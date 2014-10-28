@@ -1,0 +1,31 @@
+.skilllevel-3
+{
+   
+    background-image: url('../icons/skilllevel/3.png');
+   background-position: 14px 14px;
+  background-repeat: no-repeat;
+    display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-top: 1px;
+  margin-right: .3em;
+  line-height: 14px;
+  vertical-align: text-top;
+
+
+}
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+legend
+{
+    width:90%;
+    margin-top:15px;
+    font-size:12px;
+}
+@media print {
+ a[href]:after {
+    content: none;
+  }
+}
