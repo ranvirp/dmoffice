@@ -1,5 +1,5 @@
 <?php
- //check if user has been assigned a designation or not?
+ ///check if user has been assigned a designation or not?
 if (!Yii::app()->user->isGuest)
 if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
 {

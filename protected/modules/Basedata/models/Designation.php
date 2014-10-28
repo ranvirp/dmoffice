@@ -1,6 +1,6 @@
 <?php
 
-/**
+/***
  * This is the model class for table "Designation".
  *
  * The followings are the available columns in table 'Designation':
