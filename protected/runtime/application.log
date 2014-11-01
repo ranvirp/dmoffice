@@ -34067,3 +34067,216 @@ Stack trace:
 REQUEST_URI=/themes/abound/css/bootstrap-responsive.min.css
 HTTP_REFERER=http://localhost/rights/authItem/permissions
 ---
+2014/11/01 17:25:27 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "ldld/ldl/ld.php".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('ldld/ldl/ld.php')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/ldld/ldl/ld.php
+---
+2014/11/01 17:25:31 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "pma/scripts/setup.php".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('pma/scripts/set...')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/pma/scripts/setup.php
+---
+2014/11/01 17:25:33 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "myadmin/scripts/setup.php".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('myadmin/scripts...')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/myadmin/scripts/setup.php
+---
+2014/11/01 18:29:48 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 18:29:49 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/11/01 18:29:51 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 18:29:56 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 18:30:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "yii1".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('yii1')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii1
+---
+2014/11/01 18:30:00 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "yii1".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('yii1')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/yii1
+---
+2014/11/01 20:22:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "phppath/php".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('phppath/php')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/phppath/php
+---
+2014/11/01 22:43:02 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 22:43:02 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 22:45:18 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 22:45:21 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/11/01 22:45:22 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---
+2014/11/01 23:13:43 [error] [php] Trying to get property of non-object (D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php:171)
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CBaseController.php(126): require()
+#1 D:\xampp\htdocs\yii\framework\web\CBaseController.php(95): SiteController->renderInternal()
+#2 D:\xampp\htdocs\yii\framework\web\CController.php(784): SiteController->renderFile()
+#3 D:\xampp\htdocs\dmofficedev1\protected\controllers\SiteController.php(49): SiteController->render()
+#4 D:\xampp\htdocs\yii\framework\web\actions\CInlineAction.php(49): SiteController->actionIndex()
+#5 D:\xampp\htdocs\yii\framework\web\CController.php(308): CInlineAction->runWithParams()
+#6 D:\xampp\htdocs\yii\framework\web\filters\CFilterChain.php(133): SiteController->runAction()
+#7 D:\xampp\htdocs\yii\framework\web\CController.php(291): CFilterChain->run()
+#8 D:\xampp\htdocs\yii\framework\web\CController.php(265): SiteController->runActionWithFilters()
+#9 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(282): SiteController->run()
+#10 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#11 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#12 D:\xampp\htdocs\dmofficedev1\index.php(15): CWebApplication->run()
+REQUEST_URI=/
+in D:\xampp\htdocs\dmofficedev1\protected\modules\Basedata\models\Designation.php (171)
+in D:\xampp\htdocs\dmofficedev1\protected\models\Landdisputes.php (297)
+in D:\xampp\htdocs\dmofficedev1\themes\abound\views\layouts\column2.php (20)
+2014/11/01 23:13:44 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'Unable to resolve the request "favicon.ico".' in D:\xampp\htdocs\yii\framework\web\CWebApplication.php:286
+Stack trace:
+#0 D:\xampp\htdocs\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('favicon.ico')
+#1 D:\xampp\htdocs\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#2 D:\xampp\htdocs\dmofficedev1\index.php(15): CApplication->run()
+#3 {main}
+REQUEST_URI=/favicon.ico
+---

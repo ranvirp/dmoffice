@@ -14,6 +14,7 @@
 			),
 			));?>
 		</div>
+            <?php if (!Yii::app()->user->isGuest):?>
             <section class="panel">
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
@@ -24,7 +25,7 @@
                     </ul>
                 </div>
             </section>
-
+<?php endif;?>
 		
     </div><!--/span-->
     <div class="col-md-9">
