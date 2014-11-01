@@ -20,6 +20,8 @@
  * @property string $nextdateofaction
  * @property integer $disputependingfor
  * @property integer $casteorcommunal
+ * @property integer $prevreferencetype
+ * @property string $prevreferenceno
  */
 class Landdisputes extends CActiveRecord {
 
@@ -38,16 +40,16 @@ class Landdisputes extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending, policerequired,  disputependingfor, casteorcommunal', 'required'),
-            array('revenuevillage, policestation, category, courtcasepending, policerequired, disputependingfor, casteorcommunal', 'numerical', 'integerOnly' => true),
+            array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, disputependingfor, casteorcommunal', 'numerical', 'integerOnly' => true),
             array('complainants, oppositions', 'length', 'max' => 100),
-            array('gatanos,courtname,nextdateofaction,stayexists', 'length', 'max' => 220),
+            array('gatanos,courtname,nextdateofaction,prevreferenceno,stayexists', 'length', 'max' => 220),
             array('courtcasedetails', 'length', 'max' => 1000),
             array('nextdateofaction', 'length', 'max' => 200),
             array('complainantmobileno', 'length', 'max' => 13),
             array('oppositionmobileno', 'length', 'max' => 13),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal', 'safe', 'on' => 'search'),
+            array('complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal,prevreferencetype,prevreferenceno', 'safe', 'on' => 'search'),
         );
     }
 
@@ -89,6 +91,8 @@ class Landdisputes extends CActiveRecord {
             'nextdateofaction' => Yii::t('app', 'Proposed Date Of Action'),
             'disputependingfor' => Yii::t('app', 'Dispute pending for?'),
             'casteorcommunal' => Yii::t('app', 'Caste Or Communal Angle?'),
+             'prevreferenceno' => Yii::t('app', 'Prev. Reference No'),
+             'prevreferencetype' => Yii::t('app', 'Prev. Reference Type'),
         );
     }
 
@@ -287,5 +291,10 @@ class Landdisputes extends CActiveRecord {
              'template'=>'{view}{update}{reply}',
 		);
      return $columns;
+    }
+    public function count()
+    {
+        $designation=Designation::getDesignationByUser(Yii::app()->user->id);
+        return Landdisputes::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
     }
 }

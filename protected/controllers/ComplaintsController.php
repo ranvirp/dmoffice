@@ -137,7 +137,15 @@ class ComplaintsController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
-
+ public function actionMy()
+    {
+       $model = new Complaints('search');
+       $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
+       $dp=$model->search();
+       $dp->pagination=false;
+       $mergeColumns = array('revenuevillage');
+        $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
+    }
 	/**
 	 * Manages all models.
 	 */

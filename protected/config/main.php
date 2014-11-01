@@ -21,7 +21,7 @@ return array(
 	// preloading 'log' component
 	'theme'=>'abound',
 	'preload'=>array('log'),
-    'defaultController'=>'Basedata/revenueVillage',
+    'defaultController'=>'site/',
     'aliases'=>array(
 	     // yiistrap configuration
         'bootstrap' => realpath(__DIR__ . '/../extensions/yiistrap-bs3'), // change if necessary

@@ -279,5 +279,9 @@ class Complaints extends CActiveRecord
         $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
         return array('PhNo' => $PhNo, 'text' => $text);
     }
-
+public function count()
+    {
+        $designation=Designation::getDesignationByUser(Yii::app()->user->id);
+        return Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
+    }
 }

@@ -3,7 +3,7 @@
 class SiteController extends Controller
 {
     public function filters() {
-        return array('rights');
+        return array('rights'-'index');
     }
 	/**
 	 * Declares class-based actions.
@@ -33,7 +33,20 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+            $names=array('landdisputes','complaints');
+            $text='';
+            if (isset($_POST['contenttype']))
+            {
+                $x=$_POST['contenttype'];
+                $y=$_POST['contentid'];
+                $xU=$names[$x];
+                $model=$xU::model()->findByPk($y);
+               
+                if ($model)
+                    $text= $this->renderPartial('/landdisputes/view',array('model'=>$model),true,false);
+                else $text="not Found";
+            }
+		$this->render('index',array('text'=>$text));
 	}
 
 	/**
