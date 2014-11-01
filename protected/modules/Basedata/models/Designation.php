@@ -168,7 +168,10 @@ class Designation extends CActiveRecord {
 
 	public static function getDesignationByUser($userid) {
 		$designationUser = DesignationUser::model()->findByAttributes(array('user_id' => $userid), array('order' => 'create_time DESC'));
-		return $designationUser->designation_id;
+		if ($designationUser)
+                return $designationUser->designation_id;
+                else
+                    return 0;
 	}
 
 	public static function getDesignationModelByUser($userid) {
