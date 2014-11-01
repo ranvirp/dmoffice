@@ -18,26 +18,26 @@
   <?php echo TbHtml::labelTb("Designation:");?>
   </div>
 	<div class='form-inline well1'>
-		<div class='form-group'>
+		<div class='form-group hide'>
       <label>
 District:
 </label>
     <?php
     
-	 if (Yii::app()->user->name=='admin')
-	 {
+	// if (Yii::app()->user->name=='admin')
+	// {
 		 
-		 echo TbHtml::dropDownList(get_class($model).'_'.$attribute.'_dist_code', '', District::model()->listAll());
-	 }
-	 else 
-	 {
+	//	 echo TbHtml::dropDownList(get_class($model).'_'.$attribute.'_dist_code', '', District::model()->listAll());
+	// }
+	// else 
+	// {
 		 $userDesignation=Designation::model()->getDesignationModelByUser(Yii::app()->user->id);
 				if ($userDesignation)
 					$dist=$userDesignation->district_code;
 				else $dist=null;
-				echo '<span>'.$dist.'</span>';
+				//echo '<span>'.$dist.'</span>';
 		 echo TbHtml::textField(get_class($model).'_'.$attribute.'_dist_code', $dist, array('type'=>'hidden'));
-	 }
+	// }
 	
 	?>
 	</div>
@@ -52,9 +52,10 @@ Department
         $dist="$('#'+'".get_class($model)."'+'_'+'".$attribute."'+'_dist_code').val()";
         $id1="'".get_class($model).'_'.$attribute."'";
         $id="'".get_class($model).'_'.$attribute."_designation_type_id"."'";
+        $designation=Designation::model()->findByPk($model->$attribute);
         ?>
 	<?php 
-        echo TbHtml::dropDownList(get_class($model).'_'.$attribute.'_'.'deptDropDown', '', Department::model()->listAll(),array('empty'=>'None','onChange'=>'js:'."populateDropdown('".$url."'+'/'+$(this).val()+'/dist/'+".$dist.",".$id.")"));
+        echo TbHtml::dropDownList(get_class($model).'_'.$attribute.'_'.'deptDropDown', $designation?$designation->designationType->department_id:'', Department::model()->listAll(),array('empty'=>'None','onChange'=>'js:'."populateDropdown('".$url."'+'/'+$(this).val()+'/dist/'+".$dist.",".$id.")"));
         ?>
 	</div>	
 		<div class='form-group'>
@@ -62,7 +63,7 @@ Department
 Designation Type
 <span class="required">*</span>
 </label>
-		<?php   echo TbHtml::dropDownList(get_class($model).'_'.$attribute.'_designation_type_id','',array(),array('id'=>get_class($model).'_'.$attribute.'_designation_type_id','onChange'=>'js:'."populateDropdown('".$url1."'+'/'+$(this).val()+'/dist/'+".$dist.",".$id1.")"));
+		<?php   echo TbHtml::dropDownList(get_class($model).'_'.$attribute.'_designation_type_id',$designation?$designation->designationType->id:'',$designation?Utility::listAllByAttributes('DesignationType', array('department_id'=>$designation->designationType->department_id)):array(),array('id'=>get_class($model).'_'.$attribute.'_designation_type_id','onChange'=>'js:'."populateDropdown('".$url1."'+'/'+$(this).val()+'/dist/'+".$dist.",".$id1.")"));
                 ?>
 		</div>	
     <div class='form-group'>
@@ -73,7 +74,7 @@ Designation:
     <?php
     $url=Yii::app()->createUrl('/Basedata/designation/GetUserName/id/');
     $id="'".get_class($model).'_'.$attribute.'_username'."'";
-    echo TbHtml::activeDropDownList($model,$attribute,array(),array('empty'=>'None','onChange'=>'js:'."populateHtml('".$url."'+'/'+$(this).val(),".$id.")"));  ?>
+    echo TbHtml::activeDropDownList($model,$attribute,$designation?Utility::listAllByAttributes('Designation', array('designation_type_id'=>$designation->designation_type_id,'district_code'=>$designation->district_code)):array(),array('empty'=>'None','onChange'=>'js:'."populateHtml('".$url."'+'/'+$(this).val(),".$id.")"));  ?>
 		</div>	
             <div class="help-block" id=<?php echo $id;?>>
 		</div>

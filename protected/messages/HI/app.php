@@ -19,7 +19,7 @@ array (
 'Details of Court Case'=>'लंबित वाद का विवरण',
 'Is Police Required?'=>'निस्तारण हेतु पुलिस की आवश्यकता है|',
 'Proposed Date Of Action'=>'कार्यवाही की प्रस्तावित तिथि?',
-'Dispute pending for?'=>'मामला कब से लंबित है ?',
+'Dispute pending for?'=>'मामला कितने महीनों से लंबित है ?',
 'Caste Or Communal Angle?'=>'जातीय या सांप्रदायिक तनाव है|',
     'Is there a stay in court?'=>'स्थगनादेश है ?',
     'Stay Orders'=>'स्थगनादेश',

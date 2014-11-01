@@ -37,17 +37,17 @@ class Landdisputes extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending, policerequired, nextdateofaction, disputependingfor, casteorcommunal', 'required'),
+            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending, policerequired,  disputependingfor, casteorcommunal', 'required'),
             array('revenuevillage, policestation, category, courtcasepending, policerequired, disputependingfor, casteorcommunal', 'numerical', 'integerOnly' => true),
             array('complainants, oppositions', 'length', 'max' => 100),
-            array('gatanos,courtname,stayexists', 'length', 'max' => 220),
+            array('gatanos,courtname,nextdateofaction,stayexists', 'length', 'max' => 220),
             array('courtcasedetails', 'length', 'max' => 1000),
             array('nextdateofaction', 'length', 'max' => 200),
             array('complainantmobileno', 'length', 'max' => 13),
             array('oppositionmobileno', 'length', 'max' => 13),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired, nextdateofaction, disputependingfor, casteorcommunal', 'safe', 'on' => 'search'),
+            array('complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal', 'safe', 'on' => 'search'),
         );
     }
 
@@ -121,6 +121,7 @@ class Landdisputes extends CActiveRecord {
         $criteria->compare('courtcasedetails', $this->courtcasedetails, true);
         $criteria->compare('policerequired', $this->policerequired);
         $criteria->compare('nextdateofaction', $this->nextdateofaction, true);
+         $criteria->compare('officerassigned', $this->officerassigned, true);
         $criteria->compare('disputependingfor', $this->disputependingfor);
         $criteria->compare('casteorcommunal', $this->casteorcommunal);
 
@@ -206,7 +207,7 @@ class Landdisputes extends CActiveRecord {
             $PhNo.=',91' . $mobileNo;
         }
         $sho = Designation::model()->findByAttributes(array('designation_type_id' => 9, 'level_type_id' => $this->policestation));
-        $shoUser = User::model()->findByPk(Designation::getUserByDesignation($sho->id));
+        $shoUser = $sho?User::model()->findByPk(Designation::getUserByDesignation($sho->id)):null;
         ;
         if ($shoUser && $shoUser->profile) {
             $mobileNo = $shoUser->profile->mobile;
@@ -235,7 +236,7 @@ class Landdisputes extends CActiveRecord {
       if ($policestation)
         $columns[]= array(
 		'name'=>'policestation',
-                'value'=> 'PoliceStation::model()->findByPk($data->policestation)->name_hi',
+                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?PoliceStation::model()->findByPk($data->policestation)->name_hi:"missing"',
                 'filter'=>PoliceStation::model()->listAll(),
                 );
        if ($revenuevillage)

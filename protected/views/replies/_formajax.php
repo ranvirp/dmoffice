@@ -30,6 +30,7 @@
 	<div class="row buttons">
 		<?php echo CHtml::ajaxSubmitButton("Save","",
 		array('dataType'=>'json',
+                    'type'=>'post',
 		'success'=>"function(data)
                 {
 				if (!data.redirect){
@@ -38,7 +39,8 @@
 					}
 				else {
 				alert(data.redirect);
-				   window.location.replace(data.redirect);
+				   //window.location.replace(data.redirect);
+                                 //  window.location.reload();
 				   }
                     
  
@@ -63,7 +65,6 @@
           new google.elements.transliteration.TransliterationControl(options);
         google_control.makeTransliteratable($('.hindiinput'));
         </script>
-
 
 
 

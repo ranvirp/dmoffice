@@ -166,4 +166,9 @@ public function filters()
 		$lang=Yii::app()->language;
 		print json_encode(TbHtml::listData(DesignationType::model()->findAllByAttributes(array('department_id'=>$id)),'id','name_'.$lang));
 	}
+        public function actionCreateDesignations()
+        {
+            Designation::createDesignations();
+            print "done";
+        }
 }

@@ -119,7 +119,14 @@
    
 
    </div>
-
+       <div class='row'>
+           <div class='panel panel-success'>
+               <div class='panel-heading'>Documents </div>
+               <div class='panel-body'>
+             <?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'documents'));?>
+               </div>
+               </div>
+       </div>
 <div class="form-actions">
 <?php
 echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array(

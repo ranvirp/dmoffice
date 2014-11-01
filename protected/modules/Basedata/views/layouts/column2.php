@@ -11,6 +11,7 @@ array('label'=>'Department','url'=>array('/Basedata/department/create')),
 array('label'=>'Add Designation Type','url'=>array('/Basedata/designationType/create')),
 array('label'=>'Add Designation','url'=>array('/Basedata/designation/create')),
 array('label'=>'Assign User to a Designation','url'=>array('/Basedata/designation/userAssign')),
+    array('label'=>'Add Complaint Categories','url'=>array('/complaintcategories/create')),
 
 
 

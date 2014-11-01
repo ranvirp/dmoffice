@@ -24,7 +24,7 @@ class RAuthorizer extends CApplicationComponent
 	{
 		parent::init();
 
-		$this->_authManager = Yii::app()->getAuthManager();
+		$this->_authManager = Yii::app()-> getComponent('authManager');
 	}
 
 	/**

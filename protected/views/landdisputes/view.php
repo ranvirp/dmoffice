@@ -58,6 +58,11 @@ $this->menu=array(
             'value'=>$model->courtcasepending?$model->courtcasedetails:'NA',
         ),
         array(
+          'name'=>'stayorders',
+          'value'=>Files::showAttachments($model,'stayorders'),
+            'type'=>'raw',
+        ),
+        array(
 		'name'=>'policerequired',
                 'value'=>$model->policerequired?Yii::t('app','Yes'):Yii::t('app','No'),
             ),
@@ -66,21 +71,31 @@ $this->menu=array(
         array(
 		'name'=>'casteorcommunal',
                 'value'=>$model->casteorcommunal?Yii::t('app','Yes'):Yii::t('app','No'),
-            )
+            ),
+         array(
+          'name'=>'documents',
+          'value'=>Files::showAttachments($model,'documents'),
+            'type'=>'raw',
+        ),
 	),
 )); ?>
+<?php 
+ //echo Files::showAttachments($model,'documents');
+?>
 <?php
 echo $this->renderPartial('/landdisputes/_replies',array(
 			'replies'=>$model->replies,
 		),true); 
 	 
 echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'landdisputes','content_type_id'=>$model->id)),array('dataType'=>'json',
-	'success'=>"function(data){
+  'type'=>'post',	
+    'success'=>"function(data){
 	$('#commentdiv').html(data.html);
 	}"));
-echo CHtml::ajaxButton('Attach files', Yii::app()->createUrl('/Basedata/files/attach',array('modelName'=>get_class($model),'modelId'=>$model->id)),array('dataType'=>'json','success'=>"function(data){
-	$('#".get_class($model)."_attachments').html(data.html);}"));
+echo CHtml::ajaxButton('Attach files', Yii::app()->createUrl('/Basedata/files/attach',array('m'=>get_class($model),'idd'=>$model->id,'attr'=>'documents')),array('dataType'=>'json','success'=>"function(data){
+	$('#documents').html(data.html);}"));
 
 	
 ?>
 <div id="commentdiv"></div>
+<div id="documents"></div>

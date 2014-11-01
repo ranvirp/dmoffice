@@ -76,12 +76,15 @@ class LanddisputesController extends Controller {
             $model->attributes = $_POST['Landdisputes'];
             if (isset($_POST['Landdisputes']['stayorders']))
                 $model->stayorders = implode(",", $_POST['Landdisputes']['stayorders']);
-            if ($model->save()) {
-                //find code of sdm of tehsil
-                $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
+             if (isset($_POST['Landdisputes']['documents']))
+                $model->documents = implode(",", $_POST['Landdisputes']['documents']);
+              $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
                 if ($sdm)
                     $model->officerassigned = $sdm->id;
-                $model->save();
+            if ($model->save()) {
+                //find code of sdm of tehsil
+               
+               
                 //$model->revVillage->tehsil_code;
                 $this->redirect(array('view', 'id' => $model->id));
             }
@@ -266,6 +269,16 @@ class LanddisputesController extends Controller {
             $mergeColumns = array('policestation');
         else if (strcmp("rv", $t) == 0)
             $mergeColumns = array('revenuevillage');
+        $dp->pagination=false;
+        $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
+    }
+    public function actionMy()
+    {
+       $model = new Landdisputes('search');
+       $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
+       $dp=$model->search();
+       $dp->pagination=false;
+       $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
     }
 

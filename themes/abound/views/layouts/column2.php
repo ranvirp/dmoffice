@@ -5,15 +5,25 @@
 	<div class="col-md-3">
 		<div class="sidebar-nav">
         
-		  <?php $this->widget('zii.widgets.CMenu', array(
+		  <?php $this->widget('YiiSmartMenu', array(
 			/*'type'=>'list',*/
 			'encodeLabel'=>false,
 			'items'=>array(
 				// Include the operations menu
-				array('label'=>'OPERATIONS','items'=>$this->menu),
+				array('label'=>'OPERATIONS','url'=>'#','items'=>$this->menu),
 			),
 			));?>
 		</div>
+            <section class="panel">
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked">
+                         <li class="active"><a href="#"><span class="badge pull-right">32</span> Inbox </a>
+                        <li><a href="/landdisputes/my">Land Disputes</a></li>
+                         <li><a href="/complaints/my">Complaints</a></li>
+                        
+                    </ul>
+                </div>
+            </section>
 
 		
     </div><!--/span-->

@@ -11,9 +11,8 @@
 	'method'=>'get',
 )); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'id',array('span'=>5)); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'district_code',array('span'=>5)); ?>
+                    <?php echo $form->dropDownlistControlGroup($model,'district_code',  District::listAll(),array('span'=>5)); ?>
 
                     <?php echo $form->textFieldControlGroup($model,'name_hi',array('span'=>5,'maxlength'=>250)); ?>
 

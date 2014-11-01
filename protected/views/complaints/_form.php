@@ -64,7 +64,7 @@
     </div>
     <div class='row'>
          <div class='col-md-6'>
-    <?php echo $form->dropDownListControlGroup($model, 'category', array() , array('span' => 5, 'maxlength' => 11,)); ?>
+    <?php echo $form->dropDownListControlGroup($model, 'category', $model->categoryName?Utility::listAllByAttributes('Complaintcategories', array('department_code'=>$model->categoryName->department_code)):array() , array('span' => 5, 'maxlength' => 11,)); ?>
              <p class='help-block'><a  onclick="populateDropdown('<?php echo Yii::app()->createUrl('/Complaintcategories/getCategories/dept/');?>'+'/'+$('#Complaints_officerassigned_deptDropDown').val(),$('#Complaints_category').attr('id'))">Click</a> to populate categories </p>
     </div>
 

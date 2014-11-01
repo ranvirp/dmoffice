@@ -53,6 +53,11 @@
         array(
 		'name'=>'casteorcommunal',
                 'value'=>$model->casteorcommunal?Yii::t('app','Yes'):Yii::t('app','No'),
-            )
+            ),
+        array(
+          'name'=>'documents',
+          'value'=>Files::showAttachments($model,'documents'),
+            'type'=>'raw',
+        ),
 	),
 )); ?>

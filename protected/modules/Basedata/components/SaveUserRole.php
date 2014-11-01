@@ -20,6 +20,8 @@ class SaveUserRole extends CActiveRecordBehavior{
       if (strtolower(get_class($this->getOwner()))==='profile')
        {
            $this->getOwner()->designation=$_POST['Profile']['designation'];
+        //   $du=new DesignationUser();
+         //  $du->designation_id=$_POST['Profile']['designation'];
        }
        return true;
     }

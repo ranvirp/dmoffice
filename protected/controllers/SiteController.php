@@ -213,21 +213,43 @@ $myTrans = Transliterator::create($rule);
     {
         foreach (Designation::model()->findAll() as $designation)
         {
-            $user = new User;
+           $user;
             
             $levelClass=$designation->designationType->level->class_name;
-             $place=  $levelClass::model()->findByPk($designation->level_type_id)->name_en;
+             $levelmodel=$levelClass::model()->findByPk($designation->level_type_id);
+             $place=$levelmodel?$levelmodel->name_en:'';
            // $place=$designation->place->name_en;
-            $user->username=strtolower($designation->designationType->code.'_'.$place);
-            $user->username=  str_replace("-", "_", $user->username);
+            $username=strtolower($designation->designationType->code.'_'.$place);
+            $username=  str_replace("-", "_", $username);
+            if ($user=User::model()->findByAttributes(array('username'=>$username)))
+            {
+               print "found\n";
+            }
+            else {$user=new User;$user->username=$username;}
             $user->password= UserModule::encrypting($user->username);
             $user->email=$user->username."@gmail.com";
             $user->activkey=  UserModule::encrypting(microtime());
-                 $user->status=1;
+            $user->status=1;
+                 
+                 
             if (!$user->validate())
                 print_r($user->getErrors());
             else 
+            {
             $user->save();
+            $profile=new Profile();
+            $profile->firstname="abc";
+            $profile->lastname='abc';
+            $profile->mobile="0000000000";
+            $profile->designation=$designation->id;
+            $profile->user_id=$user->id;
+            if ($profile->validate())
+                try{
+            $profile->save();
+                }catch(Exception $ex){}
+            else 
+                print_r($profile->getErrors());
+            }
             
         }
     }

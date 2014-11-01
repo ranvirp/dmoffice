@@ -59,8 +59,8 @@ class SendSMSComponent extends CApplicationComponent{
     public function postSms($PhNo,$text)
     {
       $url= $this->baseurl."?"."ID=".$this->ID."&Pwd=".$this->Pwd."&PhNo=$PhNo&text=".urlencode($text);
-      //print $url;
-       //exit;
+     // print $url;
+      return;
       $ch = curl_init();
 
 

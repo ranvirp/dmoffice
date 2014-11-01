@@ -290,53 +290,23 @@ class FilesController extends Controller
 				$contents = ob_get_contents();
 				break;
 			case 'POST':
-				/*
-				// check if file exists
-				$upload = $_FILES[$options['field_name']];
-				$tmp_name = $_FILES[$options['field_name']]['tmp_name'];
-				//print_r($_FILES);
-				//exit;
-				if (is_array($tmp_name))
-				foreach ($tmp_name AS $index => $value){
-					//$model = files::model()->findByAttributes(array('path' => Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index]));
-					$model = new Files;
-					
-					$attributes['path'] = Yii::app()->user->id.DIRECTORY_SEPARATOR.$upload['name'][$index];
-					$attributes['title'] = $upload['name'][$index]; // TODO: fix title unique check
-					
-					#var_dump($attributes['title']);exit;
-					
-					$model->attributes = $attributes;
-					//var_dump($attributes);exit;
-					$model->validate();
-					
-					if ($model->hasErrors()) {
-						#throw new CHttpException(500, 'File exists.');
-						$file = new stdClass();
-						$file->error = "";
-						foreach($model->getErrors() AS $error) {						
-    						$file->error .= $error[0];
-    					}
-						$info[] = $file;
-						echo CJSON::encode($info);
-						exit;
-					}
-				}
-				*/
+				
+                            $title='';
+                        if (isset($_REQUEST['title']))
+                                $title=$_REQUEST['title'];
 				$upload_handler->post();
 				$contents = ob_get_contents();
 				$result = CJSON::decode($contents);
 				
 				#var_dump($result);exit;
-				$attr=$this->createMedia($result[0]['name'], Yii::getPathOfAlias(Yii::app()->params['filesAlias']));
+				$attr=$this->createMedia($result[0]['name'], Yii::getPathOfAlias(Yii::app()->params['filesAlias']),$title);
 				$result[0]['url']=Yii::app()->createUrl('/Basedata/files/file',array('id'=>$attr['id']));
 				$result[0]['delete_url'].="?id=".$attr['id'];
 				$result[0]['id']=$attr['id'];
 				$contents=CJSON::encode($result);
 				break;
 			case 'DELETE':
-				//$upload_handler->delete();
-				//$contents = ob_get_contents();
+				
 				$result = $this->deleteMedia($_GET['id']);
 				break;
 			default:
@@ -347,7 +317,7 @@ class FilesController extends Controller
 		
 		return $contents;
 	}
-	private function createMedia($fileName, $filePath) {
+	private function createMedia($fileName, $filePath,$title='') {
 		$fullFilePath = Yii::getPathOfAlias(Yii::app()->params['filesAlias']) . DIRECTORY_SEPARATOR.$fileName ;
 		$md5 = md5_file($fullFilePath);
 		$getimagesize = getimagesize($fullFilePath);
@@ -355,7 +325,7 @@ class FilesController extends Controller
 		$model = new Files;
 		//$model->detachBehavior('Upload');
 		
-		$model->title = Files::cleanName($fileName, 32);
+		$model->title = $title;
 		$model->originalname = $fileName;
 
 		//$model->type = 1; //P3Media::TYPE_FILE;
@@ -415,10 +385,10 @@ return $mimetype;
     return false;
 }
 
-public function actionAttach($modelName,$modelId)
+public function actionAttach($m,$idd,$attr)
 {
 	
-	print json_encode(array('html'=> $this->renderPartial('_attachments',array('modelName'=>$modelName,'modelId'=>$modelId),true)));
+	print json_encode(array('html'=> $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$m::model()->findByPk($idd),'attribute'=>$attr))),true);
 }
 public function actionAddTitleDescription()
 {

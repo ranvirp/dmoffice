@@ -242,6 +242,7 @@ class UploadHandler
                 'error' => null
             );
         $info = array();
+        
         if (is_array($upload['tmp_name'])) {
             foreach ($upload['tmp_name'] as $index => $value) {
                 $info[] = $this->handle_file_upload(

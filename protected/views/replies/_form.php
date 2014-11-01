@@ -40,6 +40,7 @@
 	<div class="row buttons">
 		<?php echo CHtml::ajaxSubmitButton("Save","",
 		array('dataType'=>'json',
+                    'type'=>'post',
 		'success'=>"function(data)
                 {
 				if (!data.redirect){
@@ -49,6 +50,7 @@
 				else {
 				//alert(data.redirect);
 				   window.location.replace(data.redirect);
+                                  // window.location.reload();
 				   }
                     
  
@@ -58,9 +60,11 @@
 
 <?php $this->endWidget(); ?>
 
-<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('id'=>'st2')); ?>
-	</div>
+<script>
+ //   $(document).ajaxStop(function(){
+  //  window.location.reload();
+//});
+    </script>
 
 
 

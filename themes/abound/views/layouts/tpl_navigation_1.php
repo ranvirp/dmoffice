@@ -26,7 +26,7 @@
                     'encodeLabel' => false,
                     'items' => array(
                          array('label' => 'Backup', 'url' => array('/backup')),
-                        array('label' => 'Basedata', 'url' => array('/Basedata/district/admin')),
+                        array('label' => 'Basedata', 'url' => array('/Basedata')),
                          array('label' => Yii::t('app','Land disputes'), 'url' => array('/landdisputes/create')),
                          array('label' => Yii::t('app','Complaints'), 'url' => array('/complaints/create')),
                       

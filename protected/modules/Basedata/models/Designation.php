@@ -125,7 +125,7 @@ class Designation extends CActiveRecord {
 		return json_encode($list);
 	}
 
-	public static function getByType($id, $dist) {
+	public static function getByType1($id, $dist) {
 		$designations = Designation::model()->with('designationType')->findAllByAttributes(array('designation_type_id' => $id, 'district_code' => $dist));
 		$lang = Yii::app()->language;
 		$name = "name_" . $lang;
@@ -137,6 +137,23 @@ class Designation extends CActiveRecord {
 			$x[$designation->id] = $table::model()->findByPk($designation->level_type_id)->$name;
 		}
 		return $x;
+	}
+        public static function getByType($id, $dist) {
+            /*
+		$designations = Designation::model()->with('designationType')->findAllByAttributes(array('designation_type_id' => $id, 'district_code' => $dist));
+		$lang = Yii::app()->language;
+		$name = "name_" . $lang;
+		$x = array();
+		foreach ($designations as $designation) {
+			$levelmodel = Level::model()->findByPk($designation->designationType->level_id);
+			$table = $levelmodel->table_name;
+
+			$x[$designation->id] = $table::model()->findByPk($designation->level_type_id)->$name;
+		}
+		return $x;
+             * *
+             */
+            return Utility::listAllByAttributes('Designation', array('designation_type_id' => $id, 'district_code' => $dist));
 	}
 
 	public static function getLevelsByType($id, $dist) {

@@ -46,6 +46,7 @@ class Policestation extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+                    'district'=>array(self::BELONGS_TO,'District','district_code'),
 		);
 	}
 
@@ -81,7 +82,7 @@ class Policestation extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		
 		$criteria->compare('district_code',$this->district_code);
 		$criteria->compare('name_hi',$this->name_hi,true);
 		$criteria->compare('name_en',$this->name_en,true);
