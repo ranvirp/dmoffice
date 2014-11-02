@@ -32,6 +32,9 @@ array (
 	'Manage Landdisputes'=>'भूमि विवाद प्नबंधन ',
 	'District Magistrate Office'=>'जिलाधिकारी कार्यालय',
 	'Azamgarh'=>'आजमगढ़',
+    'Complaint Id:'=>'शिकायत संख्या:',
+    'From'=>'द्वारा',
+    
 
 );
 

@@ -40,9 +40,9 @@ class Complaints extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('complainants, oppositions, complainantmobileno, revenuevillage, policestation, category, description, nextdateofaction', 'required'),
-			array('policestation, category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
+			array('complainantmobileno,policestation, category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
 			array('complainants, oppositions', 'length', 'max'=>1500),
-			array('complainantmobileno, oppositionmobileno', 'length', 'max'=>13),
+			array(' oppositionmobileno', 'length', 'max'=>13),
 			array('revenuevillage', 'length', 'max'=>11),
 			array('nextdateofaction', 'length', 'max'=>200),
 			array('officerassigned', 'length', 'max'=>20),
@@ -273,10 +273,21 @@ class Complaints extends CActiveRecord
             $mobileNo = $officerUser->profile->mobile;
             $PhNo.=',91' . $mobileNo;
         }
-        $text = "Complaint Id:".$this->id."\n";
-        $text.="Village:" . $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
-        $text.="Category:" . $this->categoryName->name_hi . "\n";
-        $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
+      //  $number=$this->urlencode_all($this->complainantmobileno);
+      //  $number=str_split('0'.$this->complainantmobileno);
+       // $x=$this->urlencode_all($this->complainantmobileno[0]);
+        if (strcmp($this->complainantmobileno[0],'9')==0)
+                $x='Nine';
+        else 
+            $x= $this->complainantmobileno[0];
+        $text=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
+        $text .= Yii::t('app',"Complaint Id:").$this->id."\n";
+        //$text = Yii::t('app',"Complaint Id:").'765432730'."\n";
+        $text.=Yii::t('app',"Revenuevillage").':' . $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
+        $text.=Yii::t('app',"Category").':' . $this->categoryName->name_hi ."\n";
+        $text.=$this->description."\n";
+      
+    
         return array('PhNo' => $PhNo, 'text' => $text);
     }
 public function count()
@@ -284,4 +295,11 @@ public function count()
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
     }
+    function urlencode_all($string){
+    $chars = array();
+    for($i = 0; $i < strlen($string); $i++){
+        $chars[] = '%'.dechex(ord($string[$i]));
+    }
+    return implode('', $chars);
+}
 }

@@ -1,3 +1,5 @@
 assets/
 protected/data/files/
 protected/runtime/
+nbproject/
+index.php

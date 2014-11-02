@@ -84,7 +84,7 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
     <div class="container-fluid">
         <?php
     foreach(Yii::app()->user->getFlashes() as $key => $message) {
-        echo '<div class="flash-' . $key . '">' . $message . "</div>\n";
+        echo '<div class="flash-' . $key . '">' . print_r($message,true) . "</div>\n";
     }
 ?>
             <!-- Include content pages -->

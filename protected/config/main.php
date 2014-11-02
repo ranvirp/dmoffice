@@ -20,6 +20,7 @@ return array(
 	'language'=>'hi',
 	// preloading 'log' component
 	'theme'=>'abound',
+    
 	'preload'=>array('log'),
     'defaultController'=>'site/',
     'aliases'=>array(
@@ -142,7 +143,8 @@ return array(
 	//'components'=>array(
             'components'=>array(
     //...
-                'SendSMS',
+                'SendSMS'=>array('class'=>'application.components.SendSMSComponent',
+                    'sendsms'=>false),
     'ePdf' => array(
         'class'         => 'ext.yii-pdf.EYiiPdf',
         'params'        => array(

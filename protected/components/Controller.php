@@ -11,7 +11,7 @@ class Controller extends RController
 	 */
 	public $layout='//layouts/column1';
 	/**
-	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
+	 * @var array context menu items. This property will be assigned to {@link CMenu::items or @link YiiSmartMenu::items}.
 	 */
 	public $menu=array();
 	/**
@@ -20,5 +20,8 @@ class Controller extends RController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+        /*
+         * @var array this is also for contextual menus if we need to have a menu at the top instead of sidebar
+         */
         public $menu1=array();
 }

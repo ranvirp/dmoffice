@@ -217,12 +217,20 @@ class Landdisputes extends CActiveRecord {
             $mobileNo = $shoUser->profile->mobile;
             $PhNo.=',91' . $mobileNo;
         }
+        //$PhNo.=',919454417521';
         $text = "";
-        $text.="Village:" . $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
-        $text.="PoliceStation:" . $this->thana->name_hi . "\n";
-        $text.="Category:" . $this->categoryName->name_hi . "\n";
-        $text.="GataNo:" . $this->gatanos;
-        $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
+        if (strcmp($this->complainantmobileno[0],'9')==0)
+                $x='Nine';
+        else 
+            $x= $this->complainantmobileno[0];
+         $text=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
+       
+        $text.=Yii::t('app',"Revenuevillage") .':'. $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
+        $text.=Yii::t('app',"Policestation").':' . $this->thana->name_hi . "\n";
+        $text.=Yii::t('app',"Category").':' . $this->categoryName->name_hi . "\n";
+         $text.=$this->description . "\n";
+        $text.=Yii::t('app',"Gatanos").':' . $this->gatanos;
+       // $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
         return array('PhNo' => $PhNo, 'text' => $text);
     }
     public static function getColumns($buttoncolumns=false,$policestation=true,$revenuevillage=true)
