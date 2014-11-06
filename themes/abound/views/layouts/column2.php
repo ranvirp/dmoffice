@@ -18,9 +18,9 @@
             <section class="panel">
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
-                         <li class="active"><a href="#"><span class="badge pull-right"><?php echo Landdisputes::model()->count()+Complaints::model()->count();?></span> Inbox </a>
-                        <li><a href="/landdisputes/my"><span class="badge pull-right"><?php echo Landdisputes::model()->count();?></span>Land Disputes</a></li>
-                         <li><a href="/complaints/my"><span class="badge pull-right"><?php echo Complaints::model()->count();?></span>Complaints</a></li>
+                         <li class="active"><a href="#"><span class="badge pull-right"><?php echo Landdisputes::model()->count1()+Complaints::model()->count1();?></span> Inbox </a>
+                        <li><a href="/landdisputes/my"><span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span>Land Disputes</a></li>
+                         <li><a href="/complaints/my"><span class="badge pull-right"><?php echo Complaints::model()->count1();?></span>Complaints</a></li>
                         
                     </ul>
                 </div>

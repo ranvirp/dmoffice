@@ -290,7 +290,7 @@ class Complaints extends CActiveRecord
     
         return array('PhNo' => $PhNo, 'text' => $text);
     }
-public function count()
+public function count1()
     {
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
@@ -302,4 +302,5 @@ public function count()
     }
     return implode('', $chars);
 }
+
 }
