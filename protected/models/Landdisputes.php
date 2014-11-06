@@ -245,6 +245,7 @@ class Landdisputes extends CActiveRecord {
       $disposed='"<b>Disposed:</b>".$data->status?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
       $policerequired='$data->policerequired?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
       $nextdate='$data->nextdateofaction';
+      $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
      $columns= array();
      $columns[]='id';
       if ($policestation)
@@ -263,8 +264,8 @@ class Landdisputes extends CActiveRecord {
         $columns[]= 'gatanos';   
          $columns[]=  array(
          'header'=>'Dispute Details',
-         'value'=>$category.$description,
-         'type'=>'raw'
+         'value'=>$category.$description.$attachments,
+        'type'=>'raw'
      );
       $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
 	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);

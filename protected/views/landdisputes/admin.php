@@ -64,45 +64,20 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
           'id' => 'print-div'         //id of the print link
       ));
 ?>
-<?php $this->widget('bootstrap.widgets.TbGridView',array(
+<?php 
+$this->widget('bootstrap.widgets.TbGridView',array(
+//$this->widget('zii.widgets.grid.CGridView',array(
 	'id'=>'landdisputes-grid',
 	'dataProvider'=>$model->search(),
-    'filterPosition'=>'header',
-	'filter'=>$model,
+        //'filterPosition'=>'header',
+	//'filter'=>$model,
+    'enablePagination'=>true,
    'type' => TbHtml::GRID_TYPE_BORDERED,
+      //'template'=>'{pager}{items}{summary}{pager}',
     
 	'columns'=>  Landdisputes::getColumns(true),
-    /*
-    array(
-		
-		'complainants',
-		'oppositions',
-            array(
-		'name'=>'revenuevillage',
-                'value'=>  'RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi',
-                //'filter'=>''
-                ),
-            array(
-		'name'=>'policestation',
-                'value'=> 'PoliceStation::model()->findByPk($data->policestation)->name_hi',
-                'filter'=>PoliceStation::model()->listAll(),
-                ),
-		'gatanos',
-		/*
-		'category',
-		'description',
-		'courtcasepending',
-		'courtcasedetails',
-		'policerequired',
-		'nextdateofaction',
-		'disputependingfor',
-		'casteorcommunal',
-		*/
-    /*
-		array(
-			'class'=>'bootstrap.widgets.TbButtonColumn',
-		),
-     * */
+    
+   
      
 	
 )); ?>

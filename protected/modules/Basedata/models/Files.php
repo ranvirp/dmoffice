@@ -212,5 +212,27 @@ class Files extends CActiveRecord {
         } else
             return null;
     }
+     public static function showAttachmentsInline($model,$attribute) {
+        $x = $model->$attribute;
+//echo $x;
+        if ($x) {
+            $y = explode(",", $x);
+
+            $str = "<table class='table'>";
+            for ($i = 0; $i < sizeof($y); $i++) {
+                $files = Files::model()->findByPk($y[$i]);
+                $str.='<tr>';
+                $str.='<td>'.$files->title.'</td>';
+                $str.= "<td>" . CHtml::link($files->originalname, Yii::app()->createUrl('/Basedata/files/file/id/' . $y[$i])).'</td>';
+                $str.='</tr>';
+
+                
+            }
+            $str.= "</table>";
+         
+            return $str;
+        } else
+            return null;
+    }
 
 }
