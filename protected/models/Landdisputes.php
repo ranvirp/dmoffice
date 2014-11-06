@@ -49,7 +49,7 @@ class Landdisputes extends CActiveRecord {
             array('oppositionmobileno', 'length', 'max' => 13),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal,prevreferencetype,prevreferenceno', 'safe', 'on' => 'search'),
+            array('id,complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal,prevreferencetype,prevreferenceno', 'safe', 'on' => 'search'),
         );
     }
 
@@ -131,6 +131,11 @@ class Landdisputes extends CActiveRecord {
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+
+'pagination'=>array(
+        'pageSize'=>20,
+    ),
+
         ));
     }
     public static function report($type)
