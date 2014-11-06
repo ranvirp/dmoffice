@@ -113,21 +113,22 @@ class Landdisputes extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id);
+        $criteria->compare('id', $this->id,true);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
-        $criteria->compare('revenuevillage', $this->revenuevillage);
-        $criteria->compare('policestation', $this->policestation);
+        $criteria->compare('revenuevillage', $this->revenuevillage,true);
+        $criteria->compare('policestation', $this->policestation,true);
         $criteria->compare('gatanos', $this->gatanos, true);
-        $criteria->compare('category', $this->category);
+        $criteria->compare('category', $this->category,true);
         $criteria->compare('description', $this->description, true);
-        $criteria->compare('courtcasepending', $this->courtcasepending);
+        $criteria->compare('courtcasepending', $this->courtcasepending,true);
+        $criteria->compare('courtname', $this->courtname,true);
         $criteria->compare('courtcasedetails', $this->courtcasedetails, true);
-        $criteria->compare('policerequired', $this->policerequired);
+        $criteria->compare('policerequired', $this->policerequired,true);
         $criteria->compare('nextdateofaction', $this->nextdateofaction, true);
          $criteria->compare('officerassigned', $this->officerassigned, true);
-        $criteria->compare('disputependingfor', $this->disputependingfor);
-        $criteria->compare('casteorcommunal', $this->casteorcommunal);
+        $criteria->compare('disputependingfor', $this->disputependingfor,true);
+        $criteria->compare('casteorcommunal', $this->casteorcommunal,true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -203,7 +204,7 @@ class Landdisputes extends CActiveRecord {
         $models = $className::model()->findAll();
         $pk = $className::model()->tableSchema->primaryKey;
         // format models resulting using listData     
-        $list = CHtml::listData($models, $pk, 'name_' . $lang);
+        $list = CHtml::listData($models, $pk, 'complainants');
         return json_encode($list);
     }
 
@@ -250,6 +251,7 @@ class Landdisputes extends CActiveRecord {
       $policerequired='$data->policerequired?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
       $nextdate='$data->nextdateofaction';
      $columns= array();
+     $columns[]='id';
       if ($policestation)
         $columns[]= array(
 		'name'=>'policestation',
@@ -305,7 +307,7 @@ class Landdisputes extends CActiveRecord {
 		);
      return $columns;
     }
-    public function count()
+    public function count1()
     {
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Landdisputes::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
