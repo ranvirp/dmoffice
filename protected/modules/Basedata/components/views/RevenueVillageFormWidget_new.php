@@ -15,8 +15,6 @@
     }
 </style>
 <?php
-Yii::app()->ClientScript->registerCssFile(Yii::app()->basePath.'/css/bootstrap-select.min.css');
-Yii::app()->ClientScript->registerScriptFile(Yii::app()->basePath.'/js/bootstrap-select.min.js');
 
 
 ?>
@@ -57,16 +55,10 @@ $tehsil_code=null;
   
   <?php if ($tehsil_code ==null){
    
-         echo TbHtml::activeDropDownListControlGroup($model, $attribute, array(),array('class'=>'selectpicker')); 
+         echo TbHtml::activeDropDownListControlGroup($model, $attribute, array()); 
   }
   else 
         echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('class'=>'selectpicker')); 
          ?>
     
 </div> 
-<script>
-         $('.selectpicker').selectpicker({
-    style: 'btn-info',
-    size: 4
-    });
-    </script>

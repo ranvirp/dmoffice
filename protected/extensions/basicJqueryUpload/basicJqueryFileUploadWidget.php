@@ -49,7 +49,7 @@ class basicJqueryFileUploadWidget extends CWidget {
             // Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-audio.js', CClientScript::POS_END);
     //Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-video.js', CClientScript::POS_END);
    Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-validate.js', CClientScript::POS_END);
-   // Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/vendor/jquery.ui.widget.js');
+    Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/vendor/jquery.ui.widget.js');
            
    
 				
