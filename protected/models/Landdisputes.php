@@ -295,6 +295,14 @@ class Landdisputes extends CActiveRecord {
      },
          'type'=>'raw',
      );
+      $columns[]=array('header'=>'Last Action','value'=>
+            
+            function($data,$row,$column)
+        {
+           if (Replies::lastReply('Landdisputes', $data->id))
+            return $column->grid->owner->renderPartial("/landdisputes/_reply",array("reply"=>Replies::lastReply("Landdisputes",$data->id)));    
+    else return "No Action taken so far";
+        });
      if ($buttoncolumns)
          $columns[]=array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
