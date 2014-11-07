@@ -42,7 +42,7 @@ class Complaints extends CActiveRecord
 			array('complainants, oppositions, complainantmobileno, revenuevillage, policestation, category, description, nextdateofaction', 'required'),
 			array('complainantmobileno,policestation, category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
 			array('complainants, oppositions', 'length', 'max'=>1500),
-			array(' oppositionmobileno', 'length', 'max'=>13),
+			array('oppositionmobileno', 'length', 'max'=>13),
 			array('revenuevillage', 'length', 'max'=>11),
 			array('nextdateofaction', 'length', 'max'=>200),
 			array('officerassigned', 'length', 'max'=>20),
