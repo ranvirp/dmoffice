@@ -25,7 +25,7 @@ border-top:0;
  
     <div id="<?php echo get_class($model);?>_<?php echo $attribute;?>_files" class="row files ">
         <div class="row show-grid">
-        <div class="col-md-12 pull-right"><span class="btn btn-success fileinput-button">
+        <div class="pull-left"><span class="btn btn-success fileinput-button">
 <i class="glyphicon glyphicon-plus"></i>
 <span>Add files...</span>
         <input id="<?php echo get_class($model);?>_<?php echo $attribute;?>" type="file" name="<?php echo get_class($model);?>_<?php echo $attribute;?>_files[]" multiple>
@@ -41,7 +41,7 @@ border-top:0;
         <th>File</th>
         
     </tr>
-    </table>
+    
         <?php 
  if ($model->$attribute)
  {
@@ -58,6 +58,7 @@ border-top:0;
     } 
 }
  ?>
+    </table>
 </div>
 <!-- The fileinput-button span is used to style the file input field as button -->
 
@@ -122,7 +123,7 @@ previewCrop: true
 data.context = $('<tr/>').appendTo('#<?php echo get_class($model)?>'+"_"+'<?php echo $attribute;?>'+'_files'+' table');
 
 $.each(data.files, function (index, file) {
-var node = $('<td><input class="hindiinput <?php echo get_class($model)?>'+"_"+'<?php echo $attribute;?>_title" name="<?php echo get_class($model)?>'+"_"+'<?php echo $attribute;?>_title[]"/></td>');
+var node = $('<td><input class="hindiinput <?php echo get_class($model)?>'+"_"+'<?php echo $attribute;?>_title" name="<?php echo get_class($model)?>'+"_"+'<?php echo $attribute;?>_title[]" onClick="js:hindiEnable()"/></td>');
 
 if (!index) {
 data.context.append(node)
@@ -214,4 +215,18 @@ $('#<?php echo get_class($model);?>_<?php echo $attribute;?>').bind('fileuploads
 });
 </script>
 
-
+<script>
+    function hindiEnable(){
+             var options = {
+          sourceLanguage:
+              google.elements.transliteration.LanguageCode.ENGLISH,
+          destinationLanguage:
+              [google.elements.transliteration.LanguageCode.HINDI],
+          shortcutKey: 'ctrl+g',
+          transliterationEnabled: true
+      };
+            google_control =
+          new google.elements.transliteration.TransliterationControl(options);
+        google_control.makeTransliteratable($('.hindiinput'));
+    }
+        </script>

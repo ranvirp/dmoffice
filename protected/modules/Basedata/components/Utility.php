@@ -63,4 +63,28 @@ class Utility
             else 
                 return null;
         }
+        /**
+	* Returns all models in List of primary key,name format
+	*/
+	public static function listAll($className)
+	{
+	    $lang = Yii::app()->language;
+        $models = $className::model()->findAll();
+        $pk = $className::model()->tableSchema->primaryKey;
+        // format models resulting using listData     
+        $list = CHtml::listData($models, $pk, 'name_'.$lang);
+        return $list;
+	}
+        /**
+	* Returns all models in List of primary key,name format
+	*/
+	public static function listAllJson($className)
+	{
+	    $lang = Yii::app()->language;
+        $models = $className::model()->findAll();
+        $pk = $className::model()->tableSchema->primaryKey;
+        // format models resulting using listData     
+        $list = CHtml::listData($models, $pk, 'name_'.$lang);
+        return json_encode($list);
+	}
 }

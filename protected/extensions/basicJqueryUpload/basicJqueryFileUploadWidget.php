@@ -46,10 +46,10 @@ class basicJqueryFileUploadWidget extends CWidget {
             // The File Upload image processing plugin
            // if($this->imageProcessing){
                 Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-image.js', CClientScript::POS_END);
-             Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-audio.js', CClientScript::POS_END);
-    Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-video.js', CClientScript::POS_END);
+            // Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-audio.js', CClientScript::POS_END);
+    //Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-video.js', CClientScript::POS_END);
    Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-validate.js', CClientScript::POS_END);
-    Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/vendor/jquery.ui.widget.js');
+   // Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/vendor/jquery.ui.widget.js');
            
    
 				

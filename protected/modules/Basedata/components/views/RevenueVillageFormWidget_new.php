@@ -14,13 +14,19 @@
         border-style:solid;
     }
 </style>
+<?php
+Yii::app()->ClientScript->registerCssFile(Yii::app()->basePath.'/css/bootstrap-select.min.css');
+Yii::app()->ClientScript->registerScriptFile(Yii::app()->basePath.'/js/bootstrap-select.min.js');
+
+
+?>
 <?php 
 $district_code=null;
 $tehsil_code=null;
  if ($model!=null)
  {
      $revvillage=  RevenueVillage::model()->findByPk($model->$attribute);
-    // echo '<h1> haha haha ha'.$model->$attribute.print_r($revvillage,true).'</h1>';
+    
      if ($revvillage!=null)
      {
          $district_code=$revvillage->district_code;
@@ -51,10 +57,16 @@ $tehsil_code=null;
   
   <?php if ($tehsil_code ==null){
    
-         echo TbHtml::activeDropDownListControlGroup($model, $attribute, array()); 
+         echo TbHtml::activeDropDownListControlGroup($model, $attribute, array(),array('class'=>'selectpicker')); 
   }
   else 
-        echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code))); 
+        echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('class'=>'selectpicker')); 
          ?>
     
 </div> 
+<script>
+         $('.selectpicker').selectpicker({
+    style: 'btn-info',
+    size: 4
+    });
+    </script>

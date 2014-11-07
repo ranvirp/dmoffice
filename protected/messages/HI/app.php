@@ -34,6 +34,7 @@ array (
 	'Azamgarh'=>'आजमगढ़',
     'Complaint Id:'=>'शिकायत संख्या:',
     'From'=>'द्वारा',
+    'Complaints'=>'शिकायतें',
     
 
 );

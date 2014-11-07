@@ -164,7 +164,7 @@ public function filters()
     public function actionGetRevenueVillagesByTehsil($t) {
         $lang = Yii::app()->language;
         $name = 'name_' . $lang;
-        print json_encode(CHtml::listData(RevenueVillage::model()->findAllByAttributes(array('tehsil_code' => $t),array('order'=>'name_en asc')), 'code', $name));
+        print json_encode(CHtml::listData(RevenueVillage::model()->findAllByAttributes(array('tehsil_code' => $t),array('order'=>'name_hi asc')), 'code', $name));
     }
    
 
