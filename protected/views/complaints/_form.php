@@ -55,7 +55,7 @@
         <legend><?php echo Yii::t('app','Opposition');?></legend>
         
      <?php echo  $form->textFieldControlGroup($model, 'oppositions',array('class'=>'hindiinput'));?> 
-         <?php echo  $form->textFieldControlGroup($model, 'oppositionmobileno',array('size'=>13));?>         
+        
     </fieldset>
     </div>
 </div>
