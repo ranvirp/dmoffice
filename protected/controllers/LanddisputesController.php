@@ -78,9 +78,9 @@ class LanddisputesController extends Controller {
                 $model->stayorders = implode(",", $_POST['Landdisputes']['stayorders']);
              if (isset($_POST['Landdisputes']['documents']))
                 $model->documents = implode(",", $_POST['Landdisputes']['documents']);
-              $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
-                if ($sdm)
-                    $model->officerassigned = $sdm->id;
+             // $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
+               // if ($sdm)
+                  //  $model->officerassigned = $sdm->id;
             if ($model->save()) {
                 //find code of sdm of tehsil
                
