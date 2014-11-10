@@ -81,6 +81,8 @@ class LanddisputesController extends Controller {
              // $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
                // if ($sdm)
                   //  $model->officerassigned = $sdm->id;
+				  $model->created_at=time();
+				  $model->created_by=Yii::app()->user->id;
             if ($model->save()) {
                 //find code of sdm of tehsil
                
@@ -166,9 +168,11 @@ class LanddisputesController extends Controller {
             if (isset($_POST['Landdisputes']['stayorders']))
                 $model->stayorders = implode(",", $_POST['Landdisputes']['stayorders']);
             if ($model->save()) {
-                $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
-                if ($sdm)
-                    $model->officerassigned = $sdm->id;
+                //$sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
+               // if ($sdm)
+                   // $model->officerassigned = $sdm->id;
+				   $model->updated_at=time();
+				   $model->updated_by=Yii::app()->user->id;
                 $model->save();
 
                 $this->redirect(array('view', 'id' => $model->id));
