@@ -41,7 +41,7 @@ class Replies extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array(' content', 'required'),
+			array('content', 'required'),
 			array('content_type_id, author, status', 'numerical', 'integerOnly'=>true),
 			array('attachments', 'length', 'max'=>255),
 			// The following rule is used by search().
