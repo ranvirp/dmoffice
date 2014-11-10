@@ -98,7 +98,7 @@ public function filters()
 		if (isset($_POST['Policestation'])) {
 			$model->attributes=$_POST['Policestation'];
 			if ($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','code'=>$model->code));
 			}
 		}
 

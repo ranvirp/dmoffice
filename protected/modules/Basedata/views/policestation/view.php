@@ -6,19 +6,19 @@
 <?php
 $this->breadcrumbs=array(
 	'Policestations'=>array('index'),
-	$model->id,
+	$model->code,
 );
 
 $this->menu=array(
 	array('label'=>'List Policestation', 'url'=>array('index')),
 	array('label'=>'Create Policestation', 'url'=>array('create')),
-	array('label'=>'Update Policestation', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete Policestation', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+	array('label'=>'Update Policestation', 'url'=>array('update', 'code'=>$model->code)),
+	array('label'=>'Delete Policestation', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','code'=>$model->code),'confirm'=>'Are you sure you want to delete this item?')),
 	array('label'=>'Manage Policestation', 'url'=>array('admin')),
 );
 ?>
 
-<h1>View Policestation #<?php echo $model->id; ?></h1>
+<h1>View Policestation #<?php echo $model->code; ?></h1>
 
 <?php $this->widget('zii.widgets.CDetailView',array(
     'htmlOptions' => array(
@@ -26,7 +26,7 @@ $this->menu=array(
     ),
     'data'=>$model,
     'attributes'=>array(
-		'id',
+		'code',
 		'district_code',
 		'name_hi',
 		'name_en',
