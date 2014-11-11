@@ -39,8 +39,8 @@ class Landdisputes extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending, policerequired,  disputependingfor, casteorcommunal', 'required'),
-            array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, disputependingfor, casteorcommunal', 'numerical', 'integerOnly' => true),
+            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending,officerassigned, policerequired,  disputependingfor, casteorcommunal', 'required'),
+            array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, officerassigned,disputependingfor, casteorcommunal', 'numerical', 'integerOnly' => true),
             array('complainants, oppositions', 'length', 'max' => 100),
             array('gatanos,courtname,nextdateofaction,prevreferenceno,stayexists', 'length', 'max' => 220),
             array('courtcasedetails', 'length', 'max' => 1000),
@@ -321,4 +321,5 @@ class Landdisputes extends CActiveRecord {
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Landdisputes::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
     }
+	
 }

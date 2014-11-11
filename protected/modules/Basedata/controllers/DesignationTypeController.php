@@ -43,7 +43,7 @@ public function filters()
 	public function actionCreate()
 	{
 		$model=new DesignationType;
-// Designation::createDesignations();
+ Designation::createDesignations();
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 

@@ -34,7 +34,7 @@ class Policestation extends CActiveRecord
 			array('circle', 'length', 'max'=>200),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, district_code, name_hi, name_en, circle', 'safe', 'on'=>'search'),
+			array('district_code, name_hi, name_en, circle', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,7 +56,7 @@ class Policestation extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => Yii::t('app','ID'),
+			
 			'district_code' => Yii::t('app','District Code'),
 			'name_hi' => Yii::t('app','Name Hi'),
 			'name_en' => Yii::t('app','Name En'),

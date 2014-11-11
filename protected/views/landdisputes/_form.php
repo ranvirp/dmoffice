@@ -69,6 +69,7 @@
          <div class='col-md-6'>
     <?php echo $form->dropDownListControlGroup($model, 'category',  Utility::listAllByAttributes('Complaintcategories', array('department_code'=>'8')), array('span' => 5, 'maxlength' => 11)); ?>
     </div>
+	
 <div class='col-md-2'>
 <?php echo $form->textFieldControlGroup($model, 'gatanos', array('span' => 5, 'maxlength' =>20)); ?>
 </div>
@@ -76,6 +77,9 @@
     <?php echo $form->textFieldControlGroup($model, 'disputependingfor', array('span' => 5, 'maxlength' => 6)); ?>
 </div>
         </div>
+		<div class='row'>
+        <?php $this->widget('OfficerWidget',array('model'=>$model,'attribute'=>'officerassigned'));?>
+    </div>
     <div class="row">
         <div class="col-md-10">
     <?php echo $form->textAreaControlGroup($model, 'description', array('span' => 5, 'maxlength' => 200,'class'=>'hindiinput')); ?>
