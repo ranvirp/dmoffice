@@ -78,9 +78,9 @@ class LanddisputesController extends Controller {
                 $model->stayorders = implode(",", $_POST['Landdisputes']['stayorders']);
              if (isset($_POST['Landdisputes']['documents']))
                 $model->documents = implode(",", $_POST['Landdisputes']['documents']);
-              $sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
-                if ($sdm)
-                    $model->officerassigned = $sdm->id;
+              //$sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
+              //  if ($sdm)
+                //    $model->officerassigned = $sdm->id;
             if ($model->save()) {
                 //find code of sdm of tehsil
                
@@ -214,11 +214,12 @@ class LanddisputesController extends Controller {
      */
     public function actionAdmin() {
         $model = new Landdisputes('search');
-        $model->unsetAttributes();  // clear any default values
+      //  $model->unsetAttributes();  // clear any default values
+        /*
         if (isset($_GET['Landdisputes'])) {
             $model->attributes = $_GET['Landdisputes'];
         }
-
+*/
         $this->render('admin', array(
             'model' => $model,
         ));
@@ -277,7 +278,7 @@ class LanddisputesController extends Controller {
        $model = new Landdisputes('search');
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
        $dp=$model->search();
-       $dp->pagination=false;
+       //$dp->pagination=false;
        $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
     }
@@ -324,5 +325,14 @@ class LanddisputesController extends Controller {
          * *
          */
     }
-
+public function actionMyJson()
+{
+    $list=array();
+   foreach (Landdisputes::model()->findAll() as $model)
+   {
+       $list[]=$model->attributes;
+       
+   }
+   return jsone_encode($list);
+}
 }
