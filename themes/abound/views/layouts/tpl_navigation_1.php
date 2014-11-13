@@ -32,6 +32,8 @@
                              'items'=>array(
                                  array('label'=>'Create','url' => array('/landdisputes/create')),
                                  array('label'=>'Manage','url' => array('/landdisputes/admin')),
+								  array('label'=>'Search','url' => array('/landdisputes/search')),
+								   array('label'=>'Datewise','url' => array('/landdisputes/datewise')),
                                  
                                  )),
                          array('label' => Yii::t('app','Complaints').'<span class="caret"></span>', 'url'=>'#',
