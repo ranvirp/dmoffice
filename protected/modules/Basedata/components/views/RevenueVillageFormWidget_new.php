@@ -56,7 +56,7 @@ $tehsil_code=null;
     <div class="col-md-7">
   <?php if ($tehsil_code ==null){
    
-         echo TbHtml::dropDownListControlGroup(get_class($model).'_'.$attribute,$model->$attribute, array(),array('empty'=>'None','label'=>Yii::t('app','Revenue Village:'),'name'=>get_class($model).'['.$attribute.']')); 
+         echo TbHtml::activeDropDownListControlGroup($model,$attribute, array(),array('empty'=>'None','label'=>Yii::t('app','Revenue Village:'))); 
   }
   else 
         echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('class'=>'selectpicker')); 

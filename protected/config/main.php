@@ -30,7 +30,7 @@ return array(
         'xupload' => realpath(__DIR__ . '/../extensions/xupload-0.5.1'),
         'basicupload' => realpath(__DIR__ . '/../extensions/basicJqueryUpload'),
         'RestfullYii' => realpath(__DIR__ . '/../extensions/RestfullYii'),
-        'rights'=>'auth.filters.AuthFilter',
+        //'rights'=>'auth.filters.AuthFilter',
     ),
     // autoloading model and component classes
     'import' => array(
@@ -53,7 +53,7 @@ return array(
         'ext.yiireport.*',
     ),
     'modules' => array(
-        'auth',
+        'rights',
         'backup',
         'importModels',
         'Basedata',
@@ -105,15 +105,7 @@ return array(
             'debug' => false,
         ),
         // uncomment the following to enable the Gii tool
-        'gii' => array(
-            'class' => 'ext.giiNew.GiiModule',
-            'password' => 'gii',
-            // If removed, Gii defaults to localhost only. Edit carefully to taste.
-            'ipFilters' => array('127.0.0.1', '::1'),
-            'generatorPaths' => array(
-                'ext.bootstrap.gii'
-            ),
-        ),
+        
     ),
     // application components
     //'components'=>array(
