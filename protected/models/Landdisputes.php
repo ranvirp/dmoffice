@@ -40,7 +40,7 @@ class Landdisputes extends CActiveRecord {
         // will receive user inputs.
         return array(
             array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending,officerassigned, policerequired,  disputependingfor, casteorcommunal', 'required'),
-            array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, officerassigned,disputependingfor, casteorcommunal', 'numerical', 'integerOnly' => true),
+            array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, officerassigned,disputependingfor, casteorcommunal,priority', 'numerical', 'integerOnly' => true),
             array('complainants, oppositions', 'length', 'max' => 100),
             array('gatanos,courtname,nextdateofaction,prevreferenceno,stayexists', 'length', 'max' => 220),
             array('courtcasedetails', 'length', 'max' => 1000),
@@ -49,7 +49,7 @@ class Landdisputes extends CActiveRecord {
             array('oppositionmobileno', 'length', 'max' => 13),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id,complainants, oppositions, revenuevillage, policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal,prevreferencetype,prevreferenceno', 'safe', 'on' => 'search'),
+            array('id,complainants, oppositions, revenuevillage, status,policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal,prevreferencetype,prevreferenceno', 'safe', 'on' => 'search'),
         );
     }
 
@@ -64,6 +64,7 @@ class Landdisputes extends CActiveRecord {
             'revVillage' => array(SELF::BELONGS_TO, 'RevenueVillage', 'revenuevillage'),
             'thana' => array(self::BELONGS_TO, 'Policestation', 'policestation'),
             'replies'=>array(self::HAS_MANY,'Replies','content_type_id','condition'=>'replies.content_type=\'landdisputes\'','order'=>'replies.create_time DESC'),
+            'officer'=>array(self::BELONGS_TO,'Designation','officerassigned'),
 			
         );
     }
@@ -108,7 +109,7 @@ class Landdisputes extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
-    public function search() {
+    public function search($limit=FALSE) {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
@@ -129,7 +130,10 @@ class Landdisputes extends CActiveRecord {
          $criteria->compare('officerassigned', $this->officerassigned, true);
         $criteria->compare('disputependingfor', $this->disputependingfor,true);
         $criteria->compare('casteorcommunal', $this->casteorcommunal,true);
-
+ if ($limit!=FALSE)
+ {
+     $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
+ }
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
 
@@ -251,13 +255,23 @@ class Landdisputes extends CActiveRecord {
       $policerequired='$data->policerequired?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
       $nextdate='$data->nextdateofaction';
       $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
+     
      $columns= array();
-     $columns[]='id';
+     $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
+     {
+          $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
+         $x= $data->id ;
+         if ($data->priority==1)
+                 $x.=$redtag;
+             return $x;
+         
+     }
+         ,'type'=>'raw');
       if ($policestation)
         $columns[]= array(
 		'name'=>'policestation',
-                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?PoliceStation::model()->findByPk($data->policestation)->name_hi:"missing"',
-                'filter'=>PoliceStation::model()->listAll(),
+                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?Policestation::model()->findByPk($data->policestation)->name_hi:"missing"',
+                'filter'=>Policestation::model()->listAll(),
                 );
        if ($revenuevillage)
          $columns[]=   array(
@@ -277,18 +291,21 @@ class Landdisputes extends CActiveRecord {
        
        
             
-    
+    $columns[]=array(
+        'header'=>'Status',
+        'value'=> function($data,$row,$column){return  Landdisputes::gridToggleStatusButton($data, $row,$column);},
+        'type'=>'raw',
+    );
      $columns[]=  array(
-         'header'=>'Status',
+         'header'=>'Other detail',
         // 'value'=>'"Disposed".'.$disposed.'."Pending in court ".'.$courtstatus.'."<br/> Stay Order ".'.$stayorder.'."<br/>Police Required ".'.$policerequired,
-         'value'=>function($data)
+         'value'=>function($data,$row,$column)
      {
-         $disposed1=$data->status?Yii::t('app','Yes'):Yii::t('app','No');
          $courtstatus=$data->courtcasepending?Yii::t('app','Yes'):Yii::t('app','No');
          $stayorder=$data->stayexists?Yii::t('app','Yes'):Yii::t('app','No');
          $policerequired=$data->policerequired?Yii::t('app','Yes'):Yii::t('app','No');
           $nextdate=$data->nextdateofaction;
-         return "<b>Disposed:</b>".$disposed1."<br/><b>Pending Court Case:</b>".$courtstatus
+         return "<br/><b>Pending Court Case:</b>".$courtstatus
                  ."<br/><b>Stay Order:</b>".$stayorder
                  ."<br/><b>Police required:</b>".$policerequired
                  ."<br/>Next date of Action:<div id='$data->id' class=\"edit\">".$nextdate."</div>";
@@ -303,6 +320,12 @@ class Landdisputes extends CActiveRecord {
             return $column->grid->owner->renderPartial("/landdisputes/_reply",array("reply"=>Replies::lastReply("Landdisputes",$data->id)));    
     else return "No Action taken so far";
         });
+        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
+        $columns[]=array('header'=>'created on','value'=>
+            function($data,$row,$column)
+        { return date("d/m/Y", $data->created_at);}
+        );
+     //   $columns[]='priority';
      if ($buttoncolumns)
          $columns[]=array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
@@ -311,7 +334,8 @@ class Landdisputes extends CActiveRecord {
                                 'label'=>'Add Action/Reply',
                                 'url'=>'Yii::app()->createUrl("/replies/create/content_type/landdisputes/content_type_id/".$data->id)'
                             
-                        )),
+                        ),
+                            ),
              'template'=>'{view}{update}{reply}',
 		);
      return $columns;
@@ -320,6 +344,15 @@ class Landdisputes extends CActiveRecord {
     {
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Landdisputes::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
+    }
+   public static function gridToggleStatusButton($data,$row,$column)
+    {
+        $disposed1=($data->status==1)?Yii::t('app','Yes'):Yii::t('app','No');
+         
+        $disposedlinktext=$data->status?Yii::t('app','Mark as Pending'):Yii::t('app','Mark as Disposed');
+        $url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
+        $result ='<b>Disposed:</b>'. $disposed1.'<br/>'.TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
+        return $result;
     }
 	
 }

@@ -19,14 +19,15 @@ $this->menu=array(
 ?>
 <?php $name='name_'.Yii::app()->language;?>
 <h1>View <?php echo Yii::t('app','Landdisputes');?> #<?php echo $model->id; ?></h1>
-
+<?php $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";?>
 <?php $this->widget('zii.widgets.CDetailView',array(
     'htmlOptions' => array(
         'class' => 'table table-striped table-condensed table-hover',
     ),
     'data'=>$model,
     'attributes'=>array(
-		
+		array('name'=>'id','value'=>($model->priority==1)?$redtag:''.$model->id,'type'=>'raw'),
+        
 		'complainants',
 		'oppositions',
         array(

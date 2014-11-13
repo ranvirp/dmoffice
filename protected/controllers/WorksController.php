@@ -28,7 +28,7 @@ class WorksController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','myJson'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -177,4 +177,20 @@ class WorksController extends Controller
 			Yii::app()->end();
 		}
 	}
+     public function actionMyJson()
+{
+    $list=array();
+    $username='';
+    if (isset($_GET['user']))
+        $username=$_GET['user'];
+   //print Designation::getDesignationByUser(User::model()->findByAttributes(array('username'=>$username))->id);
+   foreach (Works::model()->findAllByAttributes(array('officerincharge'=>  Designation::getDesignationByUser(User::model()->findByAttributes(array('username'=>$username))->id))) as $model)
+   {
+       $list[]['id']=$model->bwid;
+       $list[]['value']=$model->bwid.'-'.$model->title;
+       
+       
+   }
+   print json_encode($list);
+}
 }

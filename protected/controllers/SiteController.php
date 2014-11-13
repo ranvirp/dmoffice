@@ -123,6 +123,18 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+        public function actionTest4()
+        {
+            $models=  Landdisputes::model()->findAll();
+            $i=1;
+            foreach ($models as $model)
+            {
+                $model->created_at=time()-$i*3600*24;
+                $model->save();
+                $i++;
+            }
+            
+        }
         public function actionTest3()
         {
             $models = RevenueVillage::model()->findAll();
@@ -145,7 +157,7 @@ $myTrans = Transliterator::create($rule);
 		
 		$this->render('test1');
 	}
-	public function actionUpload()
+	public function actinUpload()
 	{
 		header( 'Vary: Accept' );
         if( isset( $_SERVER['HTTP_ACCEPT'] ) && (strpos( $_SERVER['HTTP_ACCEPT'], 'application/json' ) !== false) ) {
@@ -210,7 +222,7 @@ $myTrans = Transliterator::create($rule);
             }
         }
     }
-     public function actionActivateuser()
+     public function actioActivateuser()
      {
          foreach (User::model()->findAll() as $user)
          {
@@ -222,7 +234,7 @@ $myTrans = Transliterator::create($rule);
              }
          }
      }
-    public function actionCreateUser()
+    public function actioCreateUser()
     {
         foreach (Designation::model()->findAll() as $designation)
         {
@@ -266,7 +278,7 @@ $myTrans = Transliterator::create($rule);
             
         }
     }
-    public function actionChange()
+    public function actioChange()
     {
        $cvs= CensusVillage::model()->findAll();
         foreach($cvs as $cv)
@@ -286,7 +298,8 @@ $cv->save();
         
     }
     }
-    public function actionImportCSV()
+ 
+    public function actioImportCSV()
 	{
 	   $filename="C:/Users/admin/Downloads/LGD(1).csv";
 	   $file = fopen($filename,"r");

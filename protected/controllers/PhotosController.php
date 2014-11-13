@@ -41,7 +41,7 @@ public function filters()
 		return array(
                     
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','myJson'),
 				'users'=>array('*'),
 			),
                     array('allow', 'actions'=>array('REST.GET', 'REST.PUT', 'REST.POST', 'REST.DELETE'),
@@ -193,4 +193,8 @@ public function filters()
 			Yii::app()->end();
 		}
 	}
+        public function actionMyJson()
+        {
+            print Photos::listAllJson();
+        }
 }

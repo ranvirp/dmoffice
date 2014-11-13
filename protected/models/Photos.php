@@ -125,9 +125,15 @@ class Photos extends CActiveRecord
 	{
 	    $lang = Yii::app()->language;
         $models = $className::model()->findAll();
-        $pk = $className::model()->tableSchema->primaryKey;
+        //$pk = $className::model()->tableSchema->primaryKey;
         // format models resulting using listData     
-        $list = CHtml::listData($models, $pk, 'name_'.$lang);
+        //$list = CHtml::listData($models, $pk, 'name_'.$lang);
+        $list=array();
+        foreach ($models as $model)
+        {
+            $list[]=$model->attributes;
+        }
         return json_encode($list);
 	}
+        
 }

@@ -12,7 +12,7 @@ border-top:0;
  <div id="<?php echo get_class($model).'_'.$attribute.'_attachments';?>"></div>
     <div id="<?php echo get_class($model);?>_<?php echo $attribute;?>_files" class="container-fluid files ">
         <div class="row show-grid">
-        <div class="col-md-12 pull-right"><span class="btn btn-success fileinput-button">
+        <div class="pull-left"><span class="btn btn-success fileinput-button">
 <i class="glyphicon glyphicon-plus"></i>
 <span>Add files...</span>
         <input id="<?php echo get_class($model);?>_<?php echo $attribute;?>" type="file" name="<?php echo get_class($model);?>_<?php echo $attribute;?>_files[]" multiple>

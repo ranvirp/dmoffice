@@ -134,7 +134,7 @@ class Works extends CActiveRecord
         $models = $className::model()->findAll();
         $pk = $className::model()->tableSchema->primaryKey;
         // format models resulting using listData     
-        $list = CHtml::listData($models, $pk, 'name_'.$lang);
+        $list = CHtml::listData($models, $pk, 'title');
         return json_encode($list);
 	}
 }

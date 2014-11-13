@@ -34,31 +34,32 @@ $tehsil_code=null;
  //print '<div class="label">'. $tehsil_code." ".$district_code.'</div>';
 ?>
 
-<div class='form-inline' role="form">
+
 
     
         <?php
        
 
-            echo TbHtml::dropDownListControlGroup(get_class($model) . '_' . $attribute . '_dist_code', $district_code, Utility::listAllByAttributes('District',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))),array('class'=>'hide'));
+            echo TbHtml::dropDownList(get_class($model) . '_' . $attribute . '_dist_code', $district_code, Utility::listAllByAttributes('District',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))),array('class'=>'hide'));
        
         ?>
    
 
-    
+   <div class='form form-inline row'> 
     
       <?php   $url="'".Yii::app()->createUrl("/Basedata/RevenueVillage/getRevenueVillagesByTehsil/t/")."'";?>
             
-      
+    <div class="col-md-4">  
         <?php echo TbHtml::dropDownListControlGroup(get_class($model) . '_' . $attribute . '_' . 'tehsilDropDown', $tehsil_code, Utility::listAllByAttributes('Tehsil',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))), array('label'=>'Tehsil:','empty' => 'None', 'onChange' => 'js:' .'populateDropdown('.$url.'+'."'/'+"."$(this).val(),"."'".get_class($model) . '_' . $attribute."')")); ?>
    
-  
+    </div>
+    <div class="col-md-7">
   <?php if ($tehsil_code ==null){
    
-         echo TbHtml::activeDropDownListControlGroup($model, $attribute, array()); 
+         echo TbHtml::dropDownListControlGroup(get_class($model).'_'.$attribute,$model->$attribute, array(),array('empty'=>'None','label'=>Yii::t('app','Revenue Village:'),'name'=>get_class($model).'['.$attribute.']')); 
   }
   else 
         echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('class'=>'selectpicker')); 
          ?>
-    
+    </div>
 </div> 

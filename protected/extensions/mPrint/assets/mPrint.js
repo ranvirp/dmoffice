@@ -42,7 +42,7 @@
  
         // Create a random name for the print frame.
         var strFrameName = ("printer-" + (new Date()).getTime());
-         var newWindow = window.open("", strFrameName, "resizable=yes");
+         var newWindow = window.open("", strFrameName, "resizable=yes,scrollbars=yes");
 
  /*
         // Create an iFrame with the new name.

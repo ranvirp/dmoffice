@@ -139,19 +139,75 @@ class LanddisputesController extends Controller {
         $model = new Landdisputes();
 
         $model->unsetAttributes();  // clear any default values
-        $model->policerequired = 1;
-        $model->casteorcommunal = 0;
-        $model->courtcasepending = 0;
-        $model->stayexists = 0;
+       // $model->policerequired = 1;
+      //  $model->casteorcommunal = 0;
+       // $model->courtcasepending = 0;
+       // $model->stayexists = 0;
+        $limit=false;
         if (isset($_GET['Landdisputes'])) {
             $model->attributes = $_GET['Landdisputes'];
+            if (strcmp($model->revenuevillage,'None')==0)
+               unset($model->revenuevillage);
         }
-
-        $this->render('Thanawise', array(
-            'model' => $model,
+else 
+{
+    $limit=1;
+}
+$x=$model->search($limit);
+$x->pagination=false;
+        $this->render('ldwise', array(
+            'dp' => $x,
+           // 'mergeColumns'=>array('revenuevillage'),
+            'model'=>$model,
         ));
     }
+     public function actionDateWise() {
 
+        $model = new Landdisputes();
+
+        $model->unsetAttributes();  // clear any default values
+       
+        $x=null;
+        if (isset($_GET['Landdisputes'])) {
+            $x = $_GET['Landdisputes']['created_at'];
+            $x= str_replace("/", "-", $x );
+        }
+       
+       $timestamp1 = strtotime($x);
+//$timestamp1 = mktime(0, 0, 0, $a['tm_mon']+1, $a['tm_mday'], $a['tm_year']+1900);
+        $timestamp2=$timestamp1+3600*24;
+        $criteria = new CDbCriteria;
+        $criteria->addBetweenCondition('created_at', $timestamp1, $timestamp2, 'AND');
+        //$criteria->compare('created_at',date())
+      
+ $ca= new CActiveDataProvider($model, array(
+            'criteria' => $criteria,
+     'pagination'=>false,
+     ));
+        
+ 
+        $this->render('datewise', array(
+            'dp' => $ca,
+           
+            'model'=>$model,
+        ));
+ 
+    }
+ /*
+  * Toggle Status
+  */
+    public function actionToggleStatus($id)
+    {
+        $ld=  Landdisputes::model()->findByPk($id);
+        if ($ld)
+        {
+           ( $ld->status==1)?$ld->status=0:$ld->status=1;
+           $ld->save();
+            print $ld->status;
+        }
+        else 
+            print "no";
+    }
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -328,5 +384,13 @@ class LanddisputesController extends Controller {
          * *
          */
     }
-
+function gridToggleStatusButton($data,$row)
+    {
+        $disposed1=$data->status?Yii::t('app','Yes'):Yii::t('app','No');
+         
+        $disposedlinktext=$data->status?Yii::t('app','Mark as Pending'):Yii::t('app','Mark as Disposed');
+        $url=$this->createUrl("/landdisputes/toggleStatus",array('id'=>$data->id));
+        $result ='<b>Disposed:</b>'. $disposed.'<br/>'.CHtml::link($disposedlinktext,$url) .'<br/>'; 
+        return $result;
+    }
 }

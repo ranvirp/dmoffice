@@ -65,6 +65,8 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
 	  $cs->registerScriptFile($baseUrl.'/js/styleswitcher.js');
            $cs->registerScriptFile($baseUrl.'/js/bootstrap-datepicker.js');
           $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jeditable.mini.js');
+Yii::app()->ClientScript->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-select.min.css');
+Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-select.min.js');
 
 	?>
 		    <script type="text/javascript" src="https://www.google.com/jsapi" ></script>

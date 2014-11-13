@@ -4,7 +4,26 @@
 
 
 ?>
+<?php
+Yii::app()->clientScript->registerScript('search', "
+$('.search-button').click(function(){
+	$('.search-form').toggle();
+	return false;
+});
+$('.search-form form').submit(function(){
+	$('#landdisputes-grid').yiiGridView('update', {
+		data: $(this).serialize()
+	});
+	return false;
+});
+");
+?>
 
+<div class="search-form well" >
+<?php $this->renderPartial('_search1',array(
+	'model'=>$model,
+)); ?>
+</div><!-- search-form -->
 <div class="row">
     <button onclick="window.location='<?php echo Yii::app()->createUrl('/landdisputes/print/view/admin'); ?>';">Print</button>
 </div>
@@ -27,11 +46,11 @@
       ));
 ?>
 <?php 
-$this->widget('ext.groupgridview.BootGroupGridView',array(
+$this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'landdisputes-grid',
 	'dataProvider'=>$dp,
 	//'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
-    'mergeColumns' => $mergeColumns,  
+   // 'mergeColumns' => $mergeColumns,  
 	'columns'=>  Landdisputes::getColumns(false),
 )); ?>

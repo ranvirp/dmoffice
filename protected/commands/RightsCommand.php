@@ -19,5 +19,10 @@ class RightsCommand  extends CConsoleCommand
         $authorizer->createAuthItem($authitem,2);
         $authorizer->authManager->assign($authitem, $model->id);
     }
+    public function actionCreateChild($parentAuthItem="",$childAuthItem="")
+    {
+        $authorizer = Yii::app()->getModule("rights")->getAuthorizer();
+    }
+    
     public function actionInit() { }
 }

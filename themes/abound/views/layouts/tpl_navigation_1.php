@@ -27,8 +27,20 @@
                     'items' => array(
                          array('label' => 'Backup', 'url' => array('/backup')),
                         array('label' => 'Basedata', 'url' => array('/Basedata')),
-                         array('label' => Yii::t('app','Land disputes'), 'url' => array('/landdisputes/create')),
-                         array('label' => Yii::t('app','Complaints'), 'url' => array('/complaints/create')),
+                         array('label' => Yii::t('app','Land disputes').'<span class="caret"></span>', 'url'=>'#',
+                             'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                             'items'=>array(
+                                 array('label'=>'Create','url' => array('/landdisputes/create')),
+                                 array('label'=>'Manage','url' => array('/landdisputes/admin')),
+                                 
+                                 )),
+                         array('label' => Yii::t('app','Complaints').'<span class="caret"></span>', 'url'=>'#',
+                             'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                             'items'=>array(
+                                 array('label'=>'Create','url' => array('/complaints/create')),
+                                 array('label'=>'Manage','url' => array('/complaints/admin')),
+                                 
+                                 )),
                       
                         array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => 'Logout (' . Yii::app()->user->name . ')'.'</br>'. (Yii::app()->user->isGuest?'':Designation::getDesignationModelByUser(Yii::app()->user->id)->$name), 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),

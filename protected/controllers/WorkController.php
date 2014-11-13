@@ -1,6 +1,6 @@
 <?php
 
-class WorksController extends Controller
+class WorkController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -28,7 +28,7 @@ class WorksController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','myJson'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -177,4 +177,8 @@ class WorksController extends Controller
 			Yii::app()->end();
 		}
 	}
+        public function actionMyJson()
+        {
+            print Works::listAllJson();
+        }
 }

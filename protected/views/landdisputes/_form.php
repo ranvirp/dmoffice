@@ -94,9 +94,12 @@
    <div class='col-md-2'>
     <?php echo $form->checkBoxControlGroup($model, 'casteorcommunal', array('span' => 5, 'maxlength' => 11)); ?>
 </div>
- <div class='col-md-2'>
-<?php echo $form->textFieldControlGroup($model, 'nextdateofaction',array('class'=>'datepicker','data-date-format'=>"dd/mm/yyyy",'span'=>2,'maxlength'=>10));?>
+        <div class='col-md-2'>
+<?php 
+$priority=array('None','Urgent','Immediate','Normal');
+echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 </div>
+ 
     </div>
 
    <div class="row">
