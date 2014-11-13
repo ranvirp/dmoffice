@@ -88,10 +88,12 @@ class AuthItemController extends RController
     			'name'=>'description',
 	    		'header'=>Rights::t('core', 'Item'),
 				'type'=>'raw',
+				/*
     			'htmlOptions'=>array(
     				'class'=>'permission-column',
     				'style'=>'width:25%',
 	    		),
+				*/
     		),
 		);
 

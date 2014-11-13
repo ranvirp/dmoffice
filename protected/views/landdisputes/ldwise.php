@@ -49,7 +49,7 @@ $('.search-form form').submit(function(){
 $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'landdisputes-grid',
 	'dataProvider'=>$dp,
-	//'filter'=>$model,
+	'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
    // 'mergeColumns' => $mergeColumns,  
 	'columns'=>  Landdisputes::getColumns(false),

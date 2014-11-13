@@ -339,7 +339,7 @@ $x->pagination=false;
        $dp=$model->search();
        $dp->pagination=false;
        $mergeColumns = array('revenuevillage');
-        $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
+        $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'model'=>$model,'dp' => $dp));
     }
 
     public function actionPrintPdf() {

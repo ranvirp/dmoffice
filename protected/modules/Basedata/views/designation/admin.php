@@ -37,13 +37,9 @@ $('.search-form form').submit(function(){
 		
 		array(
 			'name'=>'designation_type_id',
-			'value'=>'$data->designationType->name_'.$lang,
+			'value'=>'$data->designationType?$data->designationType->name_'.$lang.':""',
 			),
-		array(
-		'name'=>'level_type_id',
-			'header'=>'Place of Posting',
-		'value'=>'$data->designationType->level->name_'.$lang.'.":".'. 'CActiveRecord::model($data->designationType->level->class_name)->findByPk($data->level_type_id)->name_'.$lang,
-			),
+		
 		array(
 		'name'=>'district_code',
 			'value'=>'$data->district->name_'.$lang,

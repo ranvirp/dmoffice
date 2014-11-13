@@ -41,9 +41,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-<div class="row">
-    <button onclick="window.location='<?php echo Yii::app()->createUrl('/landdisputes/print/view/admin'); ?>';">Print</button>
-</div>
+
 <?php $name='name_'.Yii::app()->language; ?>
 <?php
      $this->widget('ext.mPrint.mPrint', array(
@@ -70,7 +68,7 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'landdisputes-grid',
 	'dataProvider'=>$model->search(),
         //'filterPosition'=>'header',
-	//'filter'=>$model,
+	'filter'=>$model,
     'enablePagination'=>true,
    'type' => TbHtml::GRID_TYPE_BORDERED,
       //'template'=>'{pager}{items}{summary}{pager}',

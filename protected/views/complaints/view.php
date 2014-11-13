@@ -37,13 +37,15 @@ $this->menu=array(
 		'name'=>'policestation',
                 'value'=> Policestation::model()->findByPk($model->policestation)->$name,
             ),
-		'gatanos',
+		
         array(
 		'name'=>'category',
                 'value'=>Complaintcategories::model()->findByPk($model->category)->name_hi,
             ),
 		'description',
-        
+       array('name'=> 'officerassigned',
+	   'value'=>Designation::model()->findByPk($model->officerassigned)->name_hi,
+	   ),
          
 		
        

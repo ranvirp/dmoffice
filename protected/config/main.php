@@ -94,7 +94,7 @@ return array(
             'userNameColumn' => 'username', // Name of the user name column in the database. 
             'enableBizRule' => true, // Whether to enable authorization item business rules. 
             'enableBizRuleData' => true, // Whether to enable data for business rules. 
-            'displayDescription' => true, // Whether to use item description instead of name. 
+            'displayDescription' => false, // Whether to use item description instead of name. 
             'flashSuccessKey' => 'RightsSuccess', // Key to use for setting success flash messages. 
             'flashErrorKey' => 'RightsError', // Key to use for setting error flash messages. 
             'baseUrl' => '/rights', // Base URL for Rights. Change if module is nested. 
@@ -112,7 +112,7 @@ return array(
     'components' => array(
         //...
         'SendSMS' => array('class' => 'application.components.SendSMSComponent',
-            'sendsms' => false),
+            'sendsms' => true),
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(

@@ -228,12 +228,12 @@ class Landdisputes extends CActiveRecord {
             $PhNo.=',91' . $mobileNo;
         }
         //$PhNo.=',919454417521';
-        $text = "";
+        $text = Yii::t('app','Landdisputes').'Id:'.$this->id;
         if (strcmp($this->complainantmobileno[0],'9')==0)
                 $x='Nine';
         else 
             $x= $this->complainantmobileno[0];
-         $text=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
+         $text.=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
        
         $text.=Yii::t('app',"Revenuevillage") .':'. $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
         $text.=Yii::t('app',"Policestation").':' . $this->thana->name_hi . "\n";
@@ -351,7 +351,9 @@ class Landdisputes extends CActiveRecord {
          
         $disposedlinktext=$data->status?Yii::t('app','Mark as Pending'):Yii::t('app','Mark as Disposed');
         $url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
-        $result ='<b>Disposed:</b>'. $disposed1.'<br/>'.TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
+        $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
+		if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus'))
+		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
         return $result;
     }
 	
