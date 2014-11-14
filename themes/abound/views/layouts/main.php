@@ -26,7 +26,9 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
 	<?php
 	  $baseUrl = Yii::app()->theme->baseUrl; 
 	  $cs = Yii::app()->getClientScript();
-	  Yii::app()->clientScript->registerCoreScript('jquery');
+             $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-1.11.1.min.js');
+              $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui.min.js');
+	 // Yii::app()->clientScript->registerCoreScript('jquery');
 	?>
     <!-- Fav and Touch and touch icons -->
     <link rel="shortcut icon" href="<?php echo $baseUrl;?>/img/icons/favicon.ico">
@@ -34,7 +36,9 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $baseUrl;?>/img/icons/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<?php echo $baseUrl;?>/img/icons/apple-touch-icon-57-precomposed.png">
 	<?php  
+       
 	  $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap.min.css');
+           $cs->registerCssFile(Yii::app()->baseUrl.'/css/jquery-ui.min.css');
 	  $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-theme.min.css');
 	  $cs->registerCssFile($baseUrl.'/css/abound.css');
             $cs->registerCssFile($baseUrl.'/css/datepicker3.css');
@@ -56,6 +60,7 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
             var google_control;
             </script>
             <?php
+          
 	  $cs->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap.min.js');
         //  $cs->registerScriptFile($baseUrl.'/js/chosen.jquery.min.js');
 	  //$cs->registerScriptFile($baseUrl.'/js/plugins/jquery.sparkline.js');
@@ -71,6 +76,7 @@ Yii::app()->ClientScript->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-se
 Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-select.min.js');
 
 	?>
+            <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
 		    <script type="text/javascript" src="https://www.google.com/jsapi" ></script>
         <script src='<?php echo Yii::app()->baseUrl.'/js/googleTransliteration.js'; ?>' type='text/javascript' ></script>
  <script src='<?php echo Yii::app()->baseUrl.'/js/common.js'; ?>' type='text/javascript' ></script>

@@ -70,6 +70,6 @@ $tehsil_code=null;
 </div> 
 <script>
     $(document).ready(function(){
-        $('#'+'<?php echo get_class($model) . '_' . $attribute;  ?>').select2(matcher:function(term, text) {return text.indexOf(term)==0; })
+        $('#'+'<?php echo get_class($model) . '_' . $attribute;  ?>').select2({ matcher:function(term, text) {return text.indexOf(term)==0; }})
     });
     </script>
