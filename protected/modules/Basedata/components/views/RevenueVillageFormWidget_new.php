@@ -50,16 +50,26 @@ $tehsil_code=null;
       <?php   $url="'".Yii::app()->createUrl("/Basedata/RevenueVillage/getRevenueVillagesByTehsil/t/")."'";?>
             
     <div class="col-md-4">  
-        <?php echo TbHtml::dropDownListControlGroup(get_class($model) . '_' . $attribute . '_' . 'tehsilDropDown', $tehsil_code, Utility::listAllByAttributes('Tehsil',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))), array('label'=>'Tehsil:','empty' => 'None', 'onChange' => 'js:' .'populateDropdown('.$url.'+'."'/'+"."$(this).val(),"."'".get_class($model) . '_' . $attribute."')")); ?>
+        <?php echo TbHtml::dropDownListControlGroup(get_class($model) . '_' . $attribute . '_' . 'tehsilDropDown', $tehsil_code, Utility::listAllByAttributes('Tehsil',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))), array('label'=>'Tehsil:','empty' => 'None', 'label'=>Yii::t('app','Tehsil'),'onChange' => 'js:' .'populateDropdown('.$url.'+'."'/'+"."$(this).val(),"."'".get_class($model) . '_' . $attribute."');")); ?>
    
     </div>
     <div class="col-md-7">
-  <?php if ($tehsil_code ==null){
+        <label for="<?php echo get_class($model) . '_' . $attribute;?>"><?php echo Yii::t('app','Revenuevillage').':';?></label>
+  <?php 
+  $matchertext="function(term, text) {return text.indexOf(term)==0; }";
+  $matcherkey="matcher";
+  $text="matcher:function(term, text) {return text.indexOf(term)==0; }";
+  if ($tehsil_code ==null){
    
-         echo TbHtml::activeDropDownListControlGroup($model,$attribute, array(),array('empty'=>'None','label'=>Yii::t('app','Revenue Village:'))); 
+         echo Select2::activeDropDownList($model,$attribute, array(),array('empty'=>'None','span'=>5,'label'=>Yii::t('app','Revenuevillage'.':'),'class'=>'col-md-12','style'=>'height:30px')); 
   }
   else 
         echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('class'=>'selectpicker')); 
          ?>
     </div>
 </div> 
+<script>
+    $(document).ready(function(){
+        $('#'+'<?php echo get_class($model) . '_' . $attribute;  ?>').select2(matcher:function(term, text) {return text.indexOf(term)==0; })
+    });
+    </script>

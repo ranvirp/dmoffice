@@ -121,6 +121,7 @@ class Landdisputes extends CActiveRecord {
         $criteria->compare('policestation', $this->policestation,true);
         $criteria->compare('gatanos', $this->gatanos, true);
         $criteria->compare('category', $this->category,true);
+         $criteria->compare('priority', $this->priority,true);
         $criteria->compare('description', $this->description, true);
         $criteria->compare('courtcasepending', $this->courtcasepending,true);
         $criteria->compare('courtname', $this->courtname,true);

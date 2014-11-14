@@ -229,12 +229,5 @@ try{
         {
             $this->render('userDesignationView',array('id'=>$id));
         }
-        public function actionUsersForm()
-        {
-            if (isset($_GET['page']))
-            $page=$_GET['page'];
-            else 
-                $page=1;
-            $this->render('usersForm',array('page'=>$page));
-        }
+       
 }

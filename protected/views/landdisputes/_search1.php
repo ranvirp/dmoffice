@@ -37,6 +37,11 @@
          <div class="col-md-4">
          <?php echo $form->dropDownListControlGroup($model, 'category',  Utility::listAllByAttributes('Complaintcategories', array('department_code'=>'8')), array('empty'=>'None','span' => 5, 'maxlength' => 11)); ?>
 </div> 
+        <div class='col-md-2'>
+<?php 
+$priority=array('None','Urgent','Immediate','Normal');
+echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
+</div>
     </div>
     <div class="row"></div> 
      <div class="row">

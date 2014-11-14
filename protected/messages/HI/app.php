@@ -35,6 +35,7 @@ array (
     'Complaint Id:'=>'शिकायत संख्या:',
     'From'=>'द्वारा',
     'Complaints'=>'शिकायतें',
+    'Tehsil'=>'तहसील',
     
 
 );

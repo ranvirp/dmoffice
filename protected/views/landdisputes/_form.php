@@ -29,10 +29,10 @@
 <?php echo $form->textFieldControlGroup($model,'prevreferenceno'); ?>    
     </div>
       
-        <div class='col-md-4'>
+        <div class='col-md-5'>
 <?php $this->widget('RevenueVillageWidget', array('model' => $model, 'attribute' => 'revenuevillage')); ?>    
     </div>
-        <div class='col-md-4'>
+        <div class='col-md-2'>
            
     <?php echo $form->dropDownListControlGroup($model, 'policestation', Utility::listAllByAttributes('Policestation',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))),array('span' => 5, 'maxlength' => 11)); ?>
    

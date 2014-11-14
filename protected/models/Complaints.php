@@ -39,16 +39,16 @@ class Complaints extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('complainants, oppositions, complainantmobileno, revenuevillage, policestation, category, description, nextdateofaction', 'required'),
-			array('complainantmobileno,policestation, category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
+			array('complainants, oppositions, complainantmobileno, revenuevillage, policestation, category, description', 'required'),
+			array('complainantmobileno,officerassigned,policestation, priority,category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
 			array('complainants, oppositions', 'length', 'max'=>1500),
 			array('oppositionmobileno', 'length', 'max'=>13),
 			array('revenuevillage', 'length', 'max'=>11),
 			array('nextdateofaction', 'length', 'max'=>200),
-			array('officerassigned', 'length', 'max'=>20),
+			//array('officerassigned', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, complainants, oppositions, complainantmobileno, oppositionmobileno, revenuevillage, policestation, category, description, nextdateofaction, officerassigned, status, created_by, created_at, updated_by, updated_at', 'safe', 'on'=>'search'),
+			array('id, complainants, oppositions,priority, complainantmobileno, oppositionmobileno, revenuevillage,priority, category, description, nextdateofaction, officerassigned, status, created_by, created_at, updated_by, updated_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +64,7 @@ class Complaints extends CActiveRecord
             'revVillage' => array(SELF::BELONGS_TO, 'RevenueVillage', 'revenuevillage'),
             'thana' => array(self::BELONGS_TO, 'Policestation', 'policestation'),
                     'replies'=>array(self::HAS_MANY,'Replies','content_type_id','condition'=>'replies.content_type=\'complaints\'','order'=>'replies.create_time DESC'),
+                    'officer'=>array(self::BELONGS_TO,'Designation','officerassigned'),
 		);
 	}
 
@@ -104,34 +105,41 @@ class Complaints extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+	public function search($limit=FALSE) {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('complainants',$this->complainants,true);
-		$criteria->compare('oppositions',$this->oppositions,true);
-		$criteria->compare('complainantmobileno',$this->complainantmobileno,true);
-		$criteria->compare('oppositionmobileno',$this->oppositionmobileno,true);
-		$criteria->compare('revenuevillage',$this->revenuevillage,true);
-		$criteria->compare('policestation',$this->policestation);
-		$criteria->compare('category',$this->category);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('nextdateofaction',$this->nextdateofaction,true);
-		$criteria->compare('officerassigned',$this->officerassigned,true);
-		$criteria->compare('status',$this->status);
-		$criteria->compare('created_by',$this->created_by);
-		$criteria->compare('created_at',$this->created_at);
-		$criteria->compare('updated_by',$this->updated_by);
-		$criteria->compare('updated_at',$this->updated_at);
+        $criteria->compare('id', $this->id,true);
+        $criteria->compare('complainants', $this->complainants, true);
+        $criteria->compare('oppositions', $this->oppositions, true);
+        $criteria->compare('revenuevillage', $this->revenuevillage,true);
+       // $criteria->compare('policestation', $this->policestation,true);
+       // $criteria->compare('gatanos', $this->gatanos, true);
+        $criteria->compare('category', $this->category,true);
+         $criteria->compare('priority', $this->priority,true);
+        $criteria->compare('description', $this->description, true);
+       // $criteria->compare('courtcasepending', $this->courtcasepending,true);
+       // $criteria->compare('courtname', $this->courtname,true);
+       // $criteria->compare('courtcasedetails', $this->courtcasedetails, true);
+       // $criteria->compare('policerequired', $this->policerequired,true);
+        $criteria->compare('nextdateofaction', $this->nextdateofaction, true);
+         $criteria->compare('officerassigned', $this->officerassigned, true);
+        //$criteria->compare('disputependingfor', $this->disputependingfor,true);
+        //$criteria->compare('casteorcommunal', $this->casteorcommunal,true);
+ if ($limit!=FALSE)
+ {
+     $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
+ }
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+'pagination'=>array(
+        'pageSize'=>20,
+    ),
 
+        ));
+    }
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -174,11 +182,20 @@ class Complaints extends CActiveRecord
       $opposition='$data->oppositions."<br/> ".$data->oppositionmobileno';
       $disposed='"<b>Disposed:</b>".$data->status?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
      $nextdate='$data->nextdateofaction';
+      $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
+     
      $columns= array();
-      $columns[]=  array(
-          'name'=>'officerassigned',
-          'value'=>'Designation::model()->findByPk($data->officerassigned)->name_hi',
-      );
+     $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
+     {
+          $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
+         $x= $data->id ;
+         if ($data->priority==1)
+                 $x.=$redtag;
+             return $x;
+         
+     }
+         ,'type'=>'raw');
+      
        if ($revenuevillage)
          $columns[]=   array(
 		'name'=>'revenuevillage',
@@ -186,17 +203,24 @@ class Complaints extends CActiveRecord
               
                 );
             
-     
+       
          $columns[]=  array(
-         'header'=>'Complaint Details',
-         'value'=>$category.$description,
-         'type'=>'raw'
+         'header'=>'Dispute Details',
+         'value'=>$category.$description.$attachments,
+        'type'=>'raw'
      );
       $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
 	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
        
        
-        $columns[]=array('header'=>'Last Action','value'=>
+            
+    $columns[]=array(
+        'header'=>'Status',
+        'value'=> function($data,$row,$column){return  Complaints::gridToggleStatusButton($data, $row,$column);},
+        'type'=>'raw',
+    );
+   
+      $columns[]=array('header'=>'Last Action','value'=>
             
             function($data,$row,$column)
         {
@@ -204,18 +228,12 @@ class Complaints extends CActiveRecord
             return $column->grid->owner->renderPartial("/complaints/_reply",array("reply"=>Replies::lastReply("Complaints",$data->id)));    
     else return "No Action taken so far";
         });
-     $columns[]=  array(
-         'header'=>'Status',
-        // 'value'=>'"Disposed".'.$disposed.'."Pending in court ".'.$courtstatus.'."<br/> Stay Order ".'.$stayorder.'."<br/>Police Required ".'.$policerequired,
-         'value'=>function($data)
-     {
-         $disposed1=$data->status?Yii::t('app','Yes'):Yii::t('app','No');
-         $nextdate=$data->nextdateofaction;
-         return "<b>Disposed:</b>".$disposed1
-                 ."<br/>Next date of Action:<div id='$data->id' class=\"edit\">".$nextdate."</div>";
-     },
-         'type'=>'raw',
-     );
+        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
+        $columns[]=array('header'=>'created on','value'=>
+            function($data,$row,$column)
+        { return date("d/m/Y", $data->created_at);}
+        );
+     //   $columns[]='priority';
      if ($buttoncolumns)
          $columns[]=array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
@@ -224,7 +242,8 @@ class Complaints extends CActiveRecord
                                 'label'=>'Add Action/Reply',
                                 'url'=>'Yii::app()->createUrl("/replies/create/content_type/complaints/content_type_id/".$data->id)'
                             
-                        )),
+                        ),
+                            ),
              'template'=>'{view}{update}{reply}',
 		);
      return $columns;
@@ -302,5 +321,16 @@ public function count1()
     }
     return implode('', $chars);
 }
+public static function gridToggleStatusButton($data,$row,$column)
+    {
+        $disposed1=($data->status==1)?Yii::t('app','Yes'):Yii::t('app','No');
+         
+        $disposedlinktext=$data->status?Yii::t('app','Mark as Pending'):Yii::t('app','Mark as Disposed');
+        $url=$column->grid->owner->createUrl("/complaints/toggleStatus/id/").'/'.$data->id;
+        $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
+		if (Yii::app()->user->checkAccess('Complaints.toggleStatus'))
+		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
+        return $result;
+    }
 
 }

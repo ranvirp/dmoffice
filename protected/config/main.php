@@ -51,6 +51,7 @@ return array(
         'ext.AttachmentBehavior.AttachmentBehavior.*',
         'application.extensions.phpexcel.PHPExcel',
         'ext.yiireport.*',
+        'ext.yii-select2.Select2',
     ),
     'modules' => array(
         'rights',
@@ -215,11 +216,11 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error',
                 ),
-            /*
+            
               array(
               'class'=>'CWebLogRoute',
               ),
-             * */
+             
             ),
         ),
         // yiistrap configuration

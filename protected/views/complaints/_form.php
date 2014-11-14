@@ -26,10 +26,9 @@
 <?php $this->widget('RevenueVillageWidget', array('model' => $model, 'attribute' => 'revenuevillage')); ?>    
     </div>
         <div class='col-md-4'>
-            <fieldset>
-                <legend><?php echo Yii::t('app','PoliceStation');?></legend>
+            
     <?php echo $form->dropDownListControlGroup($model, 'policestation', Utility::listAllByAttributes('Policestation',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))),array('span' => 5, 'maxlength' => 11)); ?>
-   </fieldset>
+ 
         </div>
     </div>  
    
@@ -78,10 +77,12 @@
     <div class="row">
         
 
-   
- <div class='col-md-2'>
-<?php echo $form->textFieldControlGroup($model, 'nextdateofaction',array('class'=>'datepicker','data-date-format'=>"dd/mm/yyyy",'span'=>2,'maxlength'=>10));?>
-</div>
+  <div class='col-md-2'>
+<?php 
+$priority=array('None','Urgent','Immediate','Normal');
+echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
+</div>  
+ 
     </div>
 
    <div class="row">

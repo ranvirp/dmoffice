@@ -222,7 +222,7 @@ $myTrans = Transliterator::create($rule);
             }
         }
     }
-     public function actioActivateuser()
+     public function actionActivateuser()
      {
          foreach (User::model()->findAll() as $user)
          {
@@ -234,7 +234,7 @@ $myTrans = Transliterator::create($rule);
              }
          }
      }
-    public function actioCreateUser()
+    public function actionCreateUser()
     {
         foreach (Designation::model()->findAll() as $designation)
         {
@@ -246,11 +246,12 @@ $myTrans = Transliterator::create($rule);
            // $place=$designation->place->name_en;
             $username=strtolower($designation->designationType->code.'_'.$place);
             $username=  str_replace("-", "_", $username);
+            $username=  str_replace(" ", "_", $username);
             if ($user=User::model()->findByAttributes(array('username'=>$username)))
             {
                print "found\n";
             }
-            else {$user=new User;$user->username=$username;}
+            else {$user=new User;$user->username=$username;
             $user->password= UserModule::encrypting($user->username);
             $user->email=$user->username."@gmail.com";
             $user->activkey=  UserModule::encrypting(microtime());
@@ -261,6 +262,7 @@ $myTrans = Transliterator::create($rule);
                 print_r($user->getErrors());
             else 
             {
+                 try{
             $user->save();
             $profile=new Profile();
             $profile->firstname="abc";
@@ -269,15 +271,50 @@ $myTrans = Transliterator::create($rule);
             $profile->designation=$designation->id;
             $profile->user_id=$user->id;
             if ($profile->validate())
-                try{
+               
             $profile->save();
-                }catch(Exception $ex){}
+                
             else 
                 print_r($profile->getErrors());
+            }catch(Exception $ex){print $ex->getMessage();}
             }
             
         }
+        }
     }
+     public function actionUsersForm()
+        {
+            if (isset($_GET['page']))
+            $page=$_GET['page'];
+            else 
+                $page=1;
+            if (isset($_POST['Profile']))
+            {
+                foreach ($_POST['Profile'] as $i=>$profile)
+                {
+                   if (!empty($profile))
+                   {
+                        $username=$profile['username'];
+                        $user=User::model()->findByAttributes(array('username'=>$username));
+                        $profileModel=$user->profile;
+                        if (!$profileModel)
+                        {
+                            $profileModel=new Profile;
+                           
+                        }
+                        $profileModel->attributes=$profile;
+                        $profileModel->designation=$profile['designation'];
+                        $profileModel->validate();
+                        print_r($profileModel->getErrors());
+                        $profileModel->user_id=$user->id;
+                        $profileModel->save();
+                        // $user->user_profile_id=$profileModel->id;
+                         $user->save();
+                   }
+                }
+            }
+            $this->render('usersForm',array('page'=>$page));
+        }
     public function actioChange()
     {
        $cvs= CensusVillage::model()->findAll();

@@ -34,12 +34,13 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo $baseUrl;?>/img/icons/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="<?php echo $baseUrl;?>/img/icons/apple-touch-icon-57-precomposed.png">
 	<?php  
-	  $cs->registerCssFile($baseUrl.'/css/bootstrap.min.css');
-	  $cs->registerCssFile($baseUrl.'/css/bootstrap-theme.min.css');
+	  $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap.min.css');
+	  $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-theme.min.css');
 	  $cs->registerCssFile($baseUrl.'/css/abound.css');
             $cs->registerCssFile($baseUrl.'/css/datepicker3.css');
              $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-glyphicons.css');
           $cs->registerCssFile(Yii::app()->baseUrl.'/css/custom.css');
+         // $cs->registerCssFile(Yii::app()->baseUrl.'/css/chosen.min.css');
            $cs->registerCssFile(Yii::app()->baseUrl.'/css/font-awesome.min.css');
 	  
 	  ?>
@@ -55,13 +56,14 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
             var google_control;
             </script>
             <?php
-	  $cs->registerScriptFile($baseUrl.'/js/bootstrap.min.js');
+	  $cs->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap.min.js');
+        //  $cs->registerScriptFile($baseUrl.'/js/chosen.jquery.min.js');
 	  //$cs->registerScriptFile($baseUrl.'/js/plugins/jquery.sparkline.js');
-	  $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.flot.min.js');
-	  $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.flot.pie.min.js');
+	//  $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.flot.min.js');
+	 // $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.flot.pie.min.js');
 	 // $cs->registerScriptFile($baseUrl.'/js/charts.js');
-	  $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.knob.js');
-	  $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.masonry.min.js');
+	//  $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.knob.js');
+	 // $cs->registerScriptFile($baseUrl.'/js/plugins/jquery.masonry.min.js');
 	  $cs->registerScriptFile($baseUrl.'/js/styleswitcher.js');
            $cs->registerScriptFile($baseUrl.'/js/bootstrap-datepicker.js');
           $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery.jeditable.mini.js');
@@ -95,7 +97,9 @@ Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-
 </section>
 
 <!-- Require the footer -->
-<?php require_once('tpl_footer.php')?>
+<?php 
+//require_once('tpl_footer.php')
+?>
 <script>
      $(document).ready(function() {
      $('.editl').editable('<?php echo Yii::app()->createUrl('/landdisputes/updateDateOfAction');?>', {

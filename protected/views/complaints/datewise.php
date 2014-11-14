@@ -20,7 +20,7 @@ $('.search-form form').submit(function(){
 ?>
 
 <div class="search-form well" >
-<?php $this->renderPartial('_search1',array(
+<?php $this->renderPartial('_search2',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
@@ -47,8 +47,11 @@ $('.search-form form').submit(function(){
 $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'complaints-grid',
 	'dataProvider'=>$dp,
-	'filter'=>$model,
+	//'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
-   // 'mergeColumns' => $mergeColumns,  
+    //'mergeColumns' => $mergeColumns,  
 	'columns'=>  Complaints::getColumns(false),
 )); ?>
+<script>
+    $(document).ready(function(){$('.datepicker').datepicker()});
+    </script>

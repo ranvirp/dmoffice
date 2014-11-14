@@ -24,9 +24,7 @@ $('.search-form form').submit(function(){
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-<div class="row">
-    <button onclick="window.location='<?php echo Yii::app()->createUrl('/landdisputes/print/view/admin'); ?>';">Print</button>
-</div>
+
 <?php $name='name_'.Yii::app()->language; ?>
 <?php
      $this->widget('ext.mPrint.mPrint', array(
