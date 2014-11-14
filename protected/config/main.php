@@ -216,11 +216,11 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error',
                 ),
-            
+            /*
               array(
               'class'=>'CWebLogRoute',
               ),
-             
+             */
             ),
         ),
         // yiistrap configuration
