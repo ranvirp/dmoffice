@@ -388,7 +388,9 @@ return $mimetype;
 public function actionAttach($m,$idd,$attr)
 {
 	
-	print json_encode(array('html'=> $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$m::model()->findByPk($idd),'attribute'=>$attr))),true);
+	print json_encode(array('html'=> $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$m::model()->findByPk($idd),'attribute'=>$attr),true)));
+//print $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$m::model()->findByPk($idd),'attribute'=>$attr),true);
+        Yii::app()->end();
 }
 public function actionAddTitleDescription()
 {

@@ -33,7 +33,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-            $names=array('landdisputes','complaints');
+            $names=array('Landdisputes','Complaints');
             $text='';
             if (isset($_POST['contenttype']))
             {

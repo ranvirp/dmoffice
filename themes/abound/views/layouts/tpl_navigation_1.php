@@ -16,6 +16,12 @@
            <?php endif;?>
             <div class="navbar-collapse collapse">
 
+
+<?php
+$user_name="";
+if (!Yii::app()->user->isGuest)
+$user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model()->findByPk(Yii::app()->user->id)->profile->firstname.' '.User::model()->findByPk(Yii::app()->user->id)->profile->lastname:'';
+?>
                 <?php
                 $this->widget('YiiSmartMenu', array(
                   //  'partItemSeparator' => '.',
@@ -47,7 +53,7 @@
                                  )),
                       
                         array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => 'Logout (' . Yii::app()->user->name . ')'.'</br>'. (Yii::app()->user->isGuest?'':Designation::getDesignationModelByUser(Yii::app()->user->id)->$name), 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => 'Logout (' . Yii::app()->user->name . ')'.'</br>'. (Yii::app()->user->isGuest?'':Designation::getDesignationModelByUser(Yii::app()->user->id)->$name)."<br/>".$user_name, 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
                     ),
                 ));
                 ?>

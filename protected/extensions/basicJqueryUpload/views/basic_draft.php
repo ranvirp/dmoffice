@@ -17,7 +17,7 @@ border-top:0;
     $uploadedfiles = explode(",",$model->$attribute);
     foreach ($uploadedfiles as $uploadedfile)
     {
-     echo '<input type="hidden" name="'.get_class($model).'['.$attribute.'[]" value="'.$uploadedfile.'" >'."\n";  
+     echo '<input type="hidden" name="'.get_class($model).'['.$attribute.'][]" value="'.$uploadedfile.'" >'."\n";  
     } 
 }
  ?>
@@ -29,7 +29,6 @@ border-top:0;
 <i class="glyphicon glyphicon-plus"></i>
 <span>Add files...</span>
         <input id="<?php echo get_class($model);?>_<?php echo $attribute;?>" type="file" name="<?php echo get_class($model);?>_<?php echo $attribute;?>_files[]" multiple>
-
             </span>
         </div>
         

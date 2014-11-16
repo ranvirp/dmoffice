@@ -51,10 +51,13 @@ class LanddisputesController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id,$d=0) {
+       
         $this->render('view', array(
             'model' => $this->loadModel($id),
+            'displayAttach'=>($d==1)?true:false,
         ));
+        
     }
 
     /**
@@ -223,6 +226,8 @@ $x->pagination=false;
             $model->attributes = $_POST['Landdisputes'];
             if (isset($_POST['Landdisputes']['stayorders']))
                 $model->stayorders = implode(",", $_POST['Landdisputes']['stayorders']);
+              if (isset($_POST['Landdisputes']['documents']))
+                $model->documents = implode(",", $_POST['Landdisputes']['documents']);
             if ($model->save()) {
                 //$sdm = Designation::model()->findByAttributes(array('level_type_id' => $model->revVillage->tehsil_code, 'designation_type_id' => 8));
                // if ($sdm)
