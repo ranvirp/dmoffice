@@ -10,7 +10,7 @@
 			'encodeLabel'=>false,
 			'items'=>array(
 				// Include the operations menu
-				array('label'=>'OPERATIONS','url'=>'#','items'=>$this->menu),
+				array('label'=>$this->menu?'OPERATIONS':'','url'=>'#','items'=>$this->menu),
 			),
 			));?>
 		</div>
