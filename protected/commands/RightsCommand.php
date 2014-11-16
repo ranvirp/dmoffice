@@ -23,6 +23,17 @@ class RightsCommand  extends CConsoleCommand
     {
         $authorizer = Yii::app()->getModule("rights")->getAuthorizer();
     }
+    public function actionAssignUsersDesignationRoles()
+    {
+         $authorizer = Yii::app()->getModule("rights")->getAuthorizer();
+        foreach (User::model()->findAll() as $user)
+        {
+           $authorizer->authManager->assign('Authenticated', $model->id);
+           $authorizer->authManager->assign('Complaintsread', $model->id);
+            $authorizer->authManager->assign('Landdisputesread', $model->id);
+           
+        }
+    }
     
     public function actionInit() { }
 }
