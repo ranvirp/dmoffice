@@ -18,7 +18,7 @@
 
     <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
+	'method'=>'post',
 )); ?>
     <div class="row showgrid">
        
@@ -27,27 +27,19 @@
         </div>
         
    
-        
-        <div class="col-md-3">
-     
-    <?php echo $form->dropDownListControlGroup($model, 'policestation', Utility::listAllByAttributes('Policestation',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))),array('empty'=>'None','class'=>'form-control-inline','span' => 5, 'maxlength' => 11)); ?>
-
-        </div>
-   
+  
          <div class="col-md-4">
          <?php echo $form->dropDownListControlGroup($model, 'category',  Utility::listAllByAttributes('Complaintcategories', array('department_code'=>'8')), array('empty'=>'None','span' => 5, 'maxlength' => 11)); ?>
 </div> 
-    </div>
-    <div class="row"></div> 
-     <div class="row">
-    <div class='col-md-2'>
+        <div class='col-md-2'>
 <?php 
 $priority=array('None','Urgent','Immediate','Normal');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 </div>
-          <div class='col-md-2'>
-    <?php echo $form->checkBoxControlGroup($model, 'status', array('span' => 5, 'maxlength' => 11)); ?>
-</div>
+    </div>
+    <div class="row"></div> 
+     <div class="row">
+   
 </div>
         <div class="row form-actions">
         <?php echo TbHtml::submitButton('Search',  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>

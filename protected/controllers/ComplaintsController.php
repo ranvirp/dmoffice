@@ -152,10 +152,13 @@ class ComplaintsController extends Controller {
     public function actionAdmin() {
         $model = new Complaints('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Complaints'])) {
-            $model->attributes = $_GET['Complaints'];
+        if (isset($_POST['Complaints'])) {
+            $model->attributes = $_POST['Complaints'];
         }
-
+  if (strcmp($model->revenuevillage,'None')==0)
+               unset($model->revenuevillage);
+ // if (Yii::app()->user->id!=1)
+     // $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
         $this->render('admin', array(
             'model' => $model,
         ));

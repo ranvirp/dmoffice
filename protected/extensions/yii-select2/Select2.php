@@ -87,9 +87,9 @@ class Select2 extends CInputWidget
     private function registerScripts($id)
     {
         $cs = Yii::app()->getClientScript();
-        //$cs->registerCoreScript('jquery');
+        $cs->registerCoreScript('jquery');
 
-             $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-1.11.1.min.js');
+           
         $src = !YII_DEBUG ? '' : '/src';
         $min = YII_DEBUG ? '' : '.min';
 

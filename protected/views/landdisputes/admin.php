@@ -20,7 +20,8 @@ $('.search-button').click(function(){
 });
 $('.search-form form').submit(function(){
 	$('#landdisputes-grid').yiiGridView('update', {
-		data: $(this).serialize()
+		data: $(this).serialize(),
+                
 	});
 	return false;
 });
@@ -37,7 +38,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
+<?php $this->renderPartial('_search1',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
@@ -70,6 +71,7 @@ $this->widget('bootstrap.widgets.TbGridView',array(
         //'filterPosition'=>'header',
 	'filter'=>$model,
     'enablePagination'=>true,
+    'ajaxType'=>'POST',
    'type' => TbHtml::GRID_TYPE_BORDERED,
       //'template'=>'{pager}{items}{summary}{pager}',
     

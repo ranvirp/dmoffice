@@ -193,6 +193,13 @@ return array(
           ),
          * */
         ),
+        'clientScript'=>array(
+                      'scriptMap'=>array(
+                          'jquery.js'=>'/js/jquery-1.11.1.js',
+                          'jquery.min.js'=>'/js/jquery-1.11.1.min.js',
+                         // 'login.js'=>'site.min.js',
+                      ),
+                ),
         'db' => array(
             'connectionString' => 'sqlite:' . dirname(__FILE__) . '/../data/testdrive.db',
         ),

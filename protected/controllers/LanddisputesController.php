@@ -144,8 +144,8 @@ class LanddisputesController extends Controller {
        // $model->courtcasepending = 0;
        // $model->stayexists = 0;
         $limit=false;
-        if (isset($_GET['Landdisputes'])) {
-            $model->attributes = $_GET['Landdisputes'];
+        if (isset($_POST['Landdisputes'])) {
+            $model->attributes = $_POST['Landdisputes'];
             if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
         }
@@ -275,10 +275,13 @@ $x->pagination=false;
     public function actionAdmin() {
         $model = new Landdisputes('search');
         $model->unsetAttributes();  // clear any default values
-        if (isset($_GET['Landdisputes'])) {
-            $model->attributes = $_GET['Landdisputes'];
+        if (isset($_POST['Landdisputes'])) {
+            $model->attributes = $_POST['Landdisputes'];
         }
-
+         if (strcmp($model->revenuevillage,'None')==0)
+               unset($model->revenuevillage);
+  if (Yii::app()->user->id!=1)
+      $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
         $this->render('admin', array(
             'model' => $model,
         ));

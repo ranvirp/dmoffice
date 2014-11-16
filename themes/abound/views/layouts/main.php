@@ -26,9 +26,10 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
 	<?php
 	  $baseUrl = Yii::app()->theme->baseUrl; 
 	  $cs = Yii::app()->getClientScript();
-             $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-1.11.1.min.js');
-              $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui.min.js');
-	 // Yii::app()->clientScript->registerCoreScript('jquery');
+           //  $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-1.11.1.min.js');
+            
+	 Yii::app()->clientScript->registerCoreScript('jquery');
+           $cs->registerScriptFile(Yii::app()->baseUrl.'/js/jquery-ui.min.js');
 	?>
     <!-- Fav and Touch and touch icons -->
     <link rel="shortcut icon" href="<?php echo $baseUrl;?>/img/icons/favicon.ico">

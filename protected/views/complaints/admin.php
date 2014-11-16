@@ -19,7 +19,7 @@ $('.search-button').click(function(){
 	return false;
 });
 $('.search-form form').submit(function(){
-	$('#landdisputes-grid').yiiGridView('update', {
+	$('#complaints-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
 	return false;
@@ -37,13 +37,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
+<?php $this->renderPartial('_search1',array(
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-<div class="row">
-    <button onclick="window.location='<?php echo Yii::app()->createUrl('/complaints/print/view/admin'); ?>';">Print</button>
-</div>
+
 <?php $name='name_'.Yii::app()->language; ?>
 <?php
      $this->widget('ext.mPrint.mPrint', array(
@@ -70,6 +68,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
     'filterPosition'=>'header',
 	'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
+    'ajaxType'=>'POST',
     
 	'columns'=>  Complaints::getColumns(true),
  
