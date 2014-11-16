@@ -19,6 +19,7 @@ class SaveUserRole extends CActiveRecordBehavior{
      {
       if (strtolower(get_class($this->getOwner()))==='profile')
        {
+          if (isset($_POST['Profile']['designation']))
            $this->getOwner()->designation=$_POST['Profile']['designation'];
           
          
@@ -36,16 +37,33 @@ class SaveUserRole extends CActiveRecordBehavior{
        {
            
          //  Yii::app()->getModule('rights')->getAuthorizer()->authManager->assign($_POST['roles'],$this->getOwner()->id);
-       
+       if(isset($_POST['roles']))
            Rights::assign($_POST['roles'],$this->getOwner()->id);
+       try{
+           $profile=$this->getOwner()->profile;
+           if (!$profile)
+           {
+               print $this->getOwner()->username;
+               exit;
+           }
            if ($this->getOwner()->profile->designation >0)
            {
+               $du=DesignationUser::model()->findByAttributes(array('designation_id'=>$this->getOwner()->profile->designation));
+               if (!$du)
+               {
            $du=new DesignationUser();
          $du->designation_id=$this->getOwner()->profile->designation;
          $du->user_id=$this->getOwner()->id;
          $du->create_time=time();
          $du->save();
+               }
            }
+       } catch (Exception $ex)
+       {
+           print $ex->getTraceAsString();
+           Yii::app()->end();
+       }
        } 
+       //return parent::afterSave();
     }
 }

@@ -2,10 +2,37 @@
 
 class SiteController extends Controller
 {
-    public function filters() {
-        return array('rights'-'index');
+     public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+        );
     }
-	/**
+
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules() {
+        return array(
+            array('allow', // allow all users to perform 'index' and 'view' actions
+                'actions' => array('index', 'view'),
+                'users' => array('*'),
+            ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('create', 'update'),
+                'users' => array('@'),
+            ),
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('admin', 'delete','usersForm'),
+                'users' => array('admin'),
+            ),
+            array('deny', // deny all users
+                'users' => array('*'),
+            ),
+        );
+    }
+/**
 	 * Declares class-based actions.
 	 */
     
@@ -288,6 +315,7 @@ $myTrans = Transliterator::create($rule);
             $page=$_GET['page'];
             else 
                 $page=1;
+            $message='';
             if (isset($_POST['Profile']))
             {
                 foreach ($_POST['Profile'] as $i=>$profile)
@@ -304,15 +332,27 @@ $myTrans = Transliterator::create($rule);
                         }
                         $profileModel->attributes=$profile;
                         $profileModel->designation=$profile['designation'];
-                        $profileModel->validate();
-                        print_r($profileModel->getErrors());
+                       if (! $profileModel->validate())
+                       {
+                          
+                        $message.=$username.':'.print_r($profileModel->getErrors(),true);
+                       // Yii::app()->end();
+                        
+                       }
+                       else 
+                       {
                         $profileModel->user_id=$user->id;
+                         $profileModel->attachbehavior('SaveUserRole',new SaveUserRole());
                         $profileModel->save();
+                        
                         // $user->user_profile_id=$profileModel->id;
+                        $user->attachbehavior('SaveUserRole',new SaveUserRole());
                          $user->save();
+                       }
                    }
                 }
             }
+            Yii::app()->user->setFlash('notification',$message);
             $this->render('usersForm',array('page'=>$page));
         }
     public function actioChange()
