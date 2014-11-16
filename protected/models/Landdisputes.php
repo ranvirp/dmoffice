@@ -114,23 +114,23 @@ class Landdisputes extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id,true);
+        $criteria->compare('id', $this->id);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
-        $criteria->compare('revenuevillage', $this->revenuevillage,true);
-        $criteria->compare('policestation', $this->policestation,true);
-        $criteria->compare('gatanos', $this->gatanos, true);
-        $criteria->compare('category', $this->category,true);
-         $criteria->compare('priority', $this->priority,true);
+        $criteria->compare('revenuevillage', $this->revenuevillage);
+        $criteria->compare('policestation', $this->policestation);
+        $criteria->compare('gatanos', $this->gatanos,true);
+        $criteria->compare('category', $this->category);
+         $criteria->compare('priority', $this->priority);
         $criteria->compare('description', $this->description, true);
-        $criteria->compare('courtcasepending', $this->courtcasepending,true);
+        $criteria->compare('courtcasepending', $this->courtcasepending);
         $criteria->compare('courtname', $this->courtname,true);
         $criteria->compare('courtcasedetails', $this->courtcasedetails, true);
-        $criteria->compare('policerequired', $this->policerequired,true);
-        $criteria->compare('nextdateofaction', $this->nextdateofaction, true);
-         $criteria->compare('officerassigned', $this->officerassigned, true);
-        $criteria->compare('disputependingfor', $this->disputependingfor,true);
-        $criteria->compare('casteorcommunal', $this->casteorcommunal,true);
+        $criteria->compare('policerequired', $this->policerequired);
+        $criteria->compare('nextdateofaction', $this->nextdateofaction);
+         $criteria->compare('officerassigned', $this->officerassigned);
+        $criteria->compare('disputependingfor', $this->disputependingfor);
+        $criteria->compare('casteorcommunal', $this->casteorcommunal);
  if ($limit!=FALSE)
  {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
