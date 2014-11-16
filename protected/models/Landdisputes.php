@@ -264,7 +264,7 @@ class Landdisputes extends CActiveRecord {
          $x= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag;
-             return $x;
+             return TbHtml::link($x,'/landdisputes/'.$data->id);
          
      }
          ,'type'=>'raw');
@@ -337,7 +337,7 @@ class Landdisputes extends CActiveRecord {
                             
                         ),
                             ),
-             'template'=>'{view}{update}{reply}',
+             'template'=>(Yii::app()->user->id==1)?'{view}{update}{reply}{delete}':'{view}{reply}',
 		);
      return $columns;
     }
@@ -354,7 +354,7 @@ class Landdisputes extends CActiveRecord {
         $url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
         $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
 		if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus'))
-		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
+		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'","",)')) .'<br/>'; 
         return $result;
     }
 	

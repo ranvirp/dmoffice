@@ -218,7 +218,7 @@ $x->pagination=false;
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
+        //$model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
@@ -285,6 +285,7 @@ $x->pagination=false;
         }
          if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
+         $model->status=0;
   if (Yii::app()->user->id!=1)
       $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
         $this->render('admin', array(

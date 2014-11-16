@@ -25,8 +25,8 @@
 	<?php echo CHtml::encode($data->instruction); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('stat')); ?>:</b>
-	<?php echo CHtml::encode($data->stat); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
+	<?php echo CHtml::encode($data->status); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('attachments')); ?>:</b>

@@ -46,19 +46,5 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'id'=>'instructions-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
-	'columns'=>array(
-		'id',
-		'schemeid',
-		'sender',
-		'receiver',
-		'instruction',
-		'stat',
-		/*
-		'attachments',
-		'parentinst',
-		*/
-		array(
-			'class'=>'bootstrap.widgets.TbButtonColumn',
-		),
-	),
-)); ?>
+	'columns'=>  Instructions::getColumns(),
+	)); ?>

@@ -113,18 +113,18 @@ class Complaints extends CActiveRecord
         $criteria->compare('id', $this->id,true);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
-        $criteria->compare('revenuevillage', $this->revenuevillage,true);
+        $criteria->compare('revenuevillage', $this->revenuevillage);
        // $criteria->compare('policestation', $this->policestation,true);
        // $criteria->compare('gatanos', $this->gatanos, true);
-        $criteria->compare('category', $this->category,true);
-         $criteria->compare('priority', $this->priority,true);
+        $criteria->compare('category', $this->category);
+         $criteria->compare('priority', $this->priority);
         $criteria->compare('description', $this->description, true);
        // $criteria->compare('courtcasepending', $this->courtcasepending,true);
        // $criteria->compare('courtname', $this->courtname,true);
        // $criteria->compare('courtcasedetails', $this->courtcasedetails, true);
        // $criteria->compare('policerequired', $this->policerequired,true);
-        $criteria->compare('nextdateofaction', $this->nextdateofaction, true);
-         $criteria->compare('officerassigned', $this->officerassigned, true);
+        $criteria->compare('nextdateofaction', $this->nextdateofaction);
+         $criteria->compare('officerassigned', $this->officerassigned);
         //$criteria->compare('disputependingfor', $this->disputependingfor,true);
         //$criteria->compare('casteorcommunal', $this->casteorcommunal,true);
  if ($limit!=FALSE)
@@ -191,7 +191,7 @@ class Complaints extends CActiveRecord
          $x= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag;
-             return $x;
+              return TbHtml::link($x,'/complaints/'.$data->id);
          
      }
          ,'type'=>'raw');
@@ -244,7 +244,7 @@ class Complaints extends CActiveRecord
                             
                         ),
                             ),
-             'template'=>'{view}{update}{reply}',
+             'template'=>(Yii::app()->user->id==1)?'{view}{update}{delete}{reply}':'{view}{reply}',
 		);
      return $columns;
     }

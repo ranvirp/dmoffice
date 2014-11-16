@@ -49,12 +49,14 @@ class InstructionsController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
+	 public function actionView($id,$d=0) {
+       
+        $this->render('view', array(
+            'model' => $this->loadModel($id),
+            'displayAttach'=>($d==1)?true:false,
+        ));
+        
+    }
 
 	/**
 	 * Creates a new model.
@@ -63,14 +65,16 @@ class InstructionsController extends Controller
 	public function actionCreate()
 	{
 		$model=new Instructions;
-
+$model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if (isset($_POST['Instructions'])) {
 			$model->attributes=$_POST['Instructions'];
                          if (isset($_POST['Instructions']['attachments']))
-                $model->attachments = implode(",", $_POST['Instructions']['attachments']);
+                         $model->attachments = implode(",", $_POST['Instructions']['attachments']);
+                         $model->created_at=time();
+		         $model->created_by=Yii::app()->user->id;
 			if ($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
 			}
@@ -95,6 +99,8 @@ class InstructionsController extends Controller
 
 		if (isset($_POST['Instructions'])) {
 			$model->attributes=$_POST['Instructions'];
+                        if (isset($_POST['Instructions']['attachments']))
+                         $model->attachments = implode(",", $_POST['Instructions']['attachments']);
 			if ($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
 			}

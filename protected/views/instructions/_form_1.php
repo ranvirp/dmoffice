@@ -13,6 +13,7 @@
 	// There is a call to performAjaxValidation() commented in generated controller code.
 	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
+        'action'=>'/instructions/update/id/'.$model->id,
         //'layout'=>  TbHtml::FORM_LAYOUT_HORIZONTAL,
 )); ?>
 
@@ -20,28 +21,7 @@
 
     <?php echo $form->errorSummary($model); ?>
    
-    <div class="row">
     
-    	 <?php echo $form->dropDownListControlGroup($model,'schemeid',  Utility::listAll('Schemes'),array('empty'=>'None','span'=>5,'maxlength'=>11)); ?>
-    </div>
-    <div class="row">
-    
-    	 <?php echo $form->hiddenField($model,'sender', array('type'=>'hidden','value'=> Designation::getDesignationByUser(Yii::app()->user->id))); ?>
-    </div>
-    <div class="row">
-    
-    	 <?php  $this->widget('OfficerWidget',array('model'=>$model,'attribute'=>'receiver')) ?>
-
-    </div>
-    <div class="row">
-    	 <?php echo $form->textAreaControlGroup($model,'instruction',array('class'=>'hindiinput','span'=>5)); ?>
-
-    </div>
-    <div class='row'>
-<?php 
-$priority=array('None','Urgent','Immediate','Normal');
-echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
-</div>
     <div class="row">
     	
     

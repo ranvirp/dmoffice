@@ -21,7 +21,7 @@
 
                     <?php echo $form->textAreaControlGroup($model,'instruction',array('rows'=>6,'span'=>8)); ?>
 
-                    <?php echo $form->textFieldControlGroup($model,'stat',array('span'=>5)); ?>
+                    <?php echo $form->textFieldControlGroup($model,'status',array('span'=>5)); ?>
 
                     <?php echo $form->textFieldControlGroup($model,'attachments',array('span'=>5,'maxlength'=>50)); ?>
 

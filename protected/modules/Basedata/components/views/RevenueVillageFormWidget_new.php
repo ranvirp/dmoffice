@@ -64,7 +64,7 @@ $tehsil_code=null;
          echo Select2::activeDropDownList($model,$attribute, array(),array('empty'=>'None','span'=>5,'label'=>Yii::t('app','Revenuevillage'.':'),'class'=>'col-md-12','style'=>'height:30px')); 
   }
   else 
-        echo TbHtml::activeDropDownListControlGroup($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('class'=>'selectpicker')); 
+        echo Select2::activeDropDownList($model, $attribute, Utility::listAllByAttributes('Revenuevillage', array('tehsil_code'=>$tehsil_code)),array('empty'=>'None','span'=>5,'label'=>Yii::t('app','Revenuevillage'.':'),'class'=>'col-md-12','style'=>'height:30px')); 
          ?>
     </div>
 </div> 

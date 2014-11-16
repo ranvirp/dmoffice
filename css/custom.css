@@ -1,3 +1,7 @@
+.zoom
+{
+    zoom:90%
+}
 tr.urgent-tag:first-child
 {
      content:'<span class="glyphicon glyphicon-tag success"></span>';

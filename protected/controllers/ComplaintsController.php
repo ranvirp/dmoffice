@@ -157,8 +157,9 @@ class ComplaintsController extends Controller {
         }
   if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
- // if (Yii::app()->user->id!=1)
-     // $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
+  $model->status=0;
+  if (Yii::app()->user->id!=1)
+      $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
         $this->render('admin', array(
             'model' => $model,
         ));
