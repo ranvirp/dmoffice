@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * This is the model class for table "landdisputes".
@@ -242,6 +242,9 @@ class Landdisputes extends CActiveRecord {
         $text.=Yii::t('app',"Category").':' . $this->categoryName->name_hi . "\n";
          $text.=$this->description . "\n";
         $text.=Yii::t('app',"Gatanos").':' . $this->gatanos;
+		$text.="\nयह शिकायत ".$this->officer->name_hi." को  उचित कार्यवाही हेतु भेज दी गयी है";
+		$text.="\n";
+		$text.="कार्यवाही का विवरण azamgarhdm.com पर उपलब्ध होगा";
        // $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
         return array('PhNo' => $PhNo, 'text' => $text);
     }

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * This is the model class for table "complaints".
@@ -317,8 +317,9 @@ class Complaints extends CActiveRecord
         $text.=Yii::t('app',"Revenuevillage").':' . $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
         $text.=Yii::t('app',"Category").':' . $this->categoryName->name_hi ."\n";
         $text.=$this->description."\n";
-      
-    
+        $text.="\nयह शिकायत ".$this->officer->name_hi." को भेज दी गयी है";
+        $text.="\n";
+		$text.="कार्यवाही का विवरण azamgarhdm.com पर उपलब्ध होगा";
         return array('PhNo' => $PhNo, 'text' => $text);
     }
 public function count1()

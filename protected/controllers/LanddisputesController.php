@@ -218,7 +218,7 @@ $x->pagination=false;
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        //$model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
+        $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
