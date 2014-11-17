@@ -143,6 +143,7 @@ class ComplaintsController extends Controller {
 
     public function actionMy() {
         $model = new Complaints('search');
+		$model->unsetAttributes(); 
         $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
         $dp = $model->search();
         $dp->pagination = false;
@@ -161,9 +162,12 @@ class ComplaintsController extends Controller {
         }
   if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
-  $model->status=0;
+  //$model->status=0;
   if (Yii::app()->user->id!=1)
+  {
       $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
+	  
+	  }
         $this->render('admin', array(
             'model' => $model,
         ));

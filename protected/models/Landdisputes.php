@@ -115,6 +115,7 @@ class Landdisputes extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
+		$criteria->compare('status', $this->status);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
         $criteria->compare('revenuevillage', $this->revenuevillage);
@@ -258,6 +259,17 @@ class Landdisputes extends CActiveRecord {
       $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
      
      $columns= array();
+	$columns[]=array(
+                'header' => 'Row',
+                'value' => '$row',
+            );
+	 /*
+	 $columns[]=array(
+                'header' => 'Row',
+                'value' => '$row + ($this->grid->dataProvider->pagination->currentPage
+                    * $this->grid->dataProvider->pagination->pageSize)',
+            );
+		*/	
      $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
      {
           $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
@@ -268,12 +280,13 @@ class Landdisputes extends CActiveRecord {
          
      }
          ,'type'=>'raw');
-      if ($policestation)
-        $columns[]= array(
-		'name'=>'policestation',
-                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?Policestation::model()->findByPk($data->policestation)->name_hi:"missing"',
-                'filter'=>Policestation::model()->listAll(),
-                );
+		 $columns[]=array('header'=>'created on','value'=>
+            function($data,$row,$column)
+        { return date("d/m/Y", $data->created_at);}
+        );
+		 $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
+	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
+      
        if ($revenuevillage)
          $columns[]=   array(
 		'name'=>'revenuevillage',
@@ -287,9 +300,13 @@ class Landdisputes extends CActiveRecord {
          'value'=>$category.$description.$attachments,
         'type'=>'raw'
      );
-      $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
-	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
-       
+     
+       if ($policestation)
+        $columns[]= array(
+		'name'=>'policestation',
+                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?Policestation::model()->findByPk($data->policestation)->name_hi:"missing"',
+                'filter'=>Policestation::model()->listAll(),
+                );
        
             
     $columns[]=array(
@@ -313,6 +330,8 @@ class Landdisputes extends CActiveRecord {
      },
          'type'=>'raw',
      );
+	  $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
+        
       $columns[]=array('header'=>'Last Action','value'=>
             
             function($data,$row,$column)
@@ -321,11 +340,7 @@ class Landdisputes extends CActiveRecord {
             return $column->grid->owner->renderPartial("/landdisputes/_reply",array("reply"=>Replies::lastReply("Landdisputes",$data->id)));    
     else return "No Action taken so far";
         });
-        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
-        $columns[]=array('header'=>'created on','value'=>
-            function($data,$row,$column)
-        { return date("d/m/Y", $data->created_at);}
-        );
+       
      //   $columns[]='priority';
      if ($buttoncolumns)
          $columns[]=array(
@@ -343,8 +358,13 @@ class Landdisputes extends CActiveRecord {
     }
     public function count1()
     {
+	  if (Yii::app()->user->id!=1)
+	   {
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Landdisputes::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
+		}
+		else 
+		  return Landdisputes::model()->countByAttributes(array('status'=>0));
     }
    public static function gridToggleStatusButton($data,$row,$column)
     {
@@ -354,8 +374,13 @@ class Landdisputes extends CActiveRecord {
         $url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
         $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
 		if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus'))
-		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'","",)')) .'<br/>'; 
-        return $result;
+		{
+		 $result.=TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#landdisputes-grid').yiiGridView('update');})")) ; 
+            //$result.=TbHtml::button($disposedlinktext,array('onclick'=>"js:$.get('".$url."',function(data){})"));
+			//,function(data){$('#landdisputes-grid').yiiGridView('update');})")) ; 
+        
+		}
+		return $result;
     }
 	
 }

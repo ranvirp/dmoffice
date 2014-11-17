@@ -31,11 +31,16 @@
          <div class="col-md-4">
          <?php echo $form->dropDownListControlGroup($model, 'category',  Utility::listAllByAttributes('Complaintcategories', array('department_code'=>'8')), array('empty'=>'None','span' => 5, 'maxlength' => 11)); ?>
 </div> 
-        <div class='col-md-2'>
+        <div class='col-md-3'>
 <?php 
 $priority=array('None','Urgent','Immediate','Normal');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
+<?php 
+$status=array('Pending','Disposed');
+echo $form->dropDownListControlGroup($model, 'status',$status);?>
+
 </div>
+
     </div>
     <div class="row">
 	

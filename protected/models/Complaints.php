@@ -110,7 +110,8 @@ class Complaints extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id,true);
+        $criteria->compare('id', $this->id);
+		$criteria->compare('status', $this->status);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
         $criteria->compare('revenuevillage', $this->revenuevillage);
@@ -185,34 +186,48 @@ class Complaints extends CActiveRecord
       $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
      
      $columns= array();
+	 $columns[]=array(
+                'header' => 'Row',
+                'value' => '$row',
+            );
      $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
      {
           $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
          $x= $data->id ;
          if ($data->priority==1)
-                 $x.=$redtag;
+                 $x.=$redtag.'<br/><b>Urgent</b>';
               return TbHtml::link($x,'/complaints/'.$data->id);
          
      }
          ,'type'=>'raw');
-      /*
+       $columns[]=array('header'=>'created on','value'=>
+            function($data,$row,$column)
+        { return date("d/m/Y", $data->created_at);}
+        );
+		 $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
+	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
        if ($revenuevillage)
          $columns[]=   array(
 		'name'=>'revenuevillage',
-                'value'=>  '(RevenueVillage::model()->findByPk($data->revenuevillage))?RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi:"".",".Tehsil::model()->findByPk((RevenueVillage::model()->findByPk($data->revenuevillage))?RevenueVillage::model()->findByPk($data->revenuevillage)->tehsil_code:"0")->name_hi',
+                'value'=>  'RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi.",".Tehsil::model()->findByPk(RevenueVillage::model()->findByPk($data->revenuevillage)->tehsil_code)->name_hi',
               
                 );
             
-       */
+       
          $columns[]=  array(
          'header'=>'Dispute Details',
          'value'=>$category.$description.$attachments,
         'type'=>'raw'
      );
-      $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
-	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
+   
+        if ($policestation)
+        $columns[]= array(
+		'name'=>'policestation',
+                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?Policestation::model()->findByPk($data->policestation)->name_hi:"missing"',
+                'filter'=>Policestation::model()->listAll(),
+                );
        
-       
+         $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'($data->officer)?$data->officer->name_hi:""');
             
     $columns[]=array(
         'header'=>'Status',
@@ -228,11 +243,8 @@ class Complaints extends CActiveRecord
             return $column->grid->owner->renderPartial("/complaints/_reply",array("reply"=>Replies::lastReply("Complaints",$data->id)));    
     else return "No Action taken so far";
         });
-        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'($data->officer)?$data->officer->name_hi:""');
-        $columns[]=array('header'=>'created on','value'=>
-            function($data,$row,$column)
-        { return date("d/m/Y", $data->created_at);}
-        );
+      
+       
      //   $columns[]='priority';
      if ($buttoncolumns)
          $columns[]=array(
@@ -311,8 +323,13 @@ class Complaints extends CActiveRecord
     }
 public function count1()
     {
+	if (Yii::app()->user->id!=1)
+	{
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
+		}
+		else 
+		  return Complaints::model()->countByAttributes(array('status'=>0));
     }
     function urlencode_all($string){
     $chars = array();
@@ -329,7 +346,8 @@ public static function gridToggleStatusButton($data,$row,$column)
         $url=$column->grid->owner->createUrl("/complaints/toggleStatus/id/").'/'.$data->id;
         $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
 		if (Yii::app()->user->checkAccess('Complaints.toggleStatus'))
-		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
+		$result.= TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#complaints-grid').yiiGridView('update');})")) ; 
+        
         return $result;
     }
 
