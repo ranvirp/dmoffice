@@ -28,12 +28,22 @@ class RightsCommand  extends CConsoleCommand
          $authorizer = Yii::app()->getModule("rights")->getAuthorizer();
         foreach (User::model()->findAll() as $model)
         {
-           $authorizer->authManager->assign('Authenticated', $model->id);
-           $authorizer->authManager->assign('Complaintsread', $model->id);
-            $authorizer->authManager->assign('Landdisputesread', $model->id);
+		print $model->username."\n";
+           //$authorizer->authManager->assign('Authenticated', $model->id);
+           $authorizer->authManager->assign('complaintsread', $model->id);
+            $authorizer->authManager->assign('landdisputesread', $model->id);
            
         }
     }
-    
+    public function actionUpdateAll()
+	{
+	 foreach (Complaints::model()->findAll() as $complaint)
+	 {
+	   $complaint->created_at=time();
+	   $complaint->created_by=1;
+	   $complaint->save();
+	   print_r($complaint->getErrors());
+	 }
+	}
     public function actionInit() { }
 }

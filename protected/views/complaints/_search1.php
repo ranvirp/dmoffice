@@ -37,10 +37,11 @@ $priority=array('None','Urgent','Immediate','Normal');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 </div>
     </div>
-    <div class="row"></div> 
-     <div class="row">
-   
-</div>
+    <div class="row">
+	
+          <?php $this->widget('OfficerWidget',array('model'=>$model,'attribute'=>'officerassigned'));?>
+	</div> 
+    
         <div class="row form-actions">
         <?php echo TbHtml::submitButton('Search',  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>
     </div>

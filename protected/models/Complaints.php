@@ -39,7 +39,7 @@ class Complaints extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('complainants, oppositions, complainantmobileno, revenuevillage, policestation, category, description', 'required'),
+			array('complainants, oppositions, complainantmobileno, officerassigned,revenuevillage, policestation, category, description', 'required'),
 			array('complainantmobileno,officerassigned,policestation, priority,category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
 			array('complainants, oppositions', 'length', 'max'=>1500),
 			array('oppositionmobileno', 'length', 'max'=>13),
@@ -195,15 +195,15 @@ class Complaints extends CActiveRecord
          
      }
          ,'type'=>'raw');
-      
+      /*
        if ($revenuevillage)
          $columns[]=   array(
 		'name'=>'revenuevillage',
-                'value'=>  'RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi.",".Tehsil::model()->findByPk(RevenueVillage::model()->findByPk($data->revenuevillage)->tehsil_code)->name_hi',
+                'value'=>  '(RevenueVillage::model()->findByPk($data->revenuevillage))?RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi:"".",".Tehsil::model()->findByPk((RevenueVillage::model()->findByPk($data->revenuevillage))?RevenueVillage::model()->findByPk($data->revenuevillage)->tehsil_code:"0")->name_hi',
               
                 );
             
-       
+       */
          $columns[]=  array(
          'header'=>'Dispute Details',
          'value'=>$category.$description.$attachments,
@@ -228,7 +228,7 @@ class Complaints extends CActiveRecord
             return $column->grid->owner->renderPartial("/complaints/_reply",array("reply"=>Replies::lastReply("Complaints",$data->id)));    
     else return "No Action taken so far";
         });
-        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
+        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'($data->officer)?$data->officer->name_hi:""');
         $columns[]=array('header'=>'created on','value'=>
             function($data,$row,$column)
         { return date("d/m/Y", $data->created_at);}

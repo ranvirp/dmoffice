@@ -14,7 +14,7 @@ $('.search-form form').submit(function(){
 	$('#landdisputes-grid').yiiGridView('update', {
 		data: $(this).serialize()
 	});
-	return false;
+	//return false;
 });
 ");
 ?>
@@ -52,6 +52,3 @@ $this->widget('bootstrap.widgets.TbGridView',array(
     //'mergeColumns' => $mergeColumns,  
 	'columns'=>  Complaints::getColumns(false),
 )); ?>
-<script>
-    $(document).ready(function(){$('.datepicker').datepicker()});
-    </script>
