@@ -7,14 +7,35 @@
  */
 ?>
 
-<h1> Search Form</h1>
+<h2> Search Form</h2>
 <?php
  $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id' => 'search-form',
 		'action'=>'/site/index',
      ));
- echo TbHtml::dropDownListControlGroup('contenttype','2',array(Yii::t('app','Landdisputes'),Yii::t('app','Complaints')),array('empty'=>'None','label'=>'Type'));
+ ?>
+<div class="row">
+ <div class="col-md-4">
+    <?php
+ echo TbHtml::dropDownListControlGroup('contenttype','0',array(Yii::t('app','Landdisputes'),Yii::t('app','Complaints')),array('empty'=>'None','label'=>'Type'));
+ ?>
+ </div> 
+    <div class="col-md-2">
+     <?php
  echo TbHtml::textFieldControlGroup('contentid','',array('label'=>'Id'));
+ ?>
+    </div>
+    <div class="col-md-2">
+    <?php
  echo TbHtml::submitButton("Search");
+ ?>
+    </div>
+</div>
+    <?php
  $this->endWidget();
+ ?>
+    <div class="row">
+        <?php
 echo $text?$text:'';
+?>
+    </div>

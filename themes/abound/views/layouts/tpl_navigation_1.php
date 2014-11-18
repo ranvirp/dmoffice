@@ -1,11 +1,9 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target="#navigation-bar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
+                <span class="sr-only">Toggle</span><span class="caret"></span>
+                
             </a>
 
             <!-- Be sure to leave the brand out there if you want it shown -->
@@ -15,7 +13,7 @@
             <?php else:?>
              <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
            <?php endif;?>
-            <div class="navbar-collapse collapse">
+            <div class=" collapse navbar-collapse" id='navigation-bar'>
 
 
 <?php
@@ -27,7 +25,7 @@ $user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model(
                 $this->widget('YiiSmartMenu', array(
                   //  'partItemSeparator' => '.',
                    // 'upperCaseFirstLetter' => true,
-                    'htmlOptions' => array('class' => 'pull-right nav navbar-nav','id'=>'navigation-bar'),
+                    'htmlOptions' => array('class' => 'pull-right nav navbar-nav',),
                     'submenuHtmlOptions' => array('class' => 'dropdown-menu'),
                     'itemCssClass' => 'item-test',
                     'encodeLabel' => false,
@@ -62,7 +60,7 @@ $user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model(
 
         </div>
     </div>
-</div>
+</nav>
 
 <div class="subnav navbar navbar-fixed-top">
     <div class="navbar-inner">
