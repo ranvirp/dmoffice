@@ -61,6 +61,8 @@ $this->menu=array(
 )); ?>
 <div id="<?php echo get_class($model)."_attachments"; ?>"></div>
 <?php 
+if (!Yii::app()->user->isGuest)
+{
 if ($displayAttach==true)
 {
    // echo $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'documents'),true);
@@ -79,6 +81,8 @@ echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::
 	}"));
 
 echo '<div id="commentdiv"></div>';
+
+}
 echo $this->renderPartial('/complaints/_replies',array(
 			'replies'=>$model->replies,
 		),true); 

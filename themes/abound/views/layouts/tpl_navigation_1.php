@@ -1,7 +1,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target="#navigation-bar">
+                <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -10,9 +11,9 @@
             <!-- Be sure to leave the brand out there if you want it shown -->
             <?php $name='name_'.Yii::app()->language;?>
             <?php if (!Yii::app()->user->isGuest):?>
-            <a class="navbar-brand" href="#"><?php echo Yii::t('app','District Magistrate Office').','.District::model()->findByPk(Utility::getDistrict(Yii::app()->user->id))->$name;?></a>
+            <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.District::model()->findByPk(Utility::getDistrict(Yii::app()->user->id))->$name;?></a>
             <?php else:?>
-             <a class="navbar-brand" href="#"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
+             <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
            <?php endif;?>
             <div class="navbar-collapse collapse">
 
@@ -26,7 +27,7 @@ $user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model(
                 $this->widget('YiiSmartMenu', array(
                   //  'partItemSeparator' => '.',
                    // 'upperCaseFirstLetter' => true,
-                    'htmlOptions' => array('class' => 'pull-right nav navbar-nav'),
+                    'htmlOptions' => array('class' => 'pull-right nav navbar-nav','id'=>'navigation-bar'),
                     'submenuHtmlOptions' => array('class' => 'dropdown-menu'),
                     'itemCssClass' => 'item-test',
                     'encodeLabel' => false,

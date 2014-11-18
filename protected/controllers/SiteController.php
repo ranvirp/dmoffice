@@ -70,7 +70,7 @@ class SiteController extends Controller
                 $model=$xU::model()->findByPk($y);
                
                 if ($model)
-                    $text= $this->renderPartial('/landdisputes/view',array('model'=>$model),true,false);
+                    $text= $this->renderPartial('/'.strtolower($xU).'/view',array('displayAttach'=>false,'model'=>$model),true,false);
                 else $text="not Found";
             }
 		$this->render('index',array('text'=>$text));
