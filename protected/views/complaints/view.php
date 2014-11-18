@@ -50,7 +50,7 @@ $this->menu=array(
 		
        
        
-		
+		'nextdateofaction',
          array(
           'name'=>'documents',
           'value'=>Files::showAttachments($model,'documents'),

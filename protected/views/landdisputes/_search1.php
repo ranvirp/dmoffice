@@ -61,7 +61,12 @@ echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
     <?php echo $form->checkBoxControlGroup($model, 'casteorcommunal', array('span' => 5, 'maxlength' => 11)); ?>
 </div>
           <div class='col-md-2'>
-    <?php echo $form->checkBoxControlGroup($model, 'status', array('span' => 5, 'maxlength' => 11)); ?>
+    
+	<?php 
+$status=array('Pending','Disposed');
+echo $form->dropDownListControlGroup($model, 'status',$status);?>
+
+	
 </div>
 </div>
         <div class="row form-actions">

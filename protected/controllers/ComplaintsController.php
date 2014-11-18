@@ -76,6 +76,8 @@ class ComplaintsController extends Controller {
             $model->attributes = $_POST['Complaints'];
             if (isset($_POST['Complaints']['documents']))
                 $model->documents = implode(",", $_POST['Complaints']['documents']);
+				$model->created_at=time();
+				$model->created_by=Yii::app()->user->id;
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
@@ -93,7 +95,7 @@ class ComplaintsController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
+        //$model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
@@ -101,6 +103,8 @@ class ComplaintsController extends Controller {
             $model->attributes = $_POST['Complaints'];
             if (isset($_POST['Complaints']['documents']))
                 $model->documents = implode(",", $_POST['Complaints']['documents']);
+				$model->updated_at=time();
+				$model->updated_by=Yii::app()->user->id;
             if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
             }
@@ -142,6 +146,7 @@ class ComplaintsController extends Controller {
 
     public function actionMy() {
         $model = new Complaints('search');
+		$model->unsetAttributes(); 
         $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
         $dp = $model->search();
         $dp->pagination = false;
@@ -160,9 +165,12 @@ class ComplaintsController extends Controller {
         }
   if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
-  $model->status=0;
+  //$model->status=0;
   if (Yii::app()->user->id!=1)
+  {
       $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
+	  
+	  }
         $this->render('admin', array(
             'model' => $model,
         ));
@@ -235,29 +243,30 @@ class ComplaintsController extends Controller {
         $model = new Complaints();
 
         $model->unsetAttributes();  // clear any default values
-
-        $x = null;
+       
+        $x=null;
         if (isset($_GET['Complaints'])) {
             $x = $_GET['Complaints']['created_at'];
-            $x = str_replace("/", "-", $x);
+            $x= str_replace("/", "-", $x );
         }
-
-        $timestamp1 = strtotime($x);
+       
+       $timestamp1 = strtotime($x);
 //$timestamp1 = mktime(0, 0, 0, $a['tm_mon']+1, $a['tm_mday'], $a['tm_year']+1900);
-        $timestamp2 = $timestamp1 + 3600 * 24;
+        $timestamp2=$timestamp1+3600*24;
         $criteria = new CDbCriteria;
         $criteria->addBetweenCondition('created_at', $timestamp1, $timestamp2, 'AND');
         //$criteria->compare('created_at',date())
-
-        $ca = new CActiveDataProvider($model, array(
+       
+ $ca= new CActiveDataProvider($model, array(
             'criteria' => $criteria,
-            'pagination' => false,
-        ));
-
-
+     'pagination'=>false,
+     ));
+        
+ 
         $this->render('datewise', array(
             'dp' => $ca,
-            'model' => $model,
+           
+            'model'=>$model,
         ));
     }
 

@@ -34,7 +34,8 @@ $('.search-form form').submit(function(){
           'element' => '#complaints-grid',        //the element to be printed.
           'exceptions' => array(       //the element/s which will be ignored
               '.summary',
-              '.search-form'
+              '.search-form',
+			  'hide-print',
           ),
           'publishCss' => true,       //publish the CSS for the whole page?
          // 'visible' => Yii::app()->user->checkAccess('print'),  //should this be visible to the current user?

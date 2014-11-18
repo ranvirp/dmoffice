@@ -7,7 +7,7 @@
 <div class="form form-inline">
 
     <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
+	//'action'=>Yii::app()->createUrl($this->route),
         //'layout'=>  TbHtml::FORM_LAYOUT_HORIZONTAL,
 	'method'=>'get',
 )); ?>
@@ -25,3 +25,6 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->
+<script>
+    $(document).ready(function(){$('.datepicker').datepicker()});
+    </script>

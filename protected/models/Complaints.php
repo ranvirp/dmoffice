@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /**
  * This is the model class for table "complaints".
@@ -39,7 +39,7 @@ class Complaints extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('complainants, oppositions, complainantmobileno, revenuevillage, policestation, category, description', 'required'),
+			array('complainants, oppositions, complainantmobileno, officerassigned,revenuevillage, policestation, category, description', 'required'),
 			array('complainantmobileno,officerassigned,policestation, priority,category, status, created_by, created_at, updated_by, updated_at', 'numerical', 'integerOnly'=>true),
 			array('complainants, oppositions', 'length', 'max'=>1500),
 			array('oppositionmobileno', 'length', 'max'=>13),
@@ -110,7 +110,8 @@ class Complaints extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id,true);
+        $criteria->compare('id', $this->id);
+		$criteria->compare('status', $this->status);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
         $criteria->compare('revenuevillage', $this->revenuevillage);
@@ -185,17 +186,26 @@ class Complaints extends CActiveRecord
       $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
      
      $columns= array();
+	 $columns[]=array(
+                'header' => 'Row',
+                'value' => '$row',
+            );
      $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
      {
           $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
          $x= $data->id ;
          if ($data->priority==1)
-                 $x.=$redtag;
+                 $x.=$redtag.'<br/><b>Urgent</b>';
               return TbHtml::link($x,'/complaints/'.$data->id);
          
      }
          ,'type'=>'raw');
-      
+       $columns[]=array('header'=>'created on','value'=>
+            function($data,$row,$column)
+        { return date("d/m/Y", $data->created_at);}
+        );
+		 $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
+	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
        if ($revenuevillage)
          $columns[]=   array(
 		'name'=>'revenuevillage',
@@ -209,10 +219,15 @@ class Complaints extends CActiveRecord
          'value'=>$category.$description.$attachments,
         'type'=>'raw'
      );
-      $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
-	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
+   
+        if ($policestation)
+        $columns[]= array(
+		'name'=>'policestation',
+                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?Policestation::model()->findByPk($data->policestation)->name_hi:"missing"',
+                'filter'=>Policestation::model()->listAll(),
+                );
        
-       
+         $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'($data->officer)?$data->officer->name_hi:""');
             
     $columns[]=array(
         'header'=>'Status',
@@ -228,11 +243,8 @@ class Complaints extends CActiveRecord
             return $column->grid->owner->renderPartial("/complaints/_reply",array("reply"=>Replies::lastReply("Complaints",$data->id)));    
     else return "No Action taken so far";
         });
-        $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
-        $columns[]=array('header'=>'created on','value'=>
-            function($data,$row,$column)
-        { return date("d/m/Y", $data->created_at);}
-        );
+      
+       
      //   $columns[]='priority';
      if ($buttoncolumns)
          $columns[]=array(
@@ -305,14 +317,20 @@ class Complaints extends CActiveRecord
         $text.=Yii::t('app',"Revenuevillage").':' . $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
         $text.=Yii::t('app',"Category").':' . $this->categoryName->name_hi ."\n";
         $text.=$this->description."\n";
-      
-    
+        $text.="\nयह शिकायत ".$this->officer->name_hi." को भेज दी गयी है";
+        $text.="\n";
+		$text.="कार्यवाही का विवरण azamgarhdm.com पर उपलब्ध होगा";
         return array('PhNo' => $PhNo, 'text' => $text);
     }
 public function count1()
     {
+	if (Yii::app()->user->id!=1)
+	{
         $designation=Designation::getDesignationByUser(Yii::app()->user->id);
         return Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
+		}
+		else 
+		  return Complaints::model()->countByAttributes(array('status'=>0));
     }
     function urlencode_all($string){
     $chars = array();
@@ -329,7 +347,8 @@ public static function gridToggleStatusButton($data,$row,$column)
         $url=$column->grid->owner->createUrl("/complaints/toggleStatus/id/").'/'.$data->id;
         $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
 		if (Yii::app()->user->checkAccess('Complaints.toggleStatus'))
-		$result.=TbHtml::button($disposedlinktext,array('onclick'=>'js:$.get("'.$url.'")')) .'<br/>'; 
+		$result.= TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#complaints-grid').yiiGridView('update');})")) ; 
+        
         return $result;
     }
 
