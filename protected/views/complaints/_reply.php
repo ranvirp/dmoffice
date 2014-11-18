@@ -17,7 +17,7 @@
 
 	<div class="content">
 		<?php echo nl2br(CHtml::encode($reply->content)); ?>
-		<?php echo Files::showAttachments($reply);?>
+		<?php echo Files::showAttachments($reply,'attachments');?>
 	</div>
 
 </div><!-- comment -->

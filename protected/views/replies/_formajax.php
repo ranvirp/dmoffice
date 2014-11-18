@@ -28,7 +28,9 @@
  <?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'attachments'));?>
       
 	<div class="row buttons">
-		<?php echo CHtml::ajaxSubmitButton("Save","",
+		<?php 
+                /*
+                echo CHtml::ajaxSubmitButton("Save","",
 		array('dataType'=>'json',
                     'type'=>'post',
 		'success'=>"function(data)
@@ -45,6 +47,8 @@
                     
  
                 } "),array("style"=>"visibility:hidden","id"=>"st1"));
+                 * 
+                 */
  ?>
 	</div>
 <div class="row buttons">

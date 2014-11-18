@@ -80,7 +80,8 @@ class RepliesController extends Controller {
 
 
             $model->content_type = $content_type;
-            if ($model->save()) {
+            if ($model->validate()) {
+                $model->save();
                 if ($model->attachments != null) {
                     $fileids = explode(",", $model->attachments);
                     for ($i = 0; $i < sizeof($fileids); $i++) {
@@ -98,7 +99,7 @@ class RepliesController extends Controller {
               if (Yii::app()->request->isAjaxRequest)
               {
                 echo CJSON::encode(array('errors' => $model->getErrors(), 'redirect' => $url));
-                Yii::app()->end();
+                exit;
                 
               }
                 else 

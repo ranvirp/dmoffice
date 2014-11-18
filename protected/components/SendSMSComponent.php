@@ -29,7 +29,7 @@ $ret = file($url);
  * @author admin
  */
 class SendSMSComponent extends CApplicationComponent{
-    public $sendsms=true;
+    public $sendsms=false;
     public $ID="dmaza@nic.in";
     public $Pwd="password";
     public $baseurl ="http://www.businesssms.co.in";

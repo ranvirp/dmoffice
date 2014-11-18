@@ -13,7 +13,7 @@
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'replies-form',
-	'enableAjaxValidation'=>true,
+	'enableAjaxValidation'=>false,
 	'clientOptions'=>array('validateOnChange'=>false,'validateOnSubmit'=>TRUE),
 	'action'=>Yii::app()->createUrl('replies/create/content_type/'.$content_type.'/content_type_id/'.$content_type_id),
 )); ?>
@@ -38,7 +38,9 @@
  <?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'attachments'));?>
       
 	<div class="row buttons">
-		<?php echo CHtml::ajaxSubmitButton("Save","",
+		<?php 
+                /*
+                echo CHtml::ajaxSubmitButton("Save","",
 		array('dataType'=>'json',
                     'type'=>'post',
 		'success'=>"function(data)
@@ -55,6 +57,8 @@
                     
  
                 } "),array("id"=>"st1"));
+                 * */
+                 
  ?>
 	</div>
 

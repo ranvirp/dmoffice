@@ -59,20 +59,27 @@ $this->menu=array(
 		
 	),
 )); ?>
-<?php
-echo $this->renderPartial('/Complaints/_replies',array(
+<div id="<?php echo get_class($model)."_attachments"; ?>"></div>
+<?php 
+if ($displayAttach==true)
+{
+   // echo $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'documents'),true);
+
+    echo $this->renderPartial('_form_1',array('model'=>$model),true);
+}
+else 
+{
+    echo TbHtml::btn(TbHtml::BUTTON_TYPE_LINK,'Attach (More) files',array('onClick'=>'window.location.replace("/complaints/view/id/"+"'.$model->id.'"+"/d/1")'));
+
+}
+echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'Complaints','content_type_id'=>$model->id)),array('dataType'=>'json',
+  'type'=>'post',	
+    'success'=>"function(data){
+	$('#commentdiv').html(data.html);
+	}"));
+
+echo '<div id="commentdiv"></div>';
+echo $this->renderPartial('/complaints/_replies',array(
 			'replies'=>$model->replies,
 		),true); 
-	 
-echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'Complaints','content_type_id'=>$model->id)),array('dataType'=>'json',
-	'success'=>"function(data){
-          
-	$('#commentdiv').html(data.html);
-          
-	}"));
-echo CHtml::ajaxButton('Attach files', Yii::app()->createUrl('/Basedata/files/attach',array('modelName'=>get_class($model),'modelId'=>$model->id)),array('dataType'=>'json','success'=>"function(data){
-	$('#".get_class($model)."_attachments').html(data.html);}"));
-
-	
 ?>
-<div id="commentdiv"></div>
