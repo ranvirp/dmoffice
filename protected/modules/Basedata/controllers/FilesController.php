@@ -338,6 +338,15 @@ class FilesController extends Controller
 		$model->mimetype = CFileHelper::getMimeType($model->fileWithPath());
 		//$model->info = CJSON::encode(getimagesize($fullFilePath));
 		$model->size = filesize($fullFilePath);
+                $model->desc="";
+                $model->deleteAccess="";
+                $model->updateAccess="";
+                $model->uploadedby=Yii::app()->user->id;
+                $model->viewAccess="";
+                $model->objecttype="";
+                $model->objectid=0;
+                $model->fieldname="";
+                        
 
 		if ($model->save()) {
 		    if (!is_dir(Yii::getPathOfAlias(Yii::app()->params['filesAlias']).DIRECTORY_SEPARATOR.$model->id)){

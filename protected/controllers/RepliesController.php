@@ -80,6 +80,9 @@ class RepliesController extends Controller {
 
 
             $model->content_type = $content_type;
+            $model->status=0;
+            $model->author=Yii::app()->user->id;
+            
             if ($model->validate()) {
                 $model->save();
                 if ($model->attachments != null) {
