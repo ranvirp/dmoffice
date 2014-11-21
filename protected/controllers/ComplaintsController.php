@@ -163,6 +163,8 @@ class ComplaintsController extends Controller {
         if (isset($_POST['Complaints'])) {
             $model->attributes = $_POST['Complaints'];
         }
+        if ($model->priority==0)
+            $model->priority=">0";
   if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
   //$model->status=0;
@@ -221,8 +223,9 @@ class ComplaintsController extends Controller {
         // $model->courtcasepending = 0;
         // $model->stayexists = 0;
         $limit = false;
-        if (isset($_GET['Complaints'])) {
-            $model->attributes = $_GET['Complaints'];
+        //$model->status=0;
+        if (isset($_POST['Complaints'])) {
+            $model->attributes = $_POST['Complaints'];
             if (strcmp($model->revenuevillage, 'None') == 0)
                 unset($model->revenuevillage);
         }

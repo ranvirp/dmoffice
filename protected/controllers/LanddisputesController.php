@@ -355,6 +355,24 @@ $x->pagination=false;
        $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'model'=>$model,'dp' => $dp));
     }
+    public function actionMyPdf()
+    {
+       $model = new Landdisputes('search');
+	   $model->unsetAttributes();
+	   if (Yii::app()->user->id!=1)
+       $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
+       $dp=$model->search();
+       $dp->pagination=false;
+       $mergeColumns = array('revenuevillage');
+       $this->widget('EExcelView', array(
+     'dataProvider'=> $dp,
+     'title'=>'Title',
+     'autoWidth'=>false,
+           'grid_mode'=>'export',
+     'exportType'=>'PDF',
+     
+));
+    }
 
     public function actionPrintPdf() {
         # mPDF

@@ -7,12 +7,13 @@ $this->breadcrumbs=array(
 	'Complaints'=>array('index'),
 	'Manage',
 );
-
+/*
 $this->menu=array(
 	array('label'=>'List Complaints', 'url'=>array('index')),
 	array('label'=>'Create Complaints', 'url'=>array('create')),
 );
-
+*/
+$this->menu=array();
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -66,10 +67,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 <?php $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'complaints-grid',
 	'dataProvider'=>$model->search(),
-    'filterPosition'=>'header',
+        'filterPosition'=>'header',
 	'filter'=>$model,
-   'type' => TbHtml::GRID_TYPE_BORDERED,
-    'ajaxType'=>'POST',
+        'type' => TbHtml::GRID_TYPE_BORDERED,
+        'ajaxType'=>'POST',
     
 	'columns'=>  Complaints::getColumns(true),
  

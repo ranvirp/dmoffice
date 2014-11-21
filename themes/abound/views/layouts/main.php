@@ -85,7 +85,7 @@ Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-
   </head>
 
 <body>
-
+    
 <section id="navigation-main">   
 <!-- Require the navigation -->
 <?php require_once('tpl_navigation_1.php')?>

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target="#navigation-bar">
@@ -8,14 +8,14 @@
 
             <!-- Be sure to leave the brand out there if you want it shown -->
             <?php $name='name_'.Yii::app()->language;?>
-            <?php if (!Yii::app()->user->isGuest):?>
+           
+            <div class=" collapse navbar-collapse" id='navigation-bar'>
+
+ <?php if (!Yii::app()->user->isGuest):?>
             <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.District::model()->findByPk(Utility::getDistrict(Yii::app()->user->id))->$name;?></a>
             <?php else:?>
              <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
            <?php endif;?>
-            <div class=" collapse navbar-collapse" id='navigation-bar'>
-
-
 <?php
 $user_name="";
 if (!Yii::app()->user->isGuest)

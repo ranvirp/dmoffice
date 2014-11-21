@@ -3,6 +3,7 @@
 
   <div class="row">
 	<div class="col-md-3">
+            <?php if (!empty($this->menu)) :?>
 		<div class="sidebar-nav">
         
 		  <?php $this->widget('YiiSmartMenu', array(
@@ -14,6 +15,7 @@
 			),
 			));?>
 		</div>
+            <?php endif;?>
             <?php if (!Yii::app()->user->isGuest):?>
             <section class="panel">
                 <div class="panel-body">

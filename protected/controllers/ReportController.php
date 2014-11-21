@@ -32,16 +32,25 @@
  * @author Ranvir Prasad <ranvir.prasad@gmail.com>
  */
 class ReportController extends Controller{
-    function actionReportToday()
+    function actionReportToday($m='Landdisputes')
     {
+        $d=date('d-m-Y',time());
+        $d='10-11-2014';
         $ld=array();
         //$ldmodels =  Landdisputes::model()->findAllByAttributes(array('officerassigned'=>$model->officerassigned));
-        $ldmodels=Landdisputes::model()->findAll();
+        $timestamp1 = strtotime($d);
+//$timestamp1 = mktime(0, 0, 0, $a['tm_mon']+1, $a['tm_mday'], $a['tm_year']+1900);
+        $timestamp2=$timestamp1+3600*24;
+        $criteria = new CDbCriteria;
+        $criteria->addBetweenCondition('created_at', $timestamp1, $timestamp2, 'AND');
+        $ldmodels=Landdisputes::model()->findAll($criteria);
         foreach ($ldmodels as $ldmodel)
         {
             if ($ldmodel)
-          $ld[]=array('rv'=>$ldmodel->revVillage?$ldmodel->revVillage->name_hi:'NA','ps'=>$ldmodel->thana?$ldmodel->thana->name_hi:'NA','dd'=>$ldmodel->categoryName?$ldmodel->categoryName->name_hi:'NA'."\n".$ldmodel->description,'c'=>$ldmodel->complainants,'op'=>$ldmodel->oppositions,'st'=>'Status','at'=>'at');
-            
+            {
+                $description=($ldmodel->categoryName)?$ldmodel->categoryName->name_hi:'NA'."&".$ldmodel->description;
+          $ld[]=array('rv'=>$ldmodel->revVillage?$ldmodel->revVillage->name_hi:'NA','ps'=>$ldmodel->thana?$ldmodel->thana->name_hi:'NA','dd'=>$description,'c'=>$ldmodel->complainants,'op'=>$ldmodel->oppositions,'st'=>'Status','at'=>'at');
+            }  
         }
         $r = new YiiReport(array('template'=> 'landdisputes.xlsx'));
         
@@ -49,7 +58,7 @@ class ReportController extends Controller{
                 array(
                     'id' => 'ong',
                     'data' => array(
-                        'name' => 'All Land Disputes Entered till Today'
+                        'name' => 'All Land Disputes Entered till '.$d,
                     )
                 ),
                 array(
@@ -65,7 +74,7 @@ class ReportController extends Controller{
         //echo $r->render('excel2007', 'Students');
        // echo $r->render('pdf', 'Landdisputes');
         //echo $r->render('excel2007', 'Landdisputes');
-        echo $r->render('html', 'Landdisputes');
+        echo $r->render('pdf', 'Landdisputes');
     }
     public function actionExcel(){
         
