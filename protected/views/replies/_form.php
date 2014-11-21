@@ -39,7 +39,7 @@
       
 	<div class="row buttons">
 		<?php 
-                /*
+                
                 echo CHtml::ajaxSubmitButton("Save","",
 		array('dataType'=>'json',
                     'type'=>'post',
@@ -57,7 +57,7 @@
                     
  
                 } "),array("id"=>"st1"));
-                 * */
+                
                  
  ?>
 	</div>

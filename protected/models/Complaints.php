@@ -132,6 +132,7 @@ class Complaints extends CActiveRecord
  {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
  }
+ $criteria->order='priority asc,policestation desc,revenuevillage desc';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
 
@@ -181,7 +182,7 @@ class Complaints extends CActiveRecord
      $description='."<br>".$data->description';
      $complainant='$data->complainants."<br/>".$data->complainantmobileno';
       $opposition='$data->oppositions."<br/> ".$data->oppositionmobileno';
-      $disposed='"<b>Disposed:</b>".$data->status?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
+      $disposed='$data->status?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
      $nextdate='$data->nextdateofaction';
       $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
      
@@ -196,6 +197,8 @@ class Complaints extends CActiveRecord
          $x= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag.'<br/><b>Urgent</b>';
+          $x.='<br/>'.'<a href="/replies/create/content_type/Complaints/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
+        
               return TbHtml::link($x,'/complaints/'.$data->id);
          
      }
@@ -230,7 +233,7 @@ class Complaints extends CActiveRecord
          $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'($data->officer)?$data->officer->name_hi:""');
             
     $columns[]=array(
-        'header'=>'Status',
+        'header'=>'Disposed?',
         'value'=> function($data,$row,$column){return  Complaints::gridToggleStatusButton($data, $row,$column);},
         'type'=>'raw',
     );
@@ -252,7 +255,7 @@ class Complaints extends CActiveRecord
                         'buttons'=>array(
                             'reply'=>array(
                                 'label'=>'Add Action/Reply',
-                                'url'=>'Yii::app()->createUrl("/replies/create/content_type/complaints/content_type_id/".$data->id)'
+                                'url'=>'Yii::app()->createUrl("/replies/create/content_type/Complaints/content_type_id/".$data->id)'
                             
                         ),
                             ),
@@ -322,15 +325,20 @@ class Complaints extends CActiveRecord
 		$text.="कार्यवाही का विवरण azamgarhdm.com पर उपलब्ध होगा";
         return array('PhNo' => $PhNo, 'text' => $text);
     }
-public function count1()
+public function count1($urgent=false,$disposed=false)
     {
-	if (Yii::app()->user->id!=1)
-	{
-        $designation=Designation::getDesignationByUser(Yii::app()->user->id);
-        return Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
-		}
-		else 
-		  return Complaints::model()->countByAttributes(array('status'=>0));
+	  $condition=array();
+        $condition['status']=0;
+        if (Yii::app()->user->id!=1)
+        $condition['officerassigned']=Designation::getDesignationByUser(Yii::app()->user->id);
+        if ($urgent)
+            $condition['priority']=1;
+        if ($disposed)
+            $condition['status']=1;
+        
+            
+	 
+		  return Complaints::model()->countByAttributes($condition);
     }
     function urlencode_all($string){
     $chars = array();
@@ -343,9 +351,9 @@ public static function gridToggleStatusButton($data,$row,$column)
     {
         $disposed1=($data->status==1)?Yii::t('app','Yes'):Yii::t('app','No');
          
-        $disposedlinktext=$data->status?Yii::t('app','Mark as Pending'):Yii::t('app','Mark as Disposed');
+        $disposedlinktext=$data->status?'<i class="fa fa-thumbs-o-down"></i>':'<i class="fa fa-thumbs-o-up"></i>';
         $url=$column->grid->owner->createUrl("/complaints/toggleStatus/id/").'/'.$data->id;
-        $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
+        $result = $disposed1;
 		if (Yii::app()->user->checkAccess('Complaints.toggleStatus'))
 		$result.= TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#complaints-grid').yiiGridView('update');})")) ; 
         

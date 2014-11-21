@@ -136,6 +136,7 @@ class Landdisputes extends CActiveRecord {
  {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
  }
+ $criteria->order='priority asc,policestation desc,revenuevillage desc';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
 
@@ -250,8 +251,7 @@ class Landdisputes extends CActiveRecord {
     }
     public static function getColumns($buttoncolumns=false,$policestation=true,$revenuevillage=true)
     {
-     $category = '"<b>".Complaintcategories::model()->findByPk($data->category)->name_hi."</b><br>"';
-     $description='."<br>".$data->description';
+    
      $complainant='$data->complainants."<br/>".$data->complainantmobileno';
       $opposition='$data->oppositions."<br/> ".$data->oppositionmobileno';
       $courtstatus='$data->courtcasepending?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
@@ -259,7 +259,7 @@ class Landdisputes extends CActiveRecord {
       $disposed='"<b>Disposed:</b>".$data->status?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
       $policerequired='$data->policerequired?Yii::t(\'app\',\'Yes\'):Yii::t(\'app\',\'No\')';
       $nextdate='$data->nextdateofaction';
-      $attachments='."<br\>".Files::showAttachmentsInline($data, "documents")';
+      
      
      $columns= array();
 	$columns[]=array(
@@ -279,6 +279,7 @@ class Landdisputes extends CActiveRecord {
          $x= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag;
+         $x.='<br/>'.'<a href="/replies/create/content_type/Landdisputes/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
              return TbHtml::link($x,'/landdisputes/'.$data->id);
          
      }
@@ -300,7 +301,22 @@ class Landdisputes extends CActiveRecord {
         $columns[]= 'gatanos';   
          $columns[]=  array(
          'header'=>'Dispute Details',
-         'value'=>$category.$description.$attachments,
+         'value'=>function($data,$row,$column)
+     {
+              $category = "<b>".Complaintcategories::model()->findByPk($data->category)->name_hi."</b><br>";
+     $description="<br>".$data->description;
+     $attachments="<br\>".Files::showAttachmentsInline($data, "documents");
+         $courtstatus=$data->courtcasepending?'<i class="fa fa-gavel"></i>':'';
+
+         $stayorder=$data->stayexists?'<i class=fa fa-legal></i>':'';
+         $policerequired=$data->policerequired?'<i class="fa fa-users"></i>':'';
+
+          $nextdate=$data->nextdateofaction;
+         return $courtstatus
+                 .$stayorder
+                 .$policerequired.$category.$description.$attachments;
+                 //."<br/>Next date of Action:<div id='$data->id' class=\"edit\">".$nextdate."</div>";
+     },
         'type'=>'raw'
      );
      
@@ -313,26 +329,11 @@ class Landdisputes extends CActiveRecord {
        
             
     $columns[]=array(
-        'header'=>'Status',
+        'header'=>'Disposed?',
         'value'=> function($data,$row,$column){return  Landdisputes::gridToggleStatusButton($data, $row,$column);},
         'type'=>'raw',
     );
-     $columns[]=  array(
-         'header'=>'Other detail',
-        // 'value'=>'"Disposed".'.$disposed.'."Pending in court ".'.$courtstatus.'."<br/> Stay Order ".'.$stayorder.'."<br/>Police Required ".'.$policerequired,
-         'value'=>function($data,$row,$column)
-     {
-         $courtstatus=$data->courtcasepending?Yii::t('app','Yes'):Yii::t('app','No');
-         $stayorder=$data->stayexists?Yii::t('app','Yes'):Yii::t('app','No');
-         $policerequired=$data->policerequired?Yii::t('app','Yes'):Yii::t('app','No');
-          $nextdate=$data->nextdateofaction;
-         return "<br/><b>Pending Court Case:</b>".$courtstatus
-                 ."<br/><b>Stay Order:</b>".$stayorder
-                 ."<br/><b>Police required:</b>".$policerequired
-                 ."<br/>Next date of Action:<div id='$data->id' class=\"edit\">".$nextdate."</div>";
-     },
-         'type'=>'raw',
-     );
+    
 	  $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
         
       $columns[]=array('header'=>'Last Action','value'=>
@@ -351,7 +352,7 @@ class Landdisputes extends CActiveRecord {
                         'buttons'=>array(
                             'reply'=>array(
                                 'label'=>'Add Action/Reply',
-                                'url'=>'Yii::app()->createUrl("/replies/create/content_type/landdisputes/content_type_id/".$data->id)'
+                                'url'=>'Yii::app()->createUrl("/replies/create/content_type/Landdisputes/content_type_id/".$data->id)'
                             
                         ),
                             ),
@@ -359,23 +360,29 @@ class Landdisputes extends CActiveRecord {
 		);
      return $columns;
     }
-    public function count1()
+    public function count1($urgent=false,$disposed=false)
     {
-	  if (Yii::app()->user->id!=1)
-	   {
-        $designation=Designation::getDesignationByUser(Yii::app()->user->id);
-        return Landdisputes::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0));
-		}
-		else 
-		  return Landdisputes::model()->countByAttributes(array('status'=>0));
+        $condition=array();
+        $condition['status']=0;
+        if (Yii::app()->user->id!=1)
+        $condition['officerassigned']=Designation::getDesignationByUser(Yii::app()->user->id);
+        if ($urgent)
+            $condition['priority']=1;
+        if ($disposed)
+            $condition['status']=1;
+        
+            
+	 
+		  return Landdisputes::model()->countByAttributes($condition);
     }
    public static function gridToggleStatusButton($data,$row,$column)
     {
         $disposed1=($data->status==1)?Yii::t('app','Yes'):Yii::t('app','No');
          
-        $disposedlinktext=$data->status?Yii::t('app','Mark as Pending'):Yii::t('app','Mark as Disposed');
+       $disposedlinktext=$data->status?'<i class="fa fa-thumbs-o-down"></i>':'<i class="fa fa-thumbs-o-up"></i>';
+        
         $url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
-        $result ='<b>Disposed:</b>'. $disposed1.'<br/>';
+        $result =$disposed1;
 		if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus'))
 		{
 		 $result.=TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#landdisputes-grid').yiiGridView('update');})")) ; 

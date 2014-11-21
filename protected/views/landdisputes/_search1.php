@@ -39,14 +39,14 @@
 </div> 
         <div class='col-md-2'>
 <?php 
-$priority=array('None','Urgent','Immediate','Normal');
+$priority=array(1=>'Urgent',2=>'Immediate',3=>'Normal');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 </div>
     </div>
     <div class="row"></div> 
      <div class="row">
-    <div class="col-md-2">
-      <?php echo $form->checkBoxControlGroup($model, 'policerequired'); ?>
+    <div class='col-md-2'>
+<?php echo $form->inlineRadioButtonListControlGroup($model, 'policerequired',array('1'=>'Yes','0'=>'No'), array('span' => 5, 'maxlength' => 4,'data-toggle'=>"collapse", 'data-target'=>"#courtcasedetails")); ?>
     </div>
     <div class='col-md-2'>
 <?php echo $form->inlineRadioButtonListControlGroup($model, 'courtcasepending',array('1'=>'Yes','0'=>'No'), array('span' => 5, 'maxlength' => 4,'data-toggle'=>"collapse", 'data-target'=>"#courtcasedetails")); ?>
@@ -56,10 +56,9 @@ echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 <?php echo $form->inlineRadioButtonListControlGroup($model, 'stayexists',array('1'=>'Yes','0'=>'No'), array('span' => 5, 'maxlength' => 4,'data-toggle'=>"collapse", 'data-target'=>"#stayorders")); ?>
     </div>
 
-                    
       <div class='col-md-2'>
-    <?php echo $form->checkBoxControlGroup($model, 'casteorcommunal', array('span' => 5, 'maxlength' => 11)); ?>
-</div>
+<?php echo $form->inlineRadioButtonListControlGroup($model, 'casteorcommunal',array('1'=>'Yes','0'=>'No'), array('span' => 5, 'maxlength' => 4,'data-toggle'=>"collapse", 'data-target'=>"#courtcasedetails")); ?>
+    </div>
           <div class='col-md-2'>
     
 	<?php 

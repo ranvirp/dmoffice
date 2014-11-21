@@ -6,7 +6,8 @@
  * and open the template in the editor.
  */
 ?>
-
+<?php if  (!Yii::app()->user->isGuest)
+        require 'dashboard.php';?>
 <h2> Search Form</h2>
 <?php
  $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(

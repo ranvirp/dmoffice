@@ -147,7 +147,13 @@ class ComplaintsController extends Controller {
     public function actionMy() {
         $model = new Complaints('search');
 		$model->unsetAttributes(); 
+                if (Yii::app()->user->id!=1)
         $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
+                $model->status=0;
+        if (isset($_GET['p']))
+            $model->priority=$_GET['p'];
+         if (isset($_GET['s']))
+            $model->status=$_GET['s'];
         $dp = $model->search();
         $dp->pagination = false;
         $mergeColumns = array('revenuevillage');

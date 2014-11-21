@@ -41,7 +41,7 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
 	  $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap.min.css');
            $cs->registerCssFile(Yii::app()->baseUrl.'/css/jquery-ui.min.css');
 	  $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-theme.min.css');
-	  $cs->registerCssFile($baseUrl.'/css/abound.css');
+	  //$cs->registerCssFile($baseUrl.'/css/abound.css');
             $cs->registerCssFile($baseUrl.'/css/datepicker3.css');
              $cs->registerCssFile(Yii::app()->baseUrl.'/css/bootstrap-glyphicons.css');
           $cs->registerCssFile(Yii::app()->baseUrl.'/css/custom.css');
@@ -86,12 +86,12 @@ Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-
 
 <body>
     
-<section id="navigation-main">   
+   
 <!-- Require the navigation -->
 <?php require_once('tpl_navigation_1.php')?>
-</section><!-- /#navigation-main -->
+
     
-<section class="main-body">
+<section id="main-body">
     <div class="container-fluid">
         <?php
     foreach(Yii::app()->user->getFlashes() as $key => $message) {
@@ -101,8 +101,8 @@ Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-
             <!-- Include content pages -->
             <?php echo $content; ?>
     </div>
-</section>
 
+</section>
 <!-- Require the footer -->
 <?php 
 //require_once('tpl_footer.php')

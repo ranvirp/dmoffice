@@ -1,10 +1,13 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<section id="main-navigation">
+<div class="navbar navbar-inverse navbar-static-top" role="navigation">
     <div class="navbar-inner">
         <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target="#navigation-bar">
-                <span class="sr-only">Toggle</span><span class="caret"></span>
-                
-            </a>
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
 
             <!-- Be sure to leave the brand out there if you want it shown -->
             <?php $name='name_'.Yii::app()->language;?>
@@ -50,36 +53,26 @@ $user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model(
 				 array('label'=>'Datewise','url' => array('/complaints/datewise')),
                                  
                                  )),
-                      
-                        array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => 'Logout (' . Yii::app()->user->name . ')'.'</br>'. (Yii::app()->user->isGuest?'':Designation::getDesignationModelByUser(Yii::app()->user->id)->$name)."<br/>".$user_name, 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
-                    ),
+                         array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label'=>'<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ' . Yii::app()->user->name.' <span class=caret></span>' , 'url'=>'#','visible'=>!Yii::app()->user->isGuest,
+                            'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"),  'items'=>
+                        array(    
+                              array('url'=>'#','label'=>Yii::app()->user->isGuest?'':Designation::getDesignationModelByUser(Yii::app()->user->id)->$name,'visible'=>!Yii::app()->user->isGuest),
+                            array('label'=>'','url'=>'#','itemOptions'=>array('class'=>'divider')),
+                        array('label'=>$user_name,'url'=>'#'),
+                              array('label'=>'','url'=>'#','itemOptions'=>array('class'=>'divider')),
+                        array('label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile', 'url' => array('/user/profile'), 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => '<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout', 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
+                            ),
+                            ),
+                            ),
                 ));
                 ?>
             </div>
 
         </div>
     </div>
-</nav>
 
-<div class="subnav navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
+</div>
 
-            <div class="style-switcher pull-left">
-                <a href="javascript:chooseStyle('none', 60)" checked="checked"><span class="style" style="background-color:#0088CC;"></span></a>
-                <a href="javascript:chooseStyle('style2', 60)"><span class="style" style="background-color:#7c5706;"></span></a>
-                <a href="javascript:chooseStyle('style3', 60)"><span class="style" style="background-color:#468847;"></span></a>
-                <a href="javascript:chooseStyle('style4', 60)"><span class="style" style="background-color:#4e4e4e;"></span></a>
-                <a href="javascript:chooseStyle('style5', 60)"><span class="style" style="background-color:#d85515;"></span></a>
-                <a href="javascript:chooseStyle('style6', 60)"><span class="style" style="background-color:#a00a69;"></span></a>
-                <a href="javascript:chooseStyle('style7', 60)"><span class="style" style="background-color:#a30c22;"></span></a>
-            </div>
-            <form class="navbar-search pull-right" action="">
-
-                <input type="text" class="search-query span2" placeholder="Search">
-
-            </form>
-        </div><!-- container -->
-    </div><!-- navbar-inner -->
-</div><!-- subnav -->
+</section>
