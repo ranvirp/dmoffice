@@ -33,7 +33,7 @@
 </div> 
         <div class='col-md-3'>
 <?php 
-$priority=array('None','Urgent','Immediate','Normal');
+$priority=array(1=>'Urgent',2=>'Immediate',3=>'Normal');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 <?php 
 $status=array('Pending','Disposed');
@@ -42,11 +42,12 @@ echo $form->dropDownListControlGroup($model, 'status',$status);?>
 </div>
 
     </div>
+    <?php if (Yii::app()->user->id==1):?>
     <div class="row">
 	
           <?php $this->widget('OfficerWidget',array('model'=>$model,'attribute'=>'officerassigned'));?>
 	</div> 
-    
+    <?php endif;?>
         <div class="row form-actions">
         <?php echo TbHtml::submitButton('Search',  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>
     </div>

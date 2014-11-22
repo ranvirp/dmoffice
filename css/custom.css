@@ -1,6 +1,11 @@
+ #navigation-bar
+   {
+        height:50px;
+    }
+   
 .zoom
 {
-    zoom:90%
+    zoom:70%;
 }
 tr.urgent-tag:first-child
 {

@@ -2,7 +2,8 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
   <div class="row">
-	<div class="col-md-3">
+	<div class="col-md-2">
+            <?php if (!empty($this->menu)) :?>
 		<div class="sidebar-nav">
         
 		  <?php $this->widget('YiiSmartMenu', array(
@@ -14,14 +15,19 @@
 			),
 			));?>
 		</div>
+            <?php endif;?>
             <?php if (!Yii::app()->user->isGuest):?>
             <section class="panel">
                 <div class="panel-body">
                     <ul class="nav nav-pills nav-stacked">
-                         <li class="active"><a href="#"><span class="badge pull-right"><?php echo Landdisputes::model()->count1()+Complaints::model()->count1();?></span> Inbox </a>
-                        <li><a href="/landdisputes/my"><span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span>Land Disputes</a></li>
+                   
+                        <li class="active"><a href="#"><span class="badge pull-right"><?php echo Landdisputes::model()->count1()+Complaints::model()->count1();?></span> Inbox </a></li>
+                        <li><a href="/landdisputes/my?p=1">Urgent Land Disputes <span class="label label-danger pull-right"><?php echo Landdisputes::model()->count1(true);?></span></a></li>
+                         <li> <a href="/landdisputes/my">Land Disputes <span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span></a></li>
+                            <li><a href="/complaints/my?p=1">Urgent Complaints <span class="label label-danger pull-right"><?php echo Complaints::model()->count1(true);?></span></a></li>
+                     
                          <li><a href="/complaints/my"><span class="badge pull-right"><?php echo Complaints::model()->count1();?></span>Complaints</a></li>
-                        
+                          
                     </ul>
                 </div>
             </section>

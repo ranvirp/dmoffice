@@ -350,10 +350,35 @@ $x->pagination=false;
 	   $model->unsetAttributes();
 	   if (Yii::app()->user->id!=1)
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
+           $model->status=0;
+          if (isset($_GET['p']))
+            $model->priority=$_GET['p'];
+           if (isset($_GET['s']))
+            $model->status=$_GET['s'];
+       $dp=$model->search();
+       $dp->pagination=false;
+       $this->render('ldwise', array(
+            'model' => $model,
+           'dp'=>$dp,
+        ));
+    }
+    public function actionMyPdf()
+    {
+       $model = new Landdisputes('search');
+	   $model->unsetAttributes();
+	   if (Yii::app()->user->id!=1)
+       $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
        $dp=$model->search();
        $dp->pagination=false;
        $mergeColumns = array('revenuevillage');
-        $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'model'=>$model,'dp' => $dp));
+       $this->widget('EExcelView', array(
+     'dataProvider'=> $dp,
+     'title'=>'Title',
+     'autoWidth'=>false,
+           'grid_mode'=>'export',
+     'exportType'=>'PDF',
+     
+));
     }
 
     public function actionPrintPdf() {

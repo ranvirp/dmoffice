@@ -4,26 +4,6 @@
 
 
 ?>
-<?php
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#landdisputes-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-?>
-
-<div class="search-form well" >
-<?php $this->renderPartial('_search1',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
 
 <?php $name='name_'.Yii::app()->language; ?>
 <?php

@@ -218,7 +218,7 @@ class Files extends CActiveRecord {
         if ($x) {
             $y = explode(",", $x);
 
-            $str = "<table class='table'>";
+            $str = "<table class='table table-striped table-bordered'>";
             for ($i = 0; $i < sizeof($y); $i++) {
                 $files = Files::model()->findByPk($y[$i]);
                 $str.='<tr>';

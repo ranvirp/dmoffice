@@ -147,7 +147,13 @@ class ComplaintsController extends Controller {
     public function actionMy() {
         $model = new Complaints('search');
 		$model->unsetAttributes(); 
+                if (Yii::app()->user->id!=1)
         $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
+                $model->status=0;
+        if (isset($_GET['p']))
+            $model->priority=$_GET['p'];
+         if (isset($_GET['s']))
+            $model->status=$_GET['s'];
         $dp = $model->search();
         $dp->pagination = false;
         $mergeColumns = array('revenuevillage');
@@ -163,6 +169,8 @@ class ComplaintsController extends Controller {
         if (isset($_POST['Complaints'])) {
             $model->attributes = $_POST['Complaints'];
         }
+        if ($model->priority==0)
+            $model->priority=">0";
   if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
   //$model->status=0;
@@ -221,8 +229,9 @@ class ComplaintsController extends Controller {
         // $model->courtcasepending = 0;
         // $model->stayexists = 0;
         $limit = false;
-        if (isset($_GET['Complaints'])) {
-            $model->attributes = $_GET['Complaints'];
+        //$model->status=0;
+        if (isset($_POST['Complaints'])) {
+            $model->attributes = $_POST['Complaints'];
             if (strcmp($model->revenuevillage, 'None') == 0)
                 unset($model->revenuevillage);
         }
