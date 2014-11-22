@@ -147,7 +147,7 @@
                                     <i class="fa fa-files-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php echo Complaints::count1();?></div>
+                                    <div class="huge"><?php echo Complaints::count1(false,true);?></div>
                                     <div>Disposed <?php echo Yii::t('app','Complaints');?></div>
                                 </div>
                             </div>
@@ -169,7 +169,7 @@
                                     <i class="fa fa-files-o fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge"><?php echo Complaints::model()->countByAttributes(array('status'=>1,'priority'=>1));?></div>
+                                    <div class="huge"><?php echo Complaints::count1(true,true);?></div>
                                     <div>Disposed Urgent <?php echo Yii::t('app','Complaints');?></div>
                                 </div>
                             </div>
