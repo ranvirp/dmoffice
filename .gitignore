@@ -3,3 +3,4 @@ protected/data/files/
 protected/runtime/
 nbproject/
 index.php
+protected/config/main-local.php
