@@ -68,7 +68,7 @@
              <p class='help-block'><a  onclick="populateDropdown('<?php echo Yii::app()->createUrl('/Complaintcategories/getCategories/dept/');?>'+'/'+$('#Complaints_officerassigned_deptDropDown').val(),$('#Complaints_category').attr('id'))">Click</a> to populate categories </p>
     </div>
 
-       
+    </div>
     <div class="row">
         <div class="col-md-10">
     <?php echo $form->textAreaControlGroup($model, 'description', array('span' => 5, 'maxlength' => 200,'class'=>'hindiinput')); ?>
@@ -79,7 +79,7 @@
 
   <div class='col-md-2'>
 <?php 
-$priority=array('None','Urgent','Immediate','Normal');
+$priority=array(3=>'Normal',1=>'Urgent',2=>'Immediate');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 </div>  
  
@@ -87,7 +87,7 @@ echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 
    <div class="row">
 
-    
+       <div class='col-md-1'></div>
       <div class='col-md-9' id="documents">
          
     
