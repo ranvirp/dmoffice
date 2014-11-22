@@ -1,5 +1,5 @@
 
-
+  <div class='container-fluid'>
   <style>
   .well1
   {
@@ -14,9 +14,9 @@
     border-style:solid;
   }
   </style>
-  <div class="row">
+
   <?php echo TbHtml::labelTb("Designation:");?>
-  </div>
+ 
 	<div class='form-inline well1'>
 		<div class='form-group hide'>
       <label>
@@ -78,3 +78,5 @@ Designation:
 		</div>	
             <div class="help-block" id=<?php echo $id;?>>
 		</div>
+        </div>   
+  </div>
