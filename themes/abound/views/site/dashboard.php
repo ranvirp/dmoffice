@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-danger">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-warning">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -65,14 +65,14 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <a href='/complaints/my'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-danger">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -87,7 +87,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <a href='/landdisputes/my?p=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-danger">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -140,7 +140,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-warning">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -155,14 +155,14 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <a href='/landdisputes/my?s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="panel panel-danger">
+                    <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
@@ -177,7 +177,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <a href='/complaints/my?p=1&s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>

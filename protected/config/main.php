@@ -112,8 +112,7 @@ return array(
     //'components'=>array(
     'components' => array(
         //...
-        'SendSMS' => array('class' => 'application.components.SendSMSComponent',
-            'sendsms' => true),
+        
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(

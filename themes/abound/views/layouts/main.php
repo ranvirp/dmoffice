@@ -47,6 +47,7 @@ if (!Designation::getDesignationModelByUser(Yii::app()->user->id))
           $cs->registerCssFile(Yii::app()->baseUrl.'/css/custom.css');
          // $cs->registerCssFile(Yii::app()->baseUrl.'/css/chosen.min.css');
            $cs->registerCssFile(Yii::app()->baseUrl.'/css/font-awesome.min.css');
+            $cs->registerCssFile(Yii::app()->baseUrl.'/css/sb-admin-2.css');
 	  
 	  ?>
       <!-- styles for style switcher -->
