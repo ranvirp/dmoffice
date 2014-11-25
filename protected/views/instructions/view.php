@@ -27,7 +27,7 @@ $this->menu=array(
     'data'=>$model,
     'attributes'=>array(
 		'id',
-		array('name'=>'schemeid','value'=>$model->scheme->name_hi),
+		
 		array('name'=>'sender','value'=>$model->senderDesignation->name_hi),
 		array('name'=>'receiver','value'=>$model->receiverDesignation->name_hi),
 		'instruction',

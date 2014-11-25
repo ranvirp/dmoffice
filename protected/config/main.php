@@ -208,7 +208,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=mydb',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => '',
+            'password' => 'root',
             'charset' => 'utf8',
             'tablePrefix' => '',
         ),
@@ -223,11 +223,11 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error',
                 ),
-            /*
+            
               array(
               'class'=>'CWebLogRoute',
               ),
-             */
+             
             ),
         ),
         // yiistrap configuration

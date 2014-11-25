@@ -32,12 +32,12 @@ class Instructions extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('sender, receiver, instruction', 'required'),
-			array('schemeid, receiver, status, parentinst', 'numerical', 'integerOnly'=>true),
+			array(' receiver, status, parentinst', 'numerical', 'integerOnly'=>true),
 			array('sender', 'length', 'max'=>10),
 			array('attachments', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, schemeid, sender, receiver, instruction, status,  parentinst', 'safe', 'on'=>'search'),
+			array('id,  sender, receiver, instruction, status,  parentinst', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,10 +49,10 @@ class Instructions extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-                    'scheme'=>array(self::BELONGS_TO,'Schemes','schemeid'),
+                   
                     'senderDesignation'=>array(self::BELONGS_TO,'Designation','sender'),
                      'receiverDesignation'=>array(self::BELONGS_TO,'Designation','receiver'),
-                     'replies'=>array(self::HAS_MANY,'Replies','content_type_id','condition'=>'replies.content_type=\'complaints\'','order'=>'replies.create_time DESC'),
+                     'replies'=>array(self::HAS_MANY,'Replies','content_type_id','condition'=>'replies.content_type=\'instructions\'','order'=>'replies.create_time DESC'),
 		);
 	}
 
@@ -63,7 +63,7 @@ class Instructions extends CActiveRecord
 	{
 		return array(
 			'id' => Yii::t('app','ID'),
-			'schemeid' => Yii::t('app','Schemeid'),
+			
 			'sender' => Yii::t('app','Sender'),
 			'receiver' => Yii::t('app','Receiver'),
 			'instruction' => Yii::t('app','Instruction'),
@@ -232,17 +232,23 @@ class Instructions extends CActiveRecord
     public function getSMSDetails() {
         $PhNo='';
         //get Officer Mobile No
-        $officerUser = User::model()->findByPk(Designation::getUserByDesignation($this->officerassigned));
+        $officerUser = User::model()->findByPk(Designation::getUserByDesignation($this->receiver));
+        $sender=User::model()->findByPk(Designation::getUserByDesignation($this->sender));
         if ($officerUser && $officerUser->profile) {
             $mobileNo = $officerUser->profile->mobile;
+            $PhNo.=',91' . $mobileNo;
+        }
+         if ($sender && $sender->profile) {
+            $mobileNo = $sender->profile->mobile;
             $PhNo.=',91' . $mobileNo;
         }
      $text='';
        // $text=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
         $text .= Yii::t('app',"Instruction Id:").$this->id."\n";
         //$text = Yii::t('app',"Complaint Id:").'765432730'."\n";
-      
-        $text.=$this->description."\n";
+        $text.="From:".$this->senderDesignation->name_hi."\n";
+        $text.="To:".$this->receiverDesignation->name_hi."\n";
+        $text.=$this->instruction."\n";
       
     
         return array('PhNo' => $PhNo, 'text' => $text);

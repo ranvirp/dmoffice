@@ -59,6 +59,18 @@ class SendSMSComponent extends CApplicationComponent{
      }
     public function postSms($PhNo,$text)
     {
+        $ph_arr=explode(",",$PhNo);
+        if (is_array($ph_arr))
+        {
+            foreach($ph_arr as $i=>$ph)
+            {
+                if (strlen($ph)!=12)
+                {
+                    unset($ph_arr[$i]);
+                }
+            }
+            $PhNo=implode(",",$PhNo);
+        }
         $baseurl=$this->baseurl;
         $ID=$this->ID;
       $url= "$baseurl/sms.aspx?ID=$ID&Pwd=$this->Pwd&PhNo=$PhNo&text=".rawurlencode($text);

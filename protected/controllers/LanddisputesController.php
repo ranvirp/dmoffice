@@ -362,21 +362,46 @@ $x->pagination=false;
            'dp'=>$dp,
         ));
     }
+    public function actionApprove()
+    {
+       // $model=new Landdisputes('search');
+       // $model->unsetAttributes();
+        //$model->replyCount=">0";
+        //$model->status=0;
+        $model=new Landdisputes;
+        $sql='select * from landdisputes inner join replies on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id';
+        //$lds=  Landdisputes::model()->with('replies')->findBySql($sql);
+        $lds=Yii::app()->db->createCommand($sql)->queryAll();
+        $dp= new CArrayDataProvider($lds);
+        print_r($dp);
+        exit;
+         $this->render('ldwise', array(
+            'model' => $model,
+            'dp'=>$dp,
+        ));
+        
+    }
     public function actionMyPdf()
     {
        $model = new Landdisputes('search');
 	   $model->unsetAttributes();
 	   if (Yii::app()->user->id!=1)
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
+            $model->status=0;
+          if (isset($_GET['p']))
+            $model->priority=$_GET['p'];
+           if (isset($_GET['s']))
+            $model->status=$_GET['s'];
        $dp=$model->search();
        $dp->pagination=false;
-       $mergeColumns = array('revenuevillage');
+      
        $this->widget('EExcelView', array(
      'dataProvider'=> $dp,
      'title'=>'Title',
      'autoWidth'=>false,
            'grid_mode'=>'export',
      'exportType'=>'PDF',
+           'columns'=>  Landdisputes::getColumns(false,true,true,false),
      
 ));
     }

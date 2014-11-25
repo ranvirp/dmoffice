@@ -24,7 +24,7 @@
  * @property string $prevreferenceno
  */
 class Landdisputes extends CActiveRecord {
-
+  
     /**
      * @return string the associated database table name
      */
@@ -64,6 +64,7 @@ class Landdisputes extends CActiveRecord {
             'revVillage' => array(SELF::BELONGS_TO, 'RevenueVillage', 'revenuevillage'),
             'thana' => array(self::BELONGS_TO, 'Policestation', 'policestation'),
             'replies'=>array(self::HAS_MANY,'Replies','content_type_id','condition'=>'replies.content_type=\'landdisputes\'','order'=>'replies.create_time DESC'),
+            'replyCount'=>array(self::STAT, 'Replies','content_type_id','condition'=>'replies.content_type=\'landdisputes\''),
             'officer'=>array(self::BELONGS_TO,'Designation','officerassigned'),
 			
         );
@@ -113,9 +114,11 @@ class Landdisputes extends CActiveRecord {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-
+       // $criteria->with=array('replyCount');
+      //   $reply_table = Replies::model()->tableName();
+    //$reply_count_sql = "(select count(*) from $reply_table pt where pt.content_type ='landdisputes t.id)";
         $criteria->compare('id', $this->id);
-		$criteria->compare('status', $this->status);
+	$criteria->compare('status', $this->status);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
         $criteria->compare('revenuevillage', $this->revenuevillage);
@@ -132,6 +135,7 @@ class Landdisputes extends CActiveRecord {
          $criteria->compare('officerassigned', $this->officerassigned);
         $criteria->compare('disputependingfor', $this->disputependingfor);
         $criteria->compare('casteorcommunal', $this->casteorcommunal);
+       // $criteria->compare('replyCount',">0");
  if ($limit!=FALSE)
  {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
@@ -249,7 +253,7 @@ class Landdisputes extends CActiveRecord {
        // $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
         return array('PhNo' => $PhNo, 'text' => $text);
     }
-    public static function getColumns($buttoncolumns=false,$policestation=true,$revenuevillage=true)
+    public static function getColumns($buttoncolumns=false,$policestation=true,$revenuevillage=true,$rowdisplay=true)
     {
     
      $complainant='$data->complainants."<br/>".$data->complainantmobileno';
@@ -262,10 +266,13 @@ class Landdisputes extends CActiveRecord {
       
      
      $columns= array();
+     if ($rowdisplay)
+     {
 	$columns[]=array(
                 'header' => 'Row',
                 'value' => '$row',
             );
+    }
 	 /*
 	 $columns[]=array(
                 'header' => 'Row',
@@ -284,7 +291,7 @@ class Landdisputes extends CActiveRecord {
          
      }
          ,'type'=>'raw');
-		 $columns[]=array('header'=>'created on','value'=>
+		 $columns[]=array('name'=>'created_at','header'=>'created on','value'=>
             function($data,$row,$column)
         { return date("d/m/Y", $data->created_at);}
         );
@@ -294,8 +301,21 @@ class Landdisputes extends CActiveRecord {
        if ($revenuevillage)
          $columns[]=   array(
 		'name'=>'revenuevillage',
-                'value'=>  'RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi.",".Tehsil::model()->findByPk(RevenueVillage::model()->findByPk($data->revenuevillage)->tehsil_code)->name_hi',
-              
+                'value'=> function($data,$row,$column)
+       {
+           $revenue=RevenueVillage::model()->with('tehsilCode')->findByPk($data->revenuevillage);
+           $revName=$revenue?$revenue->name_hi:'missing';
+           $tehsilName="missing";
+           if ($revenue)
+           {
+               //$tehsil_code=$revenue->tehsil_code;
+              // $tehsil=Tehsil::findByPk($tehsil_code);
+               $tehsil=$revenue->tehsilCode;
+               if ($tehsil) $tehsilName=$tehsil->name_hi;
+           }
+           return $revName.','.$tehsilName;
+           }  ,
+                   'type'=>'raw',
                 );
             
         $columns[]= 'gatanos';   

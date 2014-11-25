@@ -20,10 +20,7 @@
 
     <?php echo $form->errorSummary($model); ?>
    
-    <div class="row">
-    
-    	 <?php echo $form->dropDownListControlGroup($model,'schemeid',  Utility::listAll('Schemes'),array('empty'=>'None','span'=>5,'maxlength'=>11)); ?>
-    </div>
+   
     <div class="row">
     
     	 <?php echo $form->hiddenField($model,'sender', array('type'=>'hidden','value'=> Designation::getDesignationByUser(Yii::app()->user->id))); ?>

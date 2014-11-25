@@ -210,10 +210,23 @@ class Complaints extends CActiveRecord
 		 $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
 	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
        if ($revenuevillage)
-         $columns[]=   array(
+           $columns[]=   array(
 		'name'=>'revenuevillage',
-                'value'=>  'RevenueVillage::model()->findByPk($data->revenuevillage)->name_hi.",".Tehsil::model()->findByPk(RevenueVillage::model()->findByPk($data->revenuevillage)->tehsil_code)->name_hi',
-              
+                'value'=> function($data,$row,$column)
+       {
+           $revenue=RevenueVillage::model()->with('tehsilCode')->findByPk($data->revenuevillage);
+           $revName=$revenue?$revenue->name_hi:'missing';
+           $tehsilName="missing";
+           if ($revenue)
+           {
+               //$tehsil_code=$revenue->tehsil_code;
+              // $tehsil=Tehsil::findByPk($tehsil_code);
+               $tehsil=$revenue->tehsilCode;
+               if ($tehsil) $tehsilName=$tehsil->name_hi;
+           }
+           return $revName.','.$tehsilName;
+           } ,
+                   'type'=>'raw'
                 );
             
        

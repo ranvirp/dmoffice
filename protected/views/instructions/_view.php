@@ -9,9 +9,6 @@
 	<?php echo CHtml::link(CHtml::encode($data->id),array('view','id'=>$data->id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('schemeid')); ?>:</b>
-	<?php echo CHtml::encode($data->schemeid); ?>
-	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('sender')); ?>:</b>
 	<?php echo CHtml::encode($data->sender); ?>
