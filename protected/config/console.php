@@ -142,7 +142,7 @@ return array(
 	//'components'=>array(
             'components'=>array(
     //...
-                'SendSMS',
+                 'SendSMS'=>array('class'=>'application.components.SendSMSComponent','sendsms'=>true),
     'ePdf' => array(
         'class'         => 'ext.yii-pdf.EYiiPdf',
         'params'        => array(
@@ -194,7 +194,7 @@ return array(
 		       'user'=>array(
                 'class'=>'RWebUser',
                 // enable cookie-based authentication
-                'allowAutoLogin'=>true,
+                //'allowAutoLogin'=>true,
                 'loginUrl'=>array('/user/login'),
         ),
 		
