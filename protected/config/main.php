@@ -50,6 +50,7 @@ return array(
         'bootstrap.behaviors.*',
         'ext.AttachmentBehavior.AttachmentBehavior.*',
         'application.extensions.phpexcel.PHPExcel',
+        'application.vendors.mpdf.*',
         'ext.yiireport.*',
         'ext.yii-select2.Select2',
     ),
