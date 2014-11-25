@@ -113,7 +113,7 @@ return array(
     //'components'=>array(
     'components' => array(
         //...
-        
+        'SendSMS'=>array('class'=>'application.components.SendSMSComponent','sendsms'=>true),
         'ePdf' => array(
             'class' => 'ext.yii-pdf.EYiiPdf',
             'params' => array(
@@ -208,7 +208,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=mydb',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'root',
+            'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => '',
         ),

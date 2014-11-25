@@ -29,7 +29,7 @@ $ret = file($url);
  * @author admin
  */
 class SendSMSComponent extends CApplicationComponent{
-    public $sendsms=false;
+    public $sendsms=true;
     public $ID="dmaza@nic.in";
     public $Pwd="password";
     public $baseurl ="http://www.businesssms.co.in";
@@ -42,7 +42,7 @@ class SendSMSComponent extends CApplicationComponent{
 
     public function init()
     {
-        parent::init();
+        //parent::init();
     } 
      public function sendSms($event)
     {
@@ -62,9 +62,10 @@ class SendSMSComponent extends CApplicationComponent{
         $baseurl=$this->baseurl;
         $ID=$this->ID;
       $url= "$baseurl/sms.aspx?ID=$ID&Pwd=$this->Pwd&PhNo=$PhNo&text=".rawurlencode($text);
+	  //print $url;
      // print $url;
-     if (!$this->sendsms)
-      return;
+    // if (!$this->sendsms)
+      //return;
     // $response=file($url);
      $ch = curl_init();
 
@@ -84,12 +85,25 @@ curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 //exit;
       if (strstr($response, "Message Submitted")!=FALSE)
         {
-          Yii::app()->user->setFlash('notification',"Message $text sent succesfully  to $PhNo" );
+          try{
+		  Yii::app()->user->setFlash('notification',"Message $text sent succesfully  to $PhNo" );
             return 1;
+			}catch(Exception $e)
+			{
+			print "Message $text sent succesfully  to $PhNo"."\n";
+			return 1;
+			}
         }
         else {
+		try{
             Yii::app()->user->setFlash('notification',"Could not send message $text  to $PhNo" );
             return 0;
+			}
+			catch(Exception $e)
+			{
+			print "Could not send message $text  to $PhNo" ."\n";
+			return 0;
+			}
         }
     }
     
