@@ -25,7 +25,15 @@ class DesignationType extends CActiveRecord
 	{
 		return 'designation_type';
 	}
-
+public function behaviors(){
+	return array(
+		'CTimestampBehavior' => array(
+			'class' => 'zii.behaviors.CTimestampBehavior',
+			'createAttribute' => 'create_time',
+			'updateAttribute' => 'update_time',
+		)
+	);
+}
 	/**
 	 * @return array validation rules for model attributes.
 	 */

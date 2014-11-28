@@ -263,15 +263,31 @@ $x->pagination=false;
             throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
         }
     }
-
+public function actionIndex()
+{
+    $model=new Landdisputes;
+    $model->unsetAttributes();
+    $this->render('index',array('model'=>$model,'dataProvider'=>$model->search()));
+}
     /**
-     * Lists all models.
+     * Lists all models in which reports have been received.
      */
-    public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('Landdisputes');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
+    public function actionApprove() {
+      $model=new Landdisputes;
+        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+        $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
+       // $count = Yii::app()->db->createCommand('SELECT COUNT(id) FROM (' . $sql . ') as count_alias')->queryScalar(); //the count
+        $count=1;
+ 
+        $dp = new CSqlDataProvider($rawData,array('keyField'=>'id1','totalItemCount'=>$count));
+        $this->render('index',array('dataProvider'=>$dp));
+  /*    
+ $this->render('ldwise_1', array(
+            'model' => $model,
+           'dp'=>$dp,
         ));
+   * */
+   
     }
 
     /**
@@ -362,25 +378,8 @@ $x->pagination=false;
            'dp'=>$dp,
         ));
     }
-    public function actionApprove()
-    {
-       // $model=new Landdisputes('search');
-       // $model->unsetAttributes();
-        //$model->replyCount=">0";
-        //$model->status=0;
-        $model=new Landdisputes;
-        $sql='select * from landdisputes inner join replies on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id';
-        //$lds=  Landdisputes::model()->with('replies')->findBySql($sql);
-        $lds=Yii::app()->db->createCommand($sql)->queryAll();
-        $dp= new CArrayDataProvider($lds);
-        print_r($dp);
-        exit;
-         $this->render('ldwise', array(
-            'model' => $model,
-            'dp'=>$dp,
-        ));
-        
-    }
+ 
+    
     public function actionMyPdf()
     {
        $model = new Landdisputes('search');

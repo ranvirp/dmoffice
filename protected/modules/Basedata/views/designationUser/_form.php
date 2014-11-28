@@ -44,11 +44,13 @@
     <?php echo $form->errorSummary($model); ?>
    <div class="row-fluid">
     <?php echo TbHtml::labelTb(Yii::t('app','Designation:')); ?>
-    <?php echo TbHtml::dropDownList('designation_type','0' ,array_merge(array(0=>'None'),  DesignationType::model()->listAll()),array('onChange'=>'js:populateDesignation($(this).val())'));?>
+    <?php 
+    //echo TbHtml::dropDownList('designation_type','0' ,array_merge(array(0=>'None'),  DesignationType::model()->listAll()),array('onChange'=>'js:populateDesignation($(this).val())'));
+    ?>
     
     <?php   echo TbHtml::dropDownList('DesignationUser_designation_id','',Designation::model()->listAll());  ?>
    </div>
-    <?php   echo $form->dropDownListControlGroup($model,'user_id',CHtml::listData(User::model()->findAll(),'id','email'));  ?>
+    <?php   echo $form->dropDownListControlGroup($model,'user_id',CHtml::listData(User::model()->findAll(),'id','username'));  ?>
     <div class="form-actions">
         <?php echo TbHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array(
 		    'color'=>TbHtml::BUTTON_COLOR_PRIMARY,

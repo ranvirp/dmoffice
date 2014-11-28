@@ -315,14 +315,19 @@ class Complaints extends CActiveRecord
         if ($this->oppositionmobileno) 
             $PhNo.= ',' . '91' . $this->oppositionmobileno;
         //get Officer Mobile No
+        /*
         $officerUser = User::model()->findByPk(Designation::getUserByDesignation($this->officerassigned));
         if ($officerUser && $officerUser->profile) {
             $mobileNo = $officerUser->profile->mobile;
             $PhNo.=',91' . $mobileNo;
         }
+         * 
+         */
       //  $number=$this->urlencode_all($this->complainantmobileno);
       //  $number=str_split('0'.$this->complainantmobileno);
        // $x=$this->urlencode_all($this->complainantmobileno[0]);
+        if ($this->officer)
+            $PhNo.='91'.$this->officer->officer_mobile;
         if (strcmp($this->complainantmobileno[0],'9')==0)
                 $x='Nine';
         else 

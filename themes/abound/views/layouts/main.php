@@ -102,34 +102,12 @@ Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-
             <!-- Include content pages -->
             <?php echo $content; ?>
     </div>
-
+   
 </section>
 <!-- Require the footer -->
 <?php 
 //require_once('tpl_footer.php')
 ?>
-<script>
-     $(document).ready(function() {
-     $('.editl').editable('<?php echo Yii::app()->createUrl('/landdisputes/updateDateOfAction');?>', {
-         indicator : 'Saving...',
-         tooltip   : 'Click to edit...',
-         id:'id',
-         name:'date'
-     });
-     $('.editc').editable('<?php echo Yii::app()->createUrl('/complaints/updateDateOfAction');?>', {
-         indicator : 'Saving...',
-         tooltip   : 'Click to edit...',
-         id:'id',
-         name:'date'
-     });
-     $('.edit_area').editable('<?php echo Yii::app()->createUrl('/landdisputes/updateDateOfAction');?>', {
-         type      : 'textarea',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="img/indicator.gif">',
-         tooltip   : 'Click to edit...'
-     });
- });
-    </script>
+
   </body>
 </html>

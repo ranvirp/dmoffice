@@ -222,19 +222,27 @@ class Landdisputes extends CActiveRecord {
     public function getSMSDetails() {
         $PhNo = '91' . $this->complainantmobileno . ',' . '91' . $this->oppositionmobileno;
         //get Officer Mobile No
+        /*
         $officerUser = User::model()->findByPk(Designation::getUserByDesignation($this->officerassigned));
         if ($officerUser && $officerUser->profile) {
             $mobileNo = $officerUser->profile->mobile;
             $PhNo.=',91' . $mobileNo;
         }
+         * */
+         
         $sho = Designation::model()->findByAttributes(array('designation_type_id' => 9, 'level_type_id' => $this->policestation));
+        /*
         $shoUser = $sho?User::model()->findByPk(Designation::getUserByDesignation($sho->id)):null;
         ;
         if ($shoUser && $shoUser->profile) {
             $mobileNo = $shoUser->profile->mobile;
             $PhNo.=',91' . $mobileNo;
         }
+         * *
+         */
         //$PhNo.=',919454417521';
+        if ($sho)
+            $PhNo.=$sho->officer_mobile;
         $text = Yii::t('app','Landdisputes').'Id:'.$this->id;
         if (strcmp($this->complainantmobileno[0],'9')==0)
                 $x='Nine';
@@ -295,8 +303,12 @@ class Landdisputes extends CActiveRecord {
             function($data,$row,$column)
         { return date("d/m/Y", $data->created_at);}
         );
-		 $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>$complainant);
-	$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
+		 $columns[]=   array('name'=>'complainants','type'=>'raw','value'=>
+                     function ($data,$row,$column) {
+                      $complainant=$data->complainants."<br/>".$data->complainantmobileno;
+      $opposition=$data->oppositions."<br/> ".$data->oppositionmobileno;
+                     return $complainant.'<br/>Vs<br/>'.$opposition;});
+	//$columns[]=array('name'=>	'oppositions','type'=>'raw','value'=>$opposition);
       
        if ($revenuevillage)
          $columns[]=   array(
@@ -318,13 +330,15 @@ class Landdisputes extends CActiveRecord {
                    'type'=>'raw',
                 );
             
-        $columns[]= 'gatanos';   
+        //$columns[]= 'gatanos';   
          $columns[]=  array(
          'header'=>'Dispute Details',
          'value'=>function($data,$row,$column)
      {
               $category = "<b>".Complaintcategories::model()->findByPk($data->category)->name_hi."</b><br>";
      $description="<br>".$data->description;
+     if ($data->gatanos!==0)
+     $description.="<br>".Yii::t('app','Gatanos').':'.$data->gatanos;
      $attachments="<br\>".Files::showAttachmentsInline($data, "documents");
          $courtstatus=$data->courtcasepending?'<i class="fa fa-gavel"></i>':'';
 
@@ -354,7 +368,7 @@ class Landdisputes extends CActiveRecord {
         'type'=>'raw',
     );
     
-	  $columns[]=array('header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
+	  $columns[]=array('name'=>'officerassigned','filter'=>Designation::model()->listAll(),'header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
         
       $columns[]=array('header'=>'Last Action','value'=>
             
@@ -401,11 +415,12 @@ class Landdisputes extends CActiveRecord {
          
        $disposedlinktext=$data->status?'<i class="fa fa-thumbs-o-down"></i>':'<i class="fa fa-thumbs-o-up"></i>';
         
-        $url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
+        //$url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
+       $url=Yii::app()->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
         $result =$disposed1;
 		if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus'))
 		{
-		 $result.=TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#landdisputes-grid').yiiGridView('update');})")) ; 
+		 $result.=TbHtml::button($disposedlinktext,array('class'=>'hidden-print','onclick'=>"js:$.get('".$url."',function(data){\$('#landdisputes-grid').yiiGridView('update');})")) ; 
             //$result.=TbHtml::button($disposedlinktext,array('onclick'=>"js:$.get('".$url."',function(data){})"));
 			//,function(data){$('#landdisputes-grid').yiiGridView('update');})")) ; 
         

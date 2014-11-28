@@ -19,11 +19,16 @@
             <?php else:?>
              <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
            <?php endif;?>
+            
 <?php
 $user_name="";
 if (!Yii::app()->user->isGuest)
-$user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model()->findByPk(Yii::app()->user->id)->profile->firstname.' '.User::model()->findByPk(Yii::app()->user->id)->profile->lastname:'';
-?>
+{
+//$user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model()->findByPk(Yii::app()->user->id)->profile->firstname.' '.User::model()->findByPk(Yii::app()->user->id)->profile->lastname:'';
+$designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
+        $user_name=$designation?$designation->officer_name:'';
+}
+    ?>
                 <?php
                 $this->widget('YiiSmartMenu', array(
                   //  'partItemSeparator' => '.',
@@ -53,6 +58,7 @@ $user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model(
 				 array('label'=>'Datewise','url' => array('/complaints/datewise')),
                                  
                                  )),
+                        array('label'=>'<span id="clock"></span>','url'=>'#'),
                          array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label'=>'<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ' . Yii::app()->user->name.' <span class=caret></span>' , 'url'=>'#','visible'=>!Yii::app()->user->isGuest,
                             'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"),  'items'=>
@@ -61,7 +67,7 @@ $user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model(
                             array('label'=>'','url'=>'#','itemOptions'=>array('class'=>'divider')),
                         array('label'=>$user_name,'url'=>'#'),
                               array('label'=>'','url'=>'#','itemOptions'=>array('class'=>'divider')),
-                        array('label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile', 'url' => array('/user/profile'), 'visible' => !Yii::app()->user->isGuest),
+                        //array('label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Profile', 'url' => array('/user/profile'), 'visible' => !Yii::app()->user->isGuest),
                         array('label' => '<span class="glyphicon glyphicon-off" aria-hidden="true"></span> Logout', 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
                             ),
                             ),

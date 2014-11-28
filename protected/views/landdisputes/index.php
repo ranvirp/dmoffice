@@ -15,8 +15,11 @@ $this->menu=array(
 ?>
 
 <h1><?php echo Yii::t('app','Land disputes');?></h1>
-
-<?php $this->widget('bootstrap.widgets.TbListView',array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); ?>
+<?php
+echo $this->widget('bootstrap.widgets.TbListView', array(
+    'dataProvider'=>$dataProvider,
+    'itemView'=>'_item1',   // refers to the partial view named '_post'
+  //  'enablePagination'=>true,
+    
+),true);
+        ?>

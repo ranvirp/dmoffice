@@ -85,28 +85,10 @@
 			</td>
 			<td>
 	<?php
-	if (Yii::app()->user->checkAccess('Authority')) {
+	
 
 		echo TbHtml::dropDownList('Designation[district_code]', '', District::model()->listAll());
-	} else {
-		$userDesignation = Designation::model()->getDesignationModelByUser(Yii::app()->user->id);
-		if ($userDesignation)
-		   {
-			$district_code = $userDesignation->designation->district_code;
-			$district_name = $userDesignation->designation->district->$name;
-			
-		   }
-		else
-			$district_code = null;
-		if ($model->district_code)
-		   echo TbHtml::hiddenField('Designation[district_code]', $model->district_code);
-		else 
-			echo TbHtml::hiddenField('Designation[district_code]', $district_code);
-
-		echo '<span>'.$district_name.'</span>';
-		
-		
-	}
+	
 	?>
 			</td></tr>
 
@@ -127,7 +109,7 @@
 		<?php 
 		if ($model->designationType?$model->designationType->level->name_en:'' !='District')
 		{
-		 if ($model->designationType->level->name_en)
+		 if ($model->designationType && $model->designationType->level->name_en)
 		echo TbHtml::dropDownList('Designation[level_type_id]', $model->level_type_id, Utility::listAllByAttributes($model->designationType?$model->designationType->level->name_en:null, array('district_code'=>$model->district_code)), array('id' => 'Designation_level_type_id')); 
 		else 
 			echo TbHtml::dropDownList('Designation[level_type_id]', $model->level_type_id, array(), array('id' => 'Designation_level_type_id')); 
@@ -140,6 +122,12 @@
 	 
 			</td>
 		</tr>
+                <tr>
+                    <td>Name:</td><td><?php echo $form->textField($model, 'officer_name'); ?></td>
+                </tr>
+                <tr>
+                    <td>Mobile:</td><td><?php echo $form->textField($model, 'officer_mobile'); ?></td>
+                </tr>
 	</table>
     <div class="form-actions">
 <?php

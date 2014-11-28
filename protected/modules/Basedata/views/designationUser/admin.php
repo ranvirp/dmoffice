@@ -51,10 +51,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		array(
                     'name'=>'designation_id',
                     'value'=>'$data->designation->name_en',
+                    'filter'=>  Designation::model()->listAll(),
                     ),
 		array(
                     'name'=>'user_id',
-                    'value'=>'$data->user->username.":".$data->user->profile->firstname." ".$data->user->profile->lastname'
+                    'value'=>'$data->user->username.":".$data->designation->officer_name',
                     ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',

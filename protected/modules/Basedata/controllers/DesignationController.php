@@ -42,9 +42,9 @@ public function filters()
 	 */
 	public function actionCreate()
 	{
-	    Designation::createDesignations();
-print "done";
-exit;	
+	  //  Designation::createDesignations();
+//print "done";
+//exit;	
             $model=new Designation;
 
 		// Uncomment the following line if AJAX validation is needed

@@ -41,7 +41,7 @@ class FilesController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','uploadFile','file','upload','attach'),
+				'actions'=>array('create','update','uploadFile','file','file1','upload','attach'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -229,6 +229,35 @@ class FilesController extends Controller
 			Yii::app()->end();
 		}
 	}
+        public function actionFile1($id) {
+     $model = $this->loadModel($id);   
+     if (file_exists($model->fileWithPath())) {
+        
+         //header("Pragma: no-cache");
+        // header("Expires: 0");
+         header('Content-Description: File Transfer');
+        // header('Content-Type: ' . CFileHelper::getMimeType($model->fileWithPath()));
+         header('Content-Type: ' . 'image/jpeg');
+         //header('Content-Disposition: attachment; filename="'.$model->originalname.'"');
+         //header('Content-Transfer-Encoding: binary');
+        // header('Expires: 0');
+        // header('Cache-Control: must-revalidate');
+         header('Pragma: public');
+        // header('Content-Length: ' . filesize($model->fileWithPath()));  
+          if (strpos($model->mimetype,"pdf")!==false)
+         {
+             $im=new Imagick('"'.$model->fileWithPath().'[0]"');
+             $im->setImageFormat('jpg');
+
+echo $im;
+         }  
+         else 
+         readfile($model->fileWithPath());           
+         Yii::app()->end();
+     } else {
+         throw new CHttpException(404, 'Not found');
+     }
+ }
 	public function actionFile($id) {
      $model = $this->loadModel($id);   
      if (file_exists($model->fileWithPath())) {
