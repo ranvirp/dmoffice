@@ -9,10 +9,19 @@
 if (!isset($page))
 {$page=1;}
 $size=$page*9;
+$userid=null;
+if ($username)
+{
+ $userid=User::model()->findByAttributes(array('username'=>$username))->id;
+}
 $criteria=new CDbCriteria(array('order'=>'id asc','limit'=>10));
+if ($userid)
+$criteria->addCondition("id =".$userid);
+else {
+
 $criteria->addCondition("id > :size");
 $criteria->params=array(':size'=>$size,);
-
+}
 $users =User::model()->findAll($criteria);$i=-1;
 ?>
 <div class="form" class='form-inline'>

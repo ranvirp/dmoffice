@@ -311,6 +311,9 @@ $myTrans = Transliterator::create($rule);
     }
      public function actioUsersForm()
         {
+		$username=null;
+		  if (isset($_GET['username']))
+		    $username=$_GET['username'];
             if (isset($_GET['page']))
             $page=$_GET['page'];
             else 
@@ -353,7 +356,7 @@ $myTrans = Transliterator::create($rule);
                 }
             }
             Yii::app()->user->setFlash('notification',$message);
-            $this->render('usersForm',array('page'=>$page));
+            $this->render('usersForm',array('page'=>$page,'username'=>$username));
         }
     public function actioChange()
     {
