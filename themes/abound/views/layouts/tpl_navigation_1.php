@@ -47,6 +47,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                                  array('label'=>'Manage','url' => array('/landdisputes/admin')),
 				 array('label'=>'Search','url' => array('/landdisputes/search')),
 				 array('label'=>'Datewise','url' => array('/landdisputes/datewise')),
+                                  array('label'=>'Approve','url' => array('/landdisputes/approve')),
                                  
                                  )),
                          array('label' => Yii::t('app','Complaints').'<span class="caret"></span>', 'url'=>'#',

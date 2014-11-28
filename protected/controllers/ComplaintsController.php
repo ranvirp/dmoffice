@@ -292,5 +292,22 @@ class ComplaintsController extends Controller {
         } else
             print "no";
     }
+     public function actionApprove() {
+      $model=new Complaints;
+        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0';
+        $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
+       // $count = Yii::app()->db->createCommand('SELECT COUNT(id) FROM (' . $sql . ') as count_alias')->queryScalar(); //the count
+        $count=1;
+ 
+        $dp = new CSqlDataProvider($rawData,array('keyField'=>'id1','totalItemCount'=>$count));
+        $this->render('index',array('dataProvider'=>$dp));
+  /*    
+ $this->render('ldwise_1', array(
+            'model' => $model,
+           'dp'=>$dp,
+        ));
+   * */
+   
+    }
 
 }

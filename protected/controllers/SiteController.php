@@ -309,7 +309,7 @@ $myTrans = Transliterator::create($rule);
         }
         }
     }
-     public function actionUsersForm()
+     public function actioUsersForm()
         {
             if (isset($_GET['page']))
             $page=$_GET['page'];
