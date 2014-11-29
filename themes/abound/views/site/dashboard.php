@@ -87,7 +87,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/landdisputes/my?p=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='/complaints/my?p=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -155,7 +155,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/Complaints/my?s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='/complaints/my?s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
