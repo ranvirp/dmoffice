@@ -23,7 +23,7 @@
     <?php echo $form->errorSummary($model); ?>
     <div class="row">
         <div class='col-md-2'>
-            <?php echo $form->dropDownlistControlGroup($model, 'prevreferencetype', Prevreference::listAll()); ?>    
+            <?php echo $form->dropDownlistControlGroup($model, 'prevreferencetype', Prevreference::obj()->options); ?>    
         </div>
         <div class='col-md-2'>
             <?php echo $form->textFieldControlGroup($model, 'prevreferenceno'); ?>    

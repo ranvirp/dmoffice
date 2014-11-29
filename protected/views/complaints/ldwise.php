@@ -4,7 +4,7 @@
 
 
 ?>
-
+<form>Page Size:<input name="page"/></form>
 <?php $name='name_'.Yii::app()->language; ?>
 <?php
      $this->widget('ext.mPrint.mPrint', array(

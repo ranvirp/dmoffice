@@ -67,12 +67,13 @@ $this->menu=array(
 		'name'=>'policerequired',
                 'value'=>$model->policerequired?Yii::t('app','Yes'):Yii::t('app','No'),
             ),
-		'nextdateofaction',
+		
 		'disputependingfor',
         array(
 		'name'=>'casteorcommunal',
                 'value'=>$model->casteorcommunal?Yii::t('app','Yes'):Yii::t('app','No'),
             ),
+        array('name'=>'status','value'=>$model->status?Yii::t('app','Disposed'):Yii::t('app','Pending')),
          array(
           'name'=>'documents',
           'value'=>Files::showAttachments($model,'documents'),

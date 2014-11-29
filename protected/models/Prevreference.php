@@ -10,6 +10,16 @@
  */
 class Prevreference extends CActiveRecord
 {
+   public $options;
+   function init()
+   {
+   $this->options=array(0=>'None',2=>Yii::t('app','JanSunvayi'),1=>Yii::t('app','Mukhyamantri Sandarbh'));
+   }
+   function obj()
+   {
+       return new Prevreference;
+       
+   }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -99,12 +109,8 @@ class Prevreference extends CActiveRecord
 	*/
 	public static function listAll($className=__CLASS__)
 	{
-	    $lang = Yii::app()->language;
-        $models = $className::model()->findAll();
-        $pk = $className::model()->tableSchema->primaryKey;
-        // format models resulting using listData     
-        $list = CHtml::listData($models, $pk, 'name_'.$lang);
-        return $list;
+	   
+        return $this->options;
 	}
         /**
 	* Returns all models in List of primary key,name format

@@ -155,7 +155,10 @@ class ComplaintsController extends Controller {
          if (isset($_GET['s']))
             $model->status=$_GET['s'];
         $dp = $model->search();
-        $dp->pagination = false;
+         $dp->pagination=array('pageSize'=>20);
+       if (isset($_GET['page']) && is_numeric($_GET['page']))
+           
+       $dp->pagination=array('pageSize'=>$_GET['page']);
         $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns,'model'=>$model, 'dp' => $dp));
     }
@@ -294,7 +297,7 @@ class ComplaintsController extends Controller {
     }
      public function actionApprove() {
       $model=new Complaints;
-        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0';
+        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 group by complaints.id';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
        // $count = Yii::app()->db->createCommand('SELECT COUNT(id) FROM (' . $sql . ') as count_alias')->queryScalar(); //the count
         $count=1;

@@ -57,6 +57,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                                  array('label'=>'Manage','url' => array('/complaints/admin')),
                                   array('label'=>'Search','url' => array('/complaints/search')),
 				 array('label'=>'Datewise','url' => array('/complaints/datewise')),
+                                  array('label'=>'Approve','url' => array('/complaints/approve')),
                                  
                                  )),
                         array('label'=>'<span id="clock"></span>','url'=>'#'),

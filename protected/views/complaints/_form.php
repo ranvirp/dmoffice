@@ -22,7 +22,13 @@
         <?php $lang = Yii::app()->language; ?>
         <?php echo $form->errorSummary($model); ?>
     <div class="row">
-        <div class='col-md-6'>
+        <div class='col-md-2'>
+            <?php echo $form->dropDownlistControlGroup($model, 'prevreferencetype', Prevreference::obj()->options); ?>    
+        </div>
+        <div class='col-md-2'>
+            <?php echo $form->textFieldControlGroup($model, 'prevreferenceno'); ?>    
+        </div>
+        <div class='col-md-4'>
 <?php $this->widget('RevenueVillageWidget', array('model' => $model, 'attribute' => 'revenuevillage')); ?>    
     </div>
         <div class='col-md-4'>

@@ -5,7 +5,7 @@
 
 <?php
 $this->breadcrumbs=array(
-	'Landdisputes',
+	'Complaints',
 );
 
 $this->menu=array(
@@ -14,7 +14,7 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo Yii::t('app','Land disputes');?></h1>
+<h1><?php echo Yii::t('app','Complaints');?></h1>
 
 <?php $this->widget('bootstrap.widgets.TbListView',array(
 	'dataProvider'=>$dataProvider,

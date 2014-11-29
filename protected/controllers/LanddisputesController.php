@@ -274,7 +274,7 @@ public function actionIndex()
      */
     public function actionApprove() {
       $model=new Landdisputes;
-        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 group by landdisputes.id';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
        // $count = Yii::app()->db->createCommand('SELECT COUNT(id) FROM (' . $sql . ') as count_alias')->queryScalar(); //the count
         $count=1;
@@ -362,18 +362,25 @@ public function actionIndex()
     }
     public function actionMy()
     {
+        $numbers=array(0,1,2,3,4);
        $model = new Landdisputes('search');
 	   $model->unsetAttributes();
 	   if (Yii::app()->user->id!=1)
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
            $model->status=0;
           if (isset($_GET['p']))
-            $model->priority=$_GET['p'];
+            $model->priority=$numbers[$_GET['p']];
            if (isset($_GET['s']))
-            $model->status=$_GET['s'];
+            $model->status=$numbers[$_GET['s']];
+           
+               
        $dp=$model->search();
-       $dp->pagination=false;
-       $this->render('ldwise', array(
+       $dp->pagination=array('pageSize'=>20);
+       if (isset($_GET['page']) && is_numeric($_GET['page']))
+           
+       $dp->pagination=array('pageSize'=>$_GET['page']);
+
+        $this->render('ldwise', array(
             'model' => $model,
            'dp'=>$dp,
         ));

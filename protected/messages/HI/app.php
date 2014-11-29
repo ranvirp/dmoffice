@@ -36,6 +36,8 @@ array (
     'From'=>'द्वारा',
     'Complaints'=>'शिकायतें',
     'Tehsil'=>'तहसील',
+    'Mukhyamantri Sandarbh'=>'मुख्यमंत्री  सन्दर्भ',
+    'JanSunvayi'=>'जनसुनवाई',
     
 
 );

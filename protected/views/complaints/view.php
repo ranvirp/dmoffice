@@ -50,7 +50,7 @@ $this->menu=array(
 		
        
        
-		'nextdateofaction',
+	array('name'=>'status','value'=>$model->status?Yii::t('app','Disposed'):Yii::t('app','Pending')),	
          array(
           'name'=>'documents',
           'value'=>Files::showAttachments($model,'documents'),
