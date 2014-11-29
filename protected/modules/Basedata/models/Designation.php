@@ -239,15 +239,22 @@ class Designation extends CActiveRecord {
         {
             if ( parent::beforeSave())
             {
-            $designation_name_en=$this->designationType->name_en;
+			try{
+								$designation_name_en=$this->designationType->name_en;
                                 $level_name=  $this->designationType->level->class_name;
                                 $place_name=$level_name::model()->findByPK($this->level_type_id);
-                                $this->name_en=$designation_name_en.",".$place_name->name_en;
+								$place_name=$place_name?$place_name->name_en:"missing";
+                                $this->name_en=$designation_name_en.",".$place_name;
                                 $designation_name_hi=$this->designationType->name_hi;
                                 $level_name=  $this->designationType->level->class_name;
                                 $place_name=$level_name::model()->findByPK($this->level_type_id);
-                                $this->name_hi=$designation_name_hi.",".$place_name->name_hi;
+								$place_name=$place_name?$place_name->name_hi:"missing";
+                                $this->name_hi=$designation_name_hi.",".$place_name;
           return true;
+		  } catch(Exception $e)
+		  {
+		  return false;
+		  }
             }
             else return false;
             }

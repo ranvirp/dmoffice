@@ -29,14 +29,7 @@ public function actionSendSms($PhNo,$text)
 		   $uc=Complaints::model()->countByAttributes(array('officerassigned'=>$designation,'status'=>0,'priority'=>1));
 		   if (($l>0)||($c>0))
 		     {
-			    $user=Designation::getUserByDesignation($designation);
-				$userModel=User::model()->findByPk($user);
-				$mobile='';
-				if ($userModel)
-				{
-				  $profile=$userModel->profile;
-				  if ($profile) $mobile=$profile->mobile;
-				}
+			    $mobile= Designation::model()->findByPk($designation)->officer_mobile;
 				$userm='91'.$mobile;
 				$text="Pending \n";
 				$text.=Yii::t('app','Landdisputes')."-".$l."\n".'Urgent '.Yii::t('app','Landdisputes')."-".$ul."\n".Yii::t('app','Complaints')."-".$c."\n".
