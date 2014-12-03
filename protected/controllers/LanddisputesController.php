@@ -218,7 +218,7 @@ $x->pagination=false;
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-      //  $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
+        $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
@@ -308,6 +308,23 @@ public function actionIndex()
 	  //$model->status=0;
 	  }
         $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+      public function actionPrevRefWise() {
+        $model = new Landdisputes('search');
+        $model->unsetAttributes();  // clear any default values
+        if (isset($_POST['Landdisputes'])) {
+            $model->attributes = $_POST['Landdisputes'];
+        }
+       
+         //$model->status=0;
+  if (Yii::app()->user->id!=1)
+  {
+      $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
+	  //$model->status=0;
+	  }
+        $this->render('admin1', array(
             'model' => $model,
         ));
     }

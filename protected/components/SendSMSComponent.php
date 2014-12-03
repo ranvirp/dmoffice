@@ -69,32 +69,41 @@ class SendSMSComponent extends CApplicationComponent{
                     unset($ph_arr[$i]);
                 }
             }
-            $PhNo=implode(",",$PhNo);
+            if (count($ph_arr)>0)
+            {
+               
+            $PhNo=implode(",",$ph_arr);
+            }
+            else return;
         }
         $baseurl=$this->baseurl;
         $ID=$this->ID;
+        
       $url= "$baseurl/sms.aspx?ID=$ID&Pwd=$this->Pwd&PhNo=$PhNo&text=".rawurlencode($text);
 	  //print $url;
      // print $url;
     // if (!$this->sendsms)
       //return;
-    // $response=file($url);
+    //$response=  file_get_contents($url);
+    
      $ch = curl_init();
 
 
 curl_setopt($ch, CURLOPT_URL, $url);
-curl_setopt($ch, CURLOPT_HEADER, 1);
+//curl_setopt($ch, CURLOPT_HEADER, 1);
 curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 
 // grab URL and pass it to the browser
       $response=  curl_exec($ch);
 //$response=curl_getinfo($ch);
 // close cURL resource, and free up system resources
-//curl_close($ch);
+curl_close($ch);
 
-
+//var_dump($url);
 //var_dump($response);
 //exit;
+     
+     
       if (strstr($response, "Message Submitted")!=FALSE)
         {
           try{
