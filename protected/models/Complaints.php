@@ -327,9 +327,9 @@ class Complaints extends CActiveRecord
       //  $number=str_split('0'.$this->complainantmobileno);
        // $x=$this->urlencode_all($this->complainantmobileno[0]);
         if ($this->officer)
-            $PhNo.='91'.$this->officer->officer_mobile;
+            $PhNo.=',91'.$this->officer->officer_mobile;
         if (strcmp($this->complainantmobileno[0],'9')==0)
-                $x='Nine';
+                $x='9';
         else 
             $x= $this->complainantmobileno[0];
         $text=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";

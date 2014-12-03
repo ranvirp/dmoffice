@@ -135,6 +135,8 @@ class Landdisputes extends CActiveRecord {
          $criteria->compare('officerassigned', $this->officerassigned);
         $criteria->compare('disputependingfor', $this->disputependingfor);
         $criteria->compare('casteorcommunal', $this->casteorcommunal);
+        $criteria->compare('prevreferencetype', $this->prevreferencetype);
+        $criteria->compare('prevreferenceno', $this->prevreferenceno);
        // $criteria->compare('replyCount',">0");
  if ($limit!=FALSE)
  {
@@ -242,10 +244,14 @@ class Landdisputes extends CActiveRecord {
          */
         //$PhNo.=',919454417521';
         if ($sho)
-            $PhNo.=$sho->officer_mobile;
+            $PhNo.=',91'.$sho->officer_mobile;
+        if ($this->officer)
+        {
+            $PhNo.=",91".$this->officer->officer_mobile;
+        }
         $text = Yii::t('app','Landdisputes').'Id:'.$this->id;
         if (strcmp($this->complainantmobileno[0],'9')==0)
-                $x='Nine';
+                $x='9';
         else 
             $x= $this->complainantmobileno[0];
          $text.=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
@@ -257,7 +263,7 @@ class Landdisputes extends CActiveRecord {
         $text.=Yii::t('app',"Gatanos").':' . $this->gatanos;
 		$text.="\nयह शिकायत ".$this->officer->name_hi." को  उचित कार्यवाही हेतु भेज दी गयी है";
 		$text.="\n";
-		$text.="कार्यवाही का विवरण azamgarhdm.com पर उपलब्ध होगा";
+		$text.="azamgarhdm.com";
        // $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
         return array('PhNo' => $PhNo, 'text' => $text);
     }
@@ -294,8 +300,13 @@ class Landdisputes extends CActiveRecord {
          $x= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag;
+         $prevreference=new Prevreference();
+         $prevreferencetype='';
+         if (isset($prevreference->options[$data->prevreferencetype]))
+         $prevreferencetype=$prevreference->options[$data->prevreferencetype].' '.$data->prevreferenceno;
          $x.='<br/>'.'<a href="/replies/create/content_type/Landdisputes/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
-             return TbHtml::link($x,'/landdisputes/'.$data->id);
+             return TbHtml::link($x,'/landdisputes/'.$data->id).'<br/>'.'<span style="font-size:8px">'
+             .  $prevreferencetype.'</span>';
          
      }
          ,'type'=>'raw');
@@ -357,7 +368,7 @@ class Landdisputes extends CActiveRecord {
        if ($policestation)
         $columns[]= array(
 		'name'=>'policestation',
-                'value'=> 'PoliceStation::model()->findByPk($data->policestation)?Policestation::model()->findByPk($data->policestation)->name_hi:"missing"',
+                'value'=> '$data->thana?$data->thana->name_hi:"missing"',
                 'filter'=>Policestation::model()->listAll(),
                 );
        
@@ -368,7 +379,7 @@ class Landdisputes extends CActiveRecord {
         'type'=>'raw',
     );
     
-	  $columns[]=array('name'=>'officerassigned','filter'=>Designation::model()->listAll(),'header'=>Yii::t('app','assigned to'),'value'=>'$data->officer->name_hi');
+	  $columns[]=array('name'=>'officerassigned','filter'=>Designation::model()->listAll(),'header'=>Yii::t('app','assigned to'),'value'=>'$data->officer?$data->officer->name_hi:"missing"');
         
       $columns[]=array('header'=>'Last Action','value'=>
             
