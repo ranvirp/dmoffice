@@ -143,6 +143,7 @@ class Landdisputes extends CActiveRecord {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
  }
  $criteria->order='priority asc,policestation desc,revenuevillage desc';
+ $criteria->with=array('revVillage','thana','officer');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
 
