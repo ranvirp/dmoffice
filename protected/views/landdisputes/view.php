@@ -79,6 +79,7 @@ $this->menu=array(
           'value'=>Files::showAttachments($model,'documents'),
             'type'=>'raw',
         ),
+        array('name'=>'officerassigned','value'=>$model->officerassigned.($model->officer?$model->officer->name_hi:'missing')),
 	),
 )); ?>
 <?php 

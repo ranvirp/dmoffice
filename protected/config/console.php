@@ -49,7 +49,7 @@ return array(
 		
 		'application.modules.School.models.*',  
 		'application.modules.rdp.models.*',  
-	    
+	     'application.vendors.mpdf.*',
 	    
 	    'bootstrap.helpers.*',
 		'bootstrap.widgets.*',
@@ -234,7 +234,7 @@ return array(
 			'connectionString' => 'mysql:host=localhost;dbname=mydb',
 			'emulatePrepare' => true,
 			'username' => 'root',
-			'password' => 'root',
+			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix'=>'',
 		),

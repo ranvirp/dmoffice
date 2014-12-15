@@ -21,7 +21,8 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/landdisputes/my'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/landdisputes/my');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>&nbsp;
+                                <a href='<?php echo Yii::app()->createUrl('/landdisputes/myPdf?o=').Designation::getDesignationByUser(Yii::app()->user->id);?>'><i class="fa fa-file-pdf-o"></i></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -43,7 +44,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/landdisputes/my?p=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/landdisputes/my?p=1');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -65,7 +66,8 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/complaints/my'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/complaints/my');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>&nbsp;
+                                <a href='<?php echo Yii::app()->createUrl('/complaints/myPdf?o=').Designation::getDesignationByUser(Yii::app()->user->id);?>'><i class="fa fa-file-pdf-o"></i></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -87,7 +89,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/complaints/my?p=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/complaints/my?p=1');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -111,7 +113,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/landdisputes/my?s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/landdisputes/my?s=1');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -133,7 +135,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/landdisputes/my?p=1&s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/landdisputes/my?p=1&s=1');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -155,7 +157,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/complaints/my?s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/complaints/my?s=1');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
@@ -177,7 +179,7 @@
                         <a href="#">
                             <div class="panel-footer">
                                 <span class="pull-left">View Details</span>
-                                <a href='/complaints/my?p=1&s=1'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
+                                <a href='<?php echo Yii::app()->createUrl('/complaints/my?p=1&s=1');?>'><span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span></a>
                                 <div class="clearfix"></div>
                             </div>
                         </a>

@@ -195,8 +195,8 @@ return array(
         ),
         'clientScript'=>array(
                       'scriptMap'=>array(
-                          'jquery.js'=>'/js/jquery-1.11.1.js',
-                          'jquery.min.js'=>'/js/jquery-1.11.1.min.js',
+                          'jquery.js'=>'/dmofficedev1/js/jquery-1.11.1.js',
+                          'jquery.min.js'=>'/dmofficedev1/js/jquery-1.11.1.min.js',
                          // 'login.js'=>'site.min.js',
                       ),
                 ),
@@ -208,7 +208,7 @@ return array(
             'connectionString' => 'mysql:host=localhost;dbname=mydb',
             'emulatePrepare' => true,
             'username' => 'root',
-            'password' => 'root',
+            'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => '',
         ),

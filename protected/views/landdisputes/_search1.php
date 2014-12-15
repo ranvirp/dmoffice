@@ -43,7 +43,14 @@ $priority=array(1=>'Urgent',2=>'Immediate',3=>'Normal');
 echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
 </div>
     </div>
-    <div class="row"></div> 
+    <div class="row">
+         <div class='col-md-2'>
+            <?php echo $form->dropDownlistControlGroup($model, 'prevreferencetype', Prevreference::obj()->options); ?>    
+        </div>
+        <div class='col-md-2'>
+            <?php echo $form->textFieldControlGroup($model, 'prevreferenceno'); ?>    
+        </div>
+    </div> 
      <div class="row">
     <div class='col-md-2'>
 <?php echo $form->inlineRadioButtonListControlGroup($model, 'policerequired',array('1'=>'Yes','0'=>'No'), array('span' => 5, 'maxlength' => 4,'data-toggle'=>"collapse", 'data-target'=>"#courtcasedetails")); ?>

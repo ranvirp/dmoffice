@@ -23,10 +23,10 @@
                    
                         <li class="active"><a href="#"><span class="badge pull-right"><?php echo Landdisputes::model()->count1()+Complaints::model()->count1();?></span> Inbox </a></li>
                         <li><a href="<?php echo Yii::app()->createUrl('/landdisputes/my?p=1');?>">Urgent Land Disputes <span class="label label-danger pull-right"><?php echo Landdisputes::model()->count1(true);?></span></a></li>
-                         <li> <a href="<?php echo Yii::app()->createUrl('/landdisputes/my');?>">Land Disputes <span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span></a></li>
+                        <li> <a href="<?php echo Yii::app()->createUrl('/landdisputes/my');?>">Land Disputes <span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span></a><a href="<?php echo Yii::app()->createUrl('/landdisputes/myPdf?o=').Designation::getDesignationByUser(Yii::app()->user->id);?>"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF Report</a></li>
                             <li><a href="<?php echo Yii::app()->createUrl('/complaints/my?p=1');?>">Urgent Complaints <span class="label label-danger pull-right"><?php echo Complaints::model()->count1(true);?></span></a></li>
                      
-                         <li><a href="<?php echo Yii::app()->createUrl('/complaints/my');?>"><span class="badge pull-right"><?php echo Complaints::model()->count1();?></span>Complaints</a></li>
+                         <li><a href="<?php echo Yii::app()->createUrl('/complaints/my');?>"><span class="badge pull-right"><?php echo Complaints::model()->count1();?></span>Complaints</a><a href="<?php echo Yii::app()->createUrl('/complaints/myPdf?o=').Designation::getDesignationByUser(Yii::app()->user->id);?>"><i class="fa fa-file-pdf-o"></i>&nbsp;PDF Report</a></li>
                           
                     </ul>
                 </div>

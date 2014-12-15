@@ -27,7 +27,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-
+<h2><?php echo $title;?></h2>
 <h1>Manage Complaints</h1>
 
 <p>

@@ -43,9 +43,8 @@ $this->menu=array(
                 'value'=>Complaintcategories::model()->findByPk($model->category)->name_hi,
             ),
 		'description',
-       array('name'=> 'officerassigned',
-	   'value'=>Designation::model()->findByPk($model->officerassigned)->name_hi,
-	   ),
+       array('name'=>'officerassigned','value'=>$model->officerassigned.($model->officer?$model->officer->name_hi:'missing')),
+	
          
 		
        

@@ -67,7 +67,8 @@ $this->widget('bootstrap.widgets.TbGridView',array(
        
        array('header'=>Yii::t('app','Landdisputes'),'value'=>
            function($data,$row,$column){
-          return '<a href="'.Yii::app()->createUrl('/landdisputes/my?o=').$data["offr"].'">'.$data["count1"]."</a>";},
+          return '<a href="'.Yii::app()->createUrl('/landdisputes/my?o=').$data["offr"].'">'.$data["count1"]."</a>"
+                ."&nbsp;<a href='".Yii::app()->createUrl('/landdisputes/myPdf?o=').$data["offr"]."'><i class=\"fa fa-file-pdf-o\"></i></a>";},
                   'type'=>'raw',
         ),     
        array('header'=>'Urgent '. Yii::t('app','Landdisputes'),'value'=>function($data,$row,$column){

@@ -22,4 +22,23 @@ class UtilityCommand extends CConsoleCommand {
             }
                 
         }
+        public function actionPdf($outdir,$offr=false)
+        {
+            $pdfwriter=new PdfWriter;
+            $rows=array();
+             if ($offr!=false)
+                $rows[0]['officerassigned']=$offr;
+             else 
+             {
+            $sql = "select * from (select officerassigned,count(*) as count1 from landdisputes  where status=0  group by officerassigned) t1 where t1.count1>0";
+           
+            $rows=Yii::app()->db->createCommand($sql)->queryAll();
+             }
+       //print($rows)
+            foreach ($rows as $row )
+            {
+              $pdfwriter->printPendingLanddisputes($row['officerassigned'],$outdir);
+              $pdfwriter->printPendingComplaints($row['officerassigned'],$outdir);
+            }
+        }
 }

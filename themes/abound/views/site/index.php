@@ -6,6 +6,9 @@
  * and open the template in the editor.
  */
 ?>
+<style>
+    
+</style>
 <?php if  (!Yii::app()->user->isGuest)
         require 'dashboard.php';?>
 <h2> Search Form</h2>
@@ -15,8 +18,9 @@
 		'action'=>'/site/index',
      ));
  ?>
+
 <div class="row">
- <div class="col-md-4">
+ <div class="col-md-2">
     <?php
  echo TbHtml::dropDownListControlGroup('contenttype','0',array(Yii::t('app','Landdisputes'),Yii::t('app','Complaints')),array('empty'=>'None','label'=>'Type'));
  ?>

@@ -48,7 +48,7 @@ class ReportController extends Controller{
         {
             if ($ldmodel)
             {
-                $description=($ldmodel->categoryName)?$ldmodel->categoryName->name_hi:'NA'."&".$ldmodel->description;
+                $description=($ldmodel->categoryName)?$ldmodel->categoryName->name_hi."&".$ldmodel->description:'NA';
           $ld[]=array('rv'=>$ldmodel->revVillage?$ldmodel->revVillage->name_hi:'NA','ps'=>$ldmodel->thana?$ldmodel->thana->name_hi:'NA','dd'=>$description,'c'=>$ldmodel->complainants,'op'=>$ldmodel->oppositions,'st'=>'Status','at'=>'at');
             }  
         }
@@ -108,4 +108,44 @@ class ReportController extends Controller{
         echo $r->render('pdf', 'Students');
         
     }//actionExcel method end
+    public function actionOw($t)
+    {
+       /* 
+        $sql="select officerassigned as offr,
+    count(*) c,
+    sum(case when t2.priority = 1 then 1 else 0 end) cu 
+    
+   
+from designation inner join  complaints t2 on t2.officerassigned=designation.id
+group by officerassigned";
+        
+        
+        
+          $final = Yii::app()->db->createCommand($sql)->queryAll();
+        * * */
+        
+       // print_r($result);exit;
+       
+       // var_dump($final);
+        //exit;
+       // $dp = new CArrayDataProvider($final,array('keyField'=>'offr'));
+        //$dp=
+        $this->render('/reports/officerwise',array('dp'=>$dp));
+    }
+    public function actionRender()
+    {
+        $model=new Landdisputes;
+        $model->unsetAttributes();
+        $model->status=0;
+        $html =$this->renderPartial('/landdisputes/admin_1',array('model'=>$model),true);
+        print $html;
+        $mdf= new mPDF();
+        $mdf->useAdobeCJK = true;		// Default setting in config.php
+						// You can set this to false if you have defined other CJK fonts
+
+$mdf->SetAutoFont(AUTOFONT_ALL);
+        $mdf->WriteHTML($html);
+        $mdf->Output("d:/output.pdf");
+        exit;
+    }
 }

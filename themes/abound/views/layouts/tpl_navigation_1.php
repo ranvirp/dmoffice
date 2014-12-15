@@ -22,6 +22,7 @@
             
 <?php
 $user_name="";
+$designation=null;
 if (!Yii::app()->user->isGuest)
 {
 //$user_name=(User::model()->findByPk(Yii::app()->user->id)->profile)?User::model()->findByPk(Yii::app()->user->id)->profile->firstname.' '.User::model()->findByPk(Yii::app()->user->id)->profile->lastname:'';
@@ -40,6 +41,9 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                     'items' => array(
                          array('label' => 'Backup', 'url' => array('/backup')),
                         array('label' => 'Basedata', 'url' => array('/Basedata')),
+                        array('label'=>'<i class="fa fa-file-pdf-o"></i> Pending '.Yii::t('app','Land disputes'),
+                            'url'=>(Yii::app()->user->id!=1 && $designation)?array('/reports/ld/'.$designation->id.'.pdf'):array('/landdisputes/ow')),
+
                          array('label' => Yii::t('app','Land disputes').'<span class="caret"></span>', 'url'=>'#',
                              'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                              'items'=>array(

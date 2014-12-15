@@ -414,7 +414,7 @@ public function actionIndex()
     }
  
     
-    public function actionMyPdf()
+    public function actioMyPdf1()
     {
        $model = new Landdisputes('search');
 	   $model->unsetAttributes();
@@ -434,36 +434,62 @@ public function actionIndex()
      'autoWidth'=>false,
            'grid_mode'=>'export',
      'exportType'=>'PDF',
-           'columns'=>  Landdisputes::getColumns(false,true,true,false),
+           'columns'=>  array('id','revenuevillage','policestation'),
      
 ));
     }
-
-    public function actionPrintPdf() {
+public function actionMyPdf()
+{
+    if (isset($_GET['o']))
+    $o=$_GET['o'];
+    else
+        $o=1;
+    if ($o==12)
+        $this->redirect(Yii::app()->createUrl('/landdisputes/ow'));
+    if (file_exists(__DIR__.'/../../reports/ld/'.$o.'.pdf')) {
+         header("Pragma: no-cache");
+         header("Expires: 0");
+         header('Content-Description: File Transfer');
+         header('Content-Type: ' . CFileHelper::getMimeType(__DIR__.'/../../reports/ld/'.$o.'.pdf'));
+         header('Content-Disposition: attachment; filename="Pending Landdisputes on'.date('d/m/Y').' for '.$o.'.pdf"');
+         header('Content-Transfer-Encoding: binary');
+         header('Expires: 0');
+         header('Cache-Control: must-revalidate');
+         header('Pragma: public');
+         header('Content-Length: ' . filesize(__DIR__.'/../../reports/ld/'.$o.'.pdf'));      
+         readfile(__DIR__.'/../../reports/ld/'.$o.'.pdf');           
+         Yii::app()->end();
+     } else {
+         throw new CHttpException(404, 'Not found');
+     }
+}
+    public function actioPrintPdf() {
         # mPDF
         $mPDF1 = Yii::app()->ePdf->mpdf();
 
         # You can easily override default constructor's params
         $mPDF1 = Yii::app()->ePdf->mpdf('', 'A5');
-
+$model=new Landdisputes;
+$model->unsetAttributes();
+$dp=$model->search();
         # render (full page)
-        $mPDF1->WriteHTML($this->render('admin', array(), true));
+        //$mPDF1->WriteHTML($this->render('admin', array('model'=>$model), true));
 
         # Load a stylesheet
         //    $stylesheet = file_get_contents(Yii::getPathOfAlias('webroot.css') . '/main.css');
         //   $mPDF1->WriteHTML($stylesheet, 1);
         # renderPartial (only 'view' of current controller)
-        $mPDF1->WriteHTML($this->renderPartial('admin', array(), true));
+        //$mPDF1->WriteHTML($this->renderPartial('ldwise', array('model'=>$model,'dp'=>$dp), true));
 
         # Renders image
         //  $mPDF1->WriteHTML(CHtml::image(Yii::getPathOfAlias('webroot.css') . '/bg.gif' ));
         # Outputs ready PDF
-        $mPDF1->Output();
+       // $mPDF1->Output();
 
         ////////////////////////////////////////////////////////////////////////////////////
         # HTML2PDF has very similar syntax
         $html2pdf = Yii::app()->ePdf->HTML2PDF();
-        $html2pdf->WriteHTML($this->renderPartial('admin', array(), true));
+        $html2pdf->WriteHTML($this->renderPartial('ldwise', array('model'=>$model,'dp'=>$dp), true));
         $html2pdf->Output();
 
         ////////////////////////////////////////////////////////////////////////////////////

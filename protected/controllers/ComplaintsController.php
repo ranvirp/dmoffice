@@ -168,42 +168,33 @@ class ComplaintsController extends Controller {
         $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns,'model'=>$model, 'dp' => $dp));
     }
-    public function actionMyPdf() {
-        $model = new Complaints('search');
-		$model->unsetAttributes(); 
-                if (Yii::app()->user->id!=1)
-        $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
-                if (isset($_GET['o']))
-                {
-                    $o=$_GET['o'];
-                    if (Designation::model()->findByPk($o)!=null)
-                        $model->officerassigned=$o;
-                }
-                $model->status=0;
-        if (isset($_GET['p']))
-            $model->priority=$_GET['p'];
-         if (isset($_GET['s']))
-            $model->status=$_GET['s'];
-        $dp = $model->search();
-         $dp->pagination=array('pageSize'=>20);
-       if (isset($_GET['page']) && is_numeric($_GET['page']))
-           
-       $dp->pagination=array('pageSize'=>$_GET['page']);
-        $mergeColumns = array('revenuevillage');
-        $html=$this->renderPartial('ldwise', array('mergeColumns' => $mergeColumns,'model'=>$model, 'dp' => $dp),true);
-        $mdf = new mPDF();
-   $mdf->useAdobeCJK = true;		// Default setting in config.php
-						// You can set this to false if you have defined other CJK fonts
-
-$mdf->SetAutoFont(AUTOFONT_ALL);
-ob_clean();
-ob_start();
-$stylesheet=file_get_contents(dirname(__FILE__).'/../../css/bootstrap.min.css');
-$mdf->WriteHTML($stylesheet,2);
-        $mdf->WriteHTML($html);
-        ob_get_clean();
-        $mdf->Output($outdir.'/'.$model->officerassigned.".pdf");
-        }
+    
+     public function actionMyPdf()
+{
+    if (isset($_GET['o']))
+    $o=$_GET['o'];
+    else
+        $o=1;
+    if ($o==12) //designation of admin
+        $this->redirect(Yii::app()->createUrl('/complaints/ow'));
+    if (file_exists(__DIR__.'/../../reports/c/'.$o.'.pdf')) {
+         header("Pragma: no-cache");
+         header("Expires: 0");
+         header('Content-Description: File Transfer');
+         header('Content-Type: ' . CFileHelper::getMimeType(__DIR__.'/../../reports/c/'.$o.'.pdf'));
+         header('Content-Disposition: attachment; filename="Pending Complaints on '.date('d/m/Y').'.pdf"');
+         header('Content-Transfer-Encoding: binary');
+         header('Expires: 0');
+         header('Cache-Control: must-revalidate');
+         header('Pragma: public');
+         header('Content-Length: ' . filesize(__DIR__.'/../../reports/c/'.$o.'.pdf'));      
+         readfile(__DIR__.'/../../reports/c/'.$o.'.pdf');           
+         Yii::app()->end();
+     } else {
+         throw new CHttpException(404, 'Not found');
+     }
+}
+        
 
     /**
      * Manages all models.
