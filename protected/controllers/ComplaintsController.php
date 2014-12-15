@@ -95,7 +95,7 @@ class ComplaintsController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        //$model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
+        $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
@@ -149,6 +149,12 @@ class ComplaintsController extends Controller {
 		$model->unsetAttributes(); 
                 if (Yii::app()->user->id!=1)
         $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
+                if (isset($_GET['o']))
+                {
+                    $o=$_GET['o'];
+                    if (Designation::model()->findByPk($o)!=null)
+                        $model->officerassigned=$o;
+                }
                 $model->status=0;
         if (isset($_GET['p']))
             $model->priority=$_GET['p'];
@@ -162,6 +168,42 @@ class ComplaintsController extends Controller {
         $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns,'model'=>$model, 'dp' => $dp));
     }
+    public function actionMyPdf() {
+        $model = new Complaints('search');
+		$model->unsetAttributes(); 
+                if (Yii::app()->user->id!=1)
+        $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
+                if (isset($_GET['o']))
+                {
+                    $o=$_GET['o'];
+                    if (Designation::model()->findByPk($o)!=null)
+                        $model->officerassigned=$o;
+                }
+                $model->status=0;
+        if (isset($_GET['p']))
+            $model->priority=$_GET['p'];
+         if (isset($_GET['s']))
+            $model->status=$_GET['s'];
+        $dp = $model->search();
+         $dp->pagination=array('pageSize'=>20);
+       if (isset($_GET['page']) && is_numeric($_GET['page']))
+           
+       $dp->pagination=array('pageSize'=>$_GET['page']);
+        $mergeColumns = array('revenuevillage');
+        $html=$this->renderPartial('ldwise', array('mergeColumns' => $mergeColumns,'model'=>$model, 'dp' => $dp),true);
+        $mdf = new mPDF();
+   $mdf->useAdobeCJK = true;		// Default setting in config.php
+						// You can set this to false if you have defined other CJK fonts
+
+$mdf->SetAutoFont(AUTOFONT_ALL);
+ob_clean();
+ob_start();
+$stylesheet=file_get_contents(dirname(__FILE__).'/../../css/bootstrap.min.css');
+$mdf->WriteHTML($stylesheet,2);
+        $mdf->WriteHTML($html);
+        ob_get_clean();
+        $mdf->Output($outdir.'/'.$model->officerassigned.".pdf");
+        }
 
     /**
      * Manages all models.
@@ -172,6 +214,7 @@ class ComplaintsController extends Controller {
         if (isset($_POST['Complaints'])) {
             $model->attributes = $_POST['Complaints'];
         }
+        $title="";
         if ($model->priority==0)
             $model->priority=">0";
   if (strcmp($model->revenuevillage,'None')==0)
@@ -180,10 +223,12 @@ class ComplaintsController extends Controller {
   if (Yii::app()->user->id!=1)
   {
       $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
+      $title="Complaints pending with ".Designation::getDesignationModelByUser (Yii::app()->user->id)->name_hi;
 	  
 	  }
         $this->render('admin', array(
             'model' => $model,
+            'title' =>$title,
         ));
     }
 
@@ -221,7 +266,10 @@ class ComplaintsController extends Controller {
             $mergeColumns = array('revenuevillage');
         $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
     }
-
+public function actionOw()
+{
+    $this->render('officerwise');
+}
     public function actionSearch() {
 
         $model = new Complaints();

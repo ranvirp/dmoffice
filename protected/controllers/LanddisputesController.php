@@ -377,6 +377,10 @@ public function actionIndex()
         $dp->pagination=false;
         $this->render('ldwise', array('mergeColumns' => $mergeColumns, 'dp' => $dp));
     }
+    public function actionOw()
+{
+    $this->render('officerwise');
+}
     public function actionMy()
     {
         $numbers=array(0,1,2,3,4);
@@ -384,6 +388,12 @@ public function actionIndex()
 	   $model->unsetAttributes();
 	   if (Yii::app()->user->id!=1)
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
+            if (isset($_GET['o']))
+                {
+                    $o=$_GET['o'];
+                    if (Designation::model()->findByPk($o)!=null)
+                        $model->officerassigned=$o;
+                }
            $model->status=0;
           if (isset($_GET['p']))
             $model->priority=$numbers[$_GET['p']];

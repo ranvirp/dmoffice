@@ -15,9 +15,9 @@
             <div class=" collapse navbar-collapse" id='navigation-bar'>
 
  <?php if (!Yii::app()->user->isGuest):?>
-            <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.District::model()->findByPk(Utility::getDistrict(Yii::app()->user->id))->$name;?></a>
+            <a class="navbar-brand" href="<?php echo Yii::app()->createUrl('/');?>"><?php echo Yii::t('app','District Magistrate Office').','.District::model()->findByPk(Utility::getDistrict(Yii::app()->user->id))->$name;?></a>
             <?php else:?>
-             <a class="navbar-brand" href="/"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
+             <a class="navbar-brand" href="<?php echo Yii::app()->createUrl('/');?>"><?php echo Yii::t('app','District Magistrate Office').','.Yii::t('app','Azamgarh')?></a>
            <?php endif;?>
             
 <?php
@@ -49,7 +49,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
 				 array('label'=>'Datewise','url' => array('/landdisputes/datewise')),
                                   array('label'=>'Approve','url' => array('/landdisputes/approve')),
                                  array('label'=>'Search By prev reference','url' => array('/landdisputes/prevRefWise')),
-                                 
+                                 array('label'=>'Officer Wise Pending','url' => array('/landdisputes/ow')),
                                  )),
                          array('label' => Yii::t('app','Complaints').'<span class="caret"></span>', 'url'=>'#',
                              'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
@@ -59,6 +59,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                                   array('label'=>'Search','url' => array('/complaints/search')),
 				 array('label'=>'Datewise','url' => array('/complaints/datewise')),
                                   array('label'=>'Approve','url' => array('/complaints/approve')),
+                                 array('label'=>'Officer Wise Pending','url' => array('/complaints/ow')),
                                  
                                  )),
                         array('label'=>'<span id="clock"></span>','url'=>'#'),

@@ -22,11 +22,11 @@
                     <ul class="nav nav-pills nav-stacked">
                    
                         <li class="active"><a href="#"><span class="badge pull-right"><?php echo Landdisputes::model()->count1()+Complaints::model()->count1();?></span> Inbox </a></li>
-                        <li><a href="/landdisputes/my?p=1">Urgent Land Disputes <span class="label label-danger pull-right"><?php echo Landdisputes::model()->count1(true);?></span></a></li>
-                         <li> <a href="/landdisputes/my">Land Disputes <span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span></a></li>
-                            <li><a href="/complaints/my?p=1">Urgent Complaints <span class="label label-danger pull-right"><?php echo Complaints::model()->count1(true);?></span></a></li>
+                        <li><a href="<?php echo Yii::app()->createUrl('/landdisputes/my?p=1');?>">Urgent Land Disputes <span class="label label-danger pull-right"><?php echo Landdisputes::model()->count1(true);?></span></a></li>
+                         <li> <a href="<?php echo Yii::app()->createUrl('/landdisputes/my');?>">Land Disputes <span class="badge pull-right"><?php echo Landdisputes::model()->count1();?></span></a></li>
+                            <li><a href="<?php echo Yii::app()->createUrl('/complaints/my?p=1');?>">Urgent Complaints <span class="label label-danger pull-right"><?php echo Complaints::model()->count1(true);?></span></a></li>
                      
-                         <li><a href="/complaints/my"><span class="badge pull-right"><?php echo Complaints::model()->count1();?></span>Complaints</a></li>
+                         <li><a href="<?php echo Yii::app()->createUrl('/complaints/my');?>"><span class="badge pull-right"><?php echo Complaints::model()->count1();?></span>Complaints</a></li>
                           
                     </ul>
                 </div>

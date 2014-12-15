@@ -38,6 +38,8 @@ array (
     'Tehsil'=>'तहसील',
     'Mukhyamantri Sandarbh'=>'मुख्यमंत्री  सन्दर्भ',
     'JanSunvayi'=>'जनसुनवाई',
+    'dispute details'=>'विवाद का विवरण',
+    'date of registering'=>'दर्ज होने का दिनांक',
     
 
 );
