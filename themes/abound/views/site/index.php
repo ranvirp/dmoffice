@@ -15,7 +15,7 @@
 <?php
  $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id' => 'search-form',
-		'action'=>'/site/index',
+		'action'=>Yii::app()->createUrl('/site/index'),
      ));
  ?>
 
