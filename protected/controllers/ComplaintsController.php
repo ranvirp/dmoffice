@@ -328,9 +328,14 @@ public function actionOw()
     public function actionToggleStatus($id) {
         $ld = Complaints::model()->findByPk($id);
         if ($ld) {
-            ( $ld->status == 1) ? $ld->status = 0 : $ld->status = 1;
+           if  ( $ld->status == 1)  $ld->status = 0 ; else $ld->status = 1;
             $ld->save();
             print $ld->status;
+             if ($ld->status==1)
+            {
+                $smsc=new SendSMSComponent();
+                $smsc->postSms('91'.$ld->complainantmobileno, Yii::t('app','Complaints')." ".$ld->id." निस्तारित");
+            }
         } else
             print "no";
     }

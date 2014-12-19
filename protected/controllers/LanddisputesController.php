@@ -204,9 +204,17 @@ $x->pagination=false;
         $ld=  Landdisputes::model()->findByPk($id);
         if ($ld)
         {
-           ( $ld->status==1)?$ld->status=0:$ld->status=1;
+           if ( $ld->status==1)
+               $ld->status=0 ;
+                   else 
+                       $ld->status=1;
            $ld->save();
             print $ld->status;
+            if ($ld->status==1)
+            {
+                $smsc=new SendSMSComponent();
+                $smsc->postSms('91'.$ld->complainantmobileno, Yii::t('app','Landdisputes')." ".$ld->id." निस्तारित");
+            }
         }
         else 
             print "no";

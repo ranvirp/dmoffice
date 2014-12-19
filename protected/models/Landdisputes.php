@@ -117,7 +117,7 @@ class Landdisputes extends CActiveRecord {
        // $criteria->with=array('replyCount');
       //   $reply_table = Replies::model()->tableName();
     //$reply_count_sql = "(select count(*) from $reply_table pt where pt.content_type ='landdisputes t.id)";
-        $criteria->compare('id', $this->id);
+        $criteria->compare('t.id', $this->id);
 	$criteria->compare('status', $this->status);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
@@ -142,7 +142,7 @@ class Landdisputes extends CActiveRecord {
  {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
  }
- $criteria->order='priority asc,policestation desc,revenuevillage desc';
+ $criteria->order='policestation desc,revenuevillage desc';
  $criteria->with=array('revVillage','thana','officer');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -255,13 +255,16 @@ class Landdisputes extends CActiveRecord {
                 $x='9';
         else 
             $x= $this->complainantmobileno[0];
-         $text.=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
+         $text.=Yii::t('app',"From").":".$this->complainants
+                // ."-$x".substr($this->complainantmobileno,1)
+                 ."\n";
        
         $text.=Yii::t('app',"Revenuevillage") .':'. $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
         $text.=Yii::t('app',"Policestation").':' . $this->thana->name_hi . "\n";
         $text.=Yii::t('app',"Category").':' . $this->categoryName->name_hi . "\n";
          $text.=$this->description . "\n";
         $text.=Yii::t('app',"Gatanos").':' . $this->gatanos;
+        //$text.="-$x".substr($this->complainantmobileno,1);
 		$text.="\nयह शिकायत ".$this->officer->name_hi." को  उचित कार्यवाही हेतु भेज दी गयी है";
 		$text.="\n";
 		$text.="azamgarhdm.com";
