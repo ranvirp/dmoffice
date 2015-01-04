@@ -41,6 +41,7 @@ landdisputes.revenuevillage=revenue_village.code and landdisputes.policestation 
    $model=new Landdisputes;
    $model->unsetAttributes();
    $model->officerassigned=$officerassigned;
+   $model->status=0;
    $dp =$model->search();
    //$dp->criteria=array('order'=>'policestation asc');
    $iterator = new CDataProviderIterator($dp);
@@ -50,7 +51,7 @@ landdisputes.revenuevillage=revenue_village.code and landdisputes.policestation 
    $html.='<tr><td>'."रिपोर्ट का दिनांक".'</td>'.'<td>'.date('d/m/Y H:i:s').'</td>'
            .'<td>'."अधिकारी".'</td>'.'<td>'.$name.'</td>'
            . '</tr>';
-    $html.='<tr><td>'."कुल लंबित भूमि विवाद".'</td>'.'<td>'.  Landdisputes::model()->countByAttributes(array('officerassigned'=>$officerassigned)).'</td></tr>';
+    $html.='<tr><td>'."कुल लंबित भूमि विवाद".'</td>'.'<td>'.  Landdisputes::model()->countByAttributes(array('officerassigned'=>$officerassigned,'status'=>0)).'</td></tr>';
    //$html="<h1>".Yii::t('app','Landdisputes')." pending with ".$name."</h1>";
     $html.='</table>';
    $html.="<table border='1' style='border-spacing:0;'>";
@@ -115,6 +116,7 @@ $mdf->setFooter('{PAGENO}');
    $model=new Complaints;
    $model->unsetAttributes();
    $model->officerassigned=$officerassigned;
+   $model->status=0;
    $dp =$model->search();
    $iterator = new CDataProviderIterator($dp);
    $html='<style> td{font-size:8px;}</style>';
@@ -122,7 +124,7 @@ $mdf->setFooter('{PAGENO}');
    $html.='<tr><td>'."रिपोर्ट का दिनांक".'</td>'.'<td>'.date('d/m/Y hh:mm').'</td>'
            .'<td>'."अधिकारी".'</td>'.'<td>'.$name.'</td>'
            . '</tr>';
-    $html.='<tr><td>'."कुल लंबित शिकायतें".'</td>'.'<td>'.  Complaints::model()->countByAttributes(array('officerassigned'=>$officerassigned)).'</td></tr>';
+    $html.='<tr><td>'."कुल लंबित शिकायतें".'</td>'.'<td>'.  Complaints::model()->countByAttributes(array('officerassigned'=>$officerassigned,'status'=>0)).'</td></tr>';
    //$html="<h1>".Yii::t('app','Landdisputes')." pending with ".$name."</h1>";
     $html.='</table>';
    $html.="<table border='1'>";
