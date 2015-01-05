@@ -40,7 +40,12 @@ $('.search-form form').submit(function(){
 ?>
 <?php 
 //$model=new Designation;
-$sql ="select officerassigned as offr,count(distinct (landdisputes.id)) as count1,sum(case when landdisputes.priority = 1 then 1 else 0 end) ldu from  landdisputes where landdisputes.status=0 group by officerassigned having count1>0 order by count1 desc";
+if ($designationtype>0)
+    $sql ="select officerassigned as offr,count(distinct (landdisputes.id)) as count1,sum(case when landdisputes.priority = 1 then 1 else 0 end) ldu from  landdisputes inner join designation on designation.id=officerassigned where landdisputes.status=0 and designation.designation_type_id=$designationtype group by officerassigned having count1>0 order by count1 desc";
+else 
+$sql ="select officerassigned as offr,count(distinct (landdisputes.id)) as count1,sum(case when landdisputes.priority = 1 then 1 else 0 end) ldu from  landdisputes inner join designation on designation.id=officerassigned where landdisputes.status=0 group by officerassigned having count1>0 order by count1 desc";
+
+//$sql ="select officerassigned as offr,count(distinct (landdisputes.id)) as count1,sum(case when landdisputes.priority = 1 then 1 else 0 end) ldu from  landdisputes inner join designation on designation.id=officerassigned where landdisputes.status=0 group by officerassigned having count1>0 order by designation_type_id";
 $count=Yii::app()->db->createCommand('SELECT count(distinct(officerassigned)) FROM landdisputes')->queryScalar();
 $dp = new CSqlDataProvider($sql,array('keyField'=>'offr','totalItemCount'=>$count));
 $dp->pagination=false;
@@ -50,25 +55,27 @@ $dp->pagination=false;
 <div id='landdisputes-main'>
 <h1>Officer wise Pending Status of Landdisputes on <?php echo date('d/m/Y');?></h1>
 <?php 
+$model=new DesignationType;
 $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'landdisputes-grid',
 	'dataProvider'=>$dp,
-	//'filter'=>$model,
+	'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
+    //'filter'=>$model,
     'columns'=>array(
-      array('header'=>'Officer','value'=>function($data,$row,$column){
+      array('name'=>'id','header'=>'Officer','value'=>function($data,$row,$column){
     $designation= Designation::model()->findByPk($data['offr']);
     if ($designation) 
         return $designation->name_hi;
     else 
         return "";
     
-      }),
+      },'filter'=>  DesignationType::model()->listAll()),
        
        array('header'=>Yii::t('app','Landdisputes'),'value'=>
            function($data,$row,$column){
           return '<a href="'.Yii::app()->createUrl('/landdisputes/my?o=').$data["offr"].'">'.$data["count1"]."</a>"
-                ."&nbsp;<a href='".Yii::app()->createUrl('/landdisputes/myPdf?o=').$data["offr"]."'><i class=\"fa fa-file-pdf-o\"></i></a>";},
+                ."&nbsp;&nbsp;&nbsp;<a href='".Yii::app()->createUrl('/landdisputes/myPdf?o=').$data["offr"]."'><i class=\"fa fa-file-pdf-o\"></i></a>";},
                   'type'=>'raw',
         ),     
        array('header'=>'Urgent '. Yii::t('app','Landdisputes'),'value'=>function($data,$row,$column){

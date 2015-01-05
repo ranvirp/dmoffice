@@ -40,7 +40,10 @@ $('.search-form form').submit(function(){
 ?>
 <?php 
 //$model=new Designation;
-$sql ="select officerassigned as offr,count(distinct (complaints.id)) as count1,sum(case when complaints.priority = 1 then 1 else 0 end) ldu from  complaints where complaints.status=0 group by officerassigned having count1>0 order by count1 desc";
+if ($designationtype>0)
+    $sql ="select officerassigned as offr,count(distinct (complaints.id)) as count1,sum(case when complaints.priority = 1 then 1 else 0 end) ldu from  complaints inner join designation on designation.id=officerassigned where complaints.status=0 and designation.designation_type_id=$designationtype group by officerassigned having count1>0 order by designation_type_id";
+else 
+$sql ="select officerassigned as offr,count(distinct (complaints.id)) as count1,sum(case when complaints.priority = 1 then 1 else 0 end) ldu from  complaints inner join designation on designation.id=officerassigned where complaints.status=0 group by officerassigned having count1>0 order by designation_type_id";
 $count=Yii::app()->db->createCommand('SELECT count(distinct(officerassigned)) FROM complaints')->queryScalar();
 $dp = new CSqlDataProvider($sql,array('keyField'=>'offr','totalItemCount'=>$count));
 $dp->pagination=false;
@@ -50,20 +53,21 @@ $dp->pagination=false;
 <div id='complaints-main'>
 <h1>Officer wise Pending Status of Complaints on <?php echo date('d/m/Y');?></h1>
 <?php 
+$model=new DesignationType;
 $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'complaints-grid',
 	'dataProvider'=>$dp,
-	//'filter'=>$model,
+	'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
     'columns'=>array(
-      array('header'=>'Officer','value'=>function($data,$row,$column){
+      array('name'=>'id','header'=>'Officer','value'=>function($data,$row,$column){
     $designation= Designation::model()->findByPk($data['offr']);
     if ($designation) 
         return $designation->name_hi;
     else 
         return "";
     
-      }),
+      },'filter'=> DesignationType::model()->listAll()),
        
        array('header'=>Yii::t('app','Complaints'),'value'=>
            function($data,$row,$column){

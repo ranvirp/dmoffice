@@ -19,7 +19,11 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-
+<div class="search-form" style="display:none">
+<?php $this->renderPartial('_search',array(
+	'model'=>$model,
+)); ?>
+</div><!-- search-form -->
 <form>Page Size:<input name="page"/></form>
 <?php $name='name_'.Yii::app()->language; ?>
 <?php

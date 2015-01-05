@@ -110,7 +110,7 @@ class Complaints extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id);
+        $criteria->compare('t.id', $this->id);
 		$criteria->compare('status', $this->status);
         $criteria->compare('complainants', $this->complainants, true);
         $criteria->compare('oppositions', $this->oppositions, true);
@@ -132,7 +132,7 @@ class Complaints extends CActiveRecord
  {
      $criteria->addCondition(array('limit'=> $limit,'offset'=>0));
  }
- $criteria->order='priority asc,policestation desc,revenuevillage desc';
+ $criteria->order='policestation desc,revenuevillage desc';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
 
@@ -199,7 +199,7 @@ class Complaints extends CActiveRecord
                  $x.=$redtag.'<br/><b>Urgent</b>';
           $x.='<br/>'.'<a href="/replies/create/content_type/Complaints/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
         
-              return TbHtml::link($x,'/complaints/'.$data->id);
+              return TbHtml::link($x,Yii::app()->createUrl('/complaints/'.$data->id));
          
      }
          ,'type'=>'raw');
@@ -332,7 +332,9 @@ class Complaints extends CActiveRecord
                 $x='9';
         else 
             $x= $this->complainantmobileno[0];
-        $text=Yii::t('app',"From").":".$this->complainants."-$x".substr($this->complainantmobileno,1)."\n";
+        $text=Yii::t('app',"From").":".$this->complainants
+                //."-$x".substr($this->complainantmobileno,1)
+                ."\n";
         $text .= Yii::t('app',"Complaint Id:").$this->id."\n";
         //$text = Yii::t('app',"Complaint Id:").'765432730'."\n";
         $text.=Yii::t('app',"Revenuevillage").':' . $this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi . "\n";
@@ -341,6 +343,17 @@ class Complaints extends CActiveRecord
         $text.="\nयह शिकायत ".$this->officer->name_hi." को भेज दी गयी है";
         $text.="\n";
 		$text.="कार्यवाही का विवरण azamgarhdm.com पर उपलब्ध होगा";
+                $temp="शि‍कायत संख्‍या - %s
+मो0न0 %s
+शि‍कायत कर्ता का नाम –%s  
+राजस्‍व ग्राम –%s     
+थाना –%s    
+श्रेणी-%s    
+वि‍वरण -%s
+Login To – http://azamgarhdm.com";
+                $text=sprintf($temp,$this->id,$this->complainantmobileno,$this->complainants,$this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi,
+                        $this->thana->name_hi,$this->categoryName->name_hi,$this->description);
+                
         return array('PhNo' => $PhNo, 'text' => $text);
     }
 public function count1($urgent=false,$disposed=false)

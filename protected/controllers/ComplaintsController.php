@@ -259,7 +259,11 @@ class ComplaintsController extends Controller {
     }
 public function actionOw()
 {
-    $this->render('officerwise');
+    $dt=0;
+    //var_dump($_GET);exit;
+    if(isset($_GET['DesignationType']['id']))
+        $dt= $_GET['DesignationType']['id'];
+    $this->render('officerwise',array('designationtype'=>$dt));
 }
     public function actionSearch() {
 

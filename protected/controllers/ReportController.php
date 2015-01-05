@@ -132,7 +132,7 @@ group by officerassigned";
         //$dp=
         $this->render('/reports/officerwise',array('dp'=>$dp));
     }
-    public function actionRender()
+    public function actinRender()
     {
         $model=new Landdisputes;
         $model->unsetAttributes();
@@ -147,5 +147,52 @@ $mdf->SetAutoFont(AUTOFONT_ALL);
         $mdf->WriteHTML($html);
         $mdf->Output("d:/output.pdf");
         exit;
+    }
+    public function actionRender()
+    {
+        $district= Utility::getDistrict(Yii::app()->user->id);
+        $sdms=Yii::app()->db->createCommand("select id from designation where district_code=$district and designation_type_id=8"
+                    )->queryAll();
+        $thanas=Yii::app()->db->createCommand("select code from policestation where district_code=$district"
+                   )->queryAll();
+        print '<meta charset="utf-8">';
+        $x= "<table class='table table-bordered'>";
+        foreach ($sdms as $j=>$sdm)
+        {
+           
+            foreach($thanas as $i=>$thana)
+            {
+               
+            $lds=Landdisputes::model()->with(array(
+                array('thana','condition'=>'code='.$thana['code']),'revVillage'))
+                    ->findAllByAttributes(array('officerassigned'=>$sdm['id']));
+             $x.= "<tr><td>";
+            $x.= Policestation::model()->findByPk($thana['code'])->name_hi;
+            $x.= "</td></tr>";
+            foreach ($lds as $ld)
+            {
+                  $x.= "<tr><td>";
+                $x.= $ld->id." ".$ld->revVillage->tehsilCode->name_hi." ".$ld->thana->name_hi."\n";
+                  $x.= "</td></tr>";
+            }
+          
+            
+            }
+            $x.= '</table>';
+        }
+        $this->render('test',array('html'=> $x));
+    }
+    public function actionSms()
+    {
+        if (isset($_POST['m']))
+            $m=$_POST['m'];
+         if (isset($_POST['p']))
+            $p=$_POST['p'];
+      if (isset($m)&&isset($p))
+      {
+       $smsc=new SendSMSComponent();
+				$smsc->postSms($p,$m);
+      }
+      $this->render('sms');
     }
 }

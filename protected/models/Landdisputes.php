@@ -269,6 +269,18 @@ class Landdisputes extends CActiveRecord {
 		$text.="\n";
 		$text.="azamgarhdm.com";
        // $text.="Complainanant:" . $this->complainants . " " . $this->complainantmobileno;
+                    $temp="भूमि‍ वि‍वाद संख्‍या - %s
+मो0न0 %s
+शि‍कायत कर्ता का नाम –%s  
+राजस्‍व ग्राम –%s     
+थाना –%s    
+श्रेणी-%s    
+वि‍वरण -%s
+गाटा संख्‍या- %s
+Login To – http://azamgarhdm.com";
+                $text=sprintf($temp,$this->id,$this->complainantmobileno,$this->complainants,$this->revVillage->name_hi . ',' . $this->revVillage->tehsilCode->name_hi,
+                        $this->thana->name_hi,$this->categoryName->name_hi,$this->description,$this->gatanos); 
+
         return array('PhNo' => $PhNo, 'text' => $text);
     }
     public static function getColumns($buttoncolumns=false,$policestation=true,$revenuevillage=true,$rowdisplay=true)
@@ -309,7 +321,7 @@ class Landdisputes extends CActiveRecord {
          if (isset($prevreference->options[$data->prevreferencetype]))
          $prevreferencetype=$prevreference->options[$data->prevreferencetype].' '.$data->prevreferenceno;
          $x.='<br/>'.'<a href="/replies/create/content_type/Landdisputes/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
-             return TbHtml::link($x,'/landdisputes/'.$data->id).'<br/>'.'<span style="font-size:8px">'
+             return TbHtml::link($x,Yii::app()->createUrl('/landdisputes/'.$data->id)).'<br/>'.'<span style="font-size:8px">'
              .  $prevreferencetype.'</span>';
          
      }

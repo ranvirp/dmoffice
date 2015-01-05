@@ -49,7 +49,7 @@ class SendSMSComponent extends CApplicationComponent{
          $x=$event->sender->getSMSDetails();
          if (is_array($x))
          {
-            $this->postSms($x['PhNo'], $x['text']);
+            $this->postSms1($x['PhNo'], $x['text']);
             // var_dump($x);
              //exit;
          }
@@ -57,6 +57,66 @@ class SendSMSComponent extends CApplicationComponent{
          
          
      }
+      public function postSms1($PhNo,$text)
+      {
+          $ScheduleSMSDateTime = "";                          //Optional.
+        $RetryMinutes = 0;                                  //Optional. Required in case of Schedulling date time is provided.
+        $SenderID = "";                                     //Optional. Required in case of Open or Dynamic SenderID only.
+        $SenderNo = "";                                     //Optional. Required in case of Open or Dynamic SenderID only.
+$options=array('SoapAction'=>'http://www.businesssms.co.in/SubmitSMS','trace'=>1,'soap_version'   => SOAP_1_1
+        ,"exception" => 1,'use' => SOAP_LITERAL,'style'=>SOAP_DOCUMENT,'keep_alive'=>false);
+            $soapclient = new SoapClient('http://businesssms.co.in/WebService/BSWS.asmx?WSDL',$options);
+         
+           $soapheader = new SoapHeader("http://www.businesssms.co.in",'ihj');
+
+        $params=array('strID'=>'dmaza@nic.in','strPwd'=>'password','strPhNo'=>$PhNo,'strText'=>$text,'intRetryMin'=>$RetryMinutes,);
+        //    'strSchedule'=>$ScheduleSMSDateTime,'strSenderId'=>$SenderID,'strSenderNo'=>$SenderNo);
+        //$text="test";
+        $x = new \SoapVar(sprintf('
+    <SubmitSMS xmlns="http://www.businesssms.co.in/">
+      <strID>%s</strID>
+      <strPwd>%s</strPwd>
+      <strPhNo>%s</strPhNo>
+      <strText>%s</strText>
+      <strSchedule></strSchedule>
+      <intRetryMin>0</intRetryMin>
+      <strSenderID></strSenderID>
+      <strSenderNo></strSenderNo>
+    </SubmitSMS>
+  ',$this->ID,$this->Pwd,$PhNo,$text),XSD_ANYXML);
+        try{
+       // $result=$soapclient->__soapCall("SubmitSMS",array($params));
+            $result=$soapclient->submitSMS($x);
+            
+        //var_dump($result);
+        }
+        catch(Exception $ex)
+        {
+            
+            print $ex->getMessage();
+            return;
+           
+        }
+       try{
+		  Yii::app()->user->setFlash('notification',"Message $text sent succesfully  to $PhNo" );
+            return 1;
+			}catch(Exception $e)
+			{
+			print "Message $text sent succesfully  to $PhNo"."\n";
+			return 1;
+			}
+        /*
+        $respXML = $soapclient->__getLastResponse();
+$requXML = $soapclient->__getLastRequest();
+
+
+var_dump( $soapclient->__getLastRequestHeaders());
+var_dump( $requXML);
+var_dump($soapclient->__getLastResponseHeaders());
+var_dump( $respXML);
+         * */
+         
+      }
     public function postSms($PhNo,$text)
     {
         $ph_arr=explode(",",$PhNo);
@@ -116,6 +176,7 @@ curl_close($ch);
 			}
         }
         else {
+            Yii::trace($response, "sms");
 		try{
             Yii::app()->user->setFlash('notification',"Could not send message $text  to $PhNo" );
             return 0;

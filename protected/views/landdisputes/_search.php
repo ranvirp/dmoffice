@@ -8,7 +8,7 @@
 
     <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
+	'method'=>'post',
 )); ?>
 
                     <?php echo $form->textFieldControlGroup($model,'id',array('span'=>5)); ?>
