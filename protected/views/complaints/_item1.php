@@ -4,7 +4,7 @@
     <div class="panel-heading">
         <div  class="col-md-2 pull-left">#<?php echo $data->id;?></div>
         <div class="col-md-4"><?php echo Yii::t('app','Category').':'.$data->categoryName->name_hi;?></div>
-        <span><?php echo $data->officer->name_hi;?></span>
+        <span><?php echo $data->officer?$data->officer->name_hi:'missing';?></span>
         <span class="pull-right"><?php echo date('d/m/Y',$data->created_at);?></span>
     </div>
 <div class="panel-body">
