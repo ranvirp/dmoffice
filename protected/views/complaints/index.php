@@ -17,7 +17,7 @@ $this->menu=array(
 <h1><?php echo Yii::t('app','Complaints');?></h1>
 <script>
 $('.disposeBt').live("click", function(e) {
-    if(confirm("Are you sure you want to mark as disposed?")
+    if(confirm("Are you sure you want to mark as disposed?"))
     {
         var href = $(this).attr('href');      
         $.ajax({
