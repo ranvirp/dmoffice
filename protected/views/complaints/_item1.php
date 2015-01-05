@@ -1,3 +1,4 @@
+
 <?php if (is_array($data)) {$data = Complaints::model()->with('replies')->findByPk($data['id1']);}?>
 <div class="panel panel-default post" id="post-<?php echo $data->id; ?>">
     <div class="panel-heading">
@@ -11,13 +12,9 @@
     <p><?php print $data->description; ?></p>
     <?php print Files::showAttachmentsInline($data, 'documents');?>
     <?php if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus')): ?>
-   <p><?php echo CHtml::ajaxButton("Mark disposed",array("/complaints/toggleStatus","id"=>$data->id),array(
-
-     "beforeSend" => 'js:function(){if(confirm("Are you sure you want to mark as disposed?"))return true;}',
-     "success"=>'js:function(data){alert(data);$.fn.yiiListView.update("yw0");}',
-     "type"=>"post",
-
-          ),array("id"=>$data->id)); ?></p>
+   <p><?php
+     echo TbHtml::button("Mark disposed",array('class'=>'disposeBt','href'=>Yii::app()->createUrl("/complaints/toggleStatus/id/".$data->id)));
+    ?></p>
    <?php  echo $this->renderPartial('/complaints/_replies',array(
 			'replies'=>$data->replies,
 		),true); 

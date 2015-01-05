@@ -210,11 +210,13 @@ $x->pagination=false;
                        $ld->status=1;
            $ld->save();
             print $ld->status;
+             $reply =Replies::lastReply("Landdisputes",$ld->id);
+            $ct=($reply)?$reply->content:'';
             if ($ld->status==1)
             {
                 $smsc=new SendSMSComponent();
-                $smsc->postSms1('91'.$ld->complainantmobileno, Yii::t('app','Landdisputes')." ".$ld->id." निस्तारित"
-                        ."\n". Replies::lastReply("Landdisputes",$ld->id));
+              $smsc->postSms1('91'.$ld->complainantmobileno, Yii::t('app','Landdisputes')." ".$ld->id." "." निस्तारित"
+                        ."\n".Yii::t('app','Landdisputes').":".$ld->description."\n"."निस्तारण:".$ct );
             }
         }
         else 

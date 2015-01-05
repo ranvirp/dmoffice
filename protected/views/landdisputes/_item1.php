@@ -1,3 +1,21 @@
+<script>
+$('.disposeBt').live("click", function(e) {
+    if(confirm("Are you sure you want to mark as disposed?")
+    {
+        var href = $(this).attr('href');      
+        $.ajax({
+            url: href,
+            type: "GET",
+            dataType: 'text',
+            //beforeSend : function(xhr){if(!confirm("Are you sure you want to mark as disposed?"))xhr.abort();},
+            success: function(result){
+               // alert(result);
+                $.fn.yiiListView.update("yw0");
+            }
+        });
+        return false;
+    }});
+</script>
 <?php if (is_array($data)) {$data = Landdisputes::model()->findByPk($data['id1']);}?>
 <div class="panel panel-success post" id="post-<?php echo $data->id; ?>">
     <div class="panel-heading">
@@ -14,13 +32,9 @@
     <p><?php print $data->description; ?></p>
     <?php print Files::showAttachmentsInline($data, 'documents');?>
     <?php if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus')): ?>
-   <p><?php echo CHtml::ajaxButton("Mark disposed",array("/landdisputes/toggleStatus","id"=>$data->id),array(
-
-     "beforeSend" => 'js:function(){if(confirm("Are you sure you want to mark as disposed?"))return true;}',
-     "success"=>'js:function(data){$.fn.yiiListView.update("yw0",{});}',
-     "type"=>"post",
-
-          ),array("id"=>$data->id)); ?></p>
+  <p><?php
+     echo TbHtml::button("Mark disposed",array('class'=>'disposeBt','href'=>Yii::app()->createUrl("/landdisputes/toggleStatus/id/".$data->id)));
+    ?></p>
    <?php  echo $this->renderPartial('/landdisputes/_replies',array(
 			'replies'=>$data->replies,
 		),true); 

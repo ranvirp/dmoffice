@@ -335,14 +335,17 @@ public function actionOw()
            if  ( $ld->status == 1)  $ld->status = 0 ; else $ld->status = 1;
             $ld->save();
             print $ld->status;
+            $reply =Replies::lastReply("Complaints",$ld->id);
+            $ct=($reply)?$reply->content:'';
              if ($ld->status==1)
             {
                 $smsc=new SendSMSComponent();
-                $smsc->postSms1('91'.$ld->complainantmobileno, Yii::t('app','Complaints')." ".$ld->id." निस्तारित"
-                        ."\n". Replies::lastReply("Complaints",$ld->id));
+                $smsc->postSms1('91'.$ld->complainantmobileno, Yii::t('app','Complaints')." ".$ld->id." "." निस्तारित"
+                        ."\n".Yii::t('app','Complaints').":".$ld->description."\n"."निस्तारण:".$ct );
             }
         } else
             print "no";
+        //Yii::app()->end();
     }
      public function actionApprove() {
       $model=new Complaints;
