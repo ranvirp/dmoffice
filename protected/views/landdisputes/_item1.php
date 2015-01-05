@@ -1,21 +1,4 @@
-<script>
-$('.disposeBt').live("click", function(e) {
-    if(confirm("Are you sure you want to mark as disposed?")
-    {
-        var href = $(this).attr('href');      
-        $.ajax({
-            url: href,
-            type: "GET",
-            dataType: 'text',
-            //beforeSend : function(xhr){if(!confirm("Are you sure you want to mark as disposed?"))xhr.abort();},
-            success: function(result){
-               // alert(result);
-                $.fn.yiiListView.update("yw0");
-            }
-        });
-        return false;
-    }});
-</script>
+
 <?php if (is_array($data)) {$data = Landdisputes::model()->findByPk($data['id1']);}?>
 <div class="panel panel-success post" id="post-<?php echo $data->id; ?>">
     <div class="panel-heading">
