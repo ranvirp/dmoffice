@@ -338,7 +338,8 @@ public function actionOw()
              if ($ld->status==1)
             {
                 $smsc=new SendSMSComponent();
-                $smsc->postSms('91'.$ld->complainantmobileno, Yii::t('app','Complaints')." ".$ld->id." निस्तारित");
+                $smsc->postSms('91'.$ld->complainantmobileno, Yii::t('app','Complaints')." ".$ld->id." निस्तारित"
+                        ."\n". Replies::lastReply("Complaints",$ld->id));
             }
         } else
             print "no";

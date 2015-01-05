@@ -213,7 +213,8 @@ $x->pagination=false;
             if ($ld->status==1)
             {
                 $smsc=new SendSMSComponent();
-                $smsc->postSms('91'.$ld->complainantmobileno, Yii::t('app','Landdisputes')." ".$ld->id." निस्तारित");
+                $smsc->postSms('91'.$ld->complainantmobileno, Yii::t('app','Landdisputes')." ".$ld->id." निस्तारित"
+                        ."\n". Replies::lastReply("Landdisputes",$ld->id));
             }
         }
         else 
