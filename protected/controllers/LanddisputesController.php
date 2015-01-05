@@ -285,12 +285,15 @@ public function actionIndex()
      */
     public function actionApprove() {
       $model=new Landdisputes;
-        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 group by landdisputes.id';
+        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-       // $count = Yii::app()->db->createCommand('SELECT COUNT(id) FROM (' . $sql . ') as count_alias')->queryScalar(); //the count
-        $count=1;
+        $sql1='select count(landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+        $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
+       // var_dump($count);
+       //exit;        
+//$count=1;
  
-        $dp = new CSqlDataProvider($rawData,array('keyField'=>'id1','totalItemCount'=>$count));
+        $dp = new CSqlDataProvider($rawData,array('keyField'=>'id1','totalItemCount'=>$count,'pagination'=>array('pageSize'=>5)));
         $this->render('index',array('dataProvider'=>$dp));
   /*    
  $this->render('ldwise_1', array(
