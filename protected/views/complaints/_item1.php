@@ -14,7 +14,7 @@
    <p><?php echo CHtml::ajaxButton("Mark disposed",array("/complaints/toggleStatus","id"=>$data->id),array(
 
      "beforeSend" => 'js:function(){if(confirm("Are you sure you want to mark as disposed?"))return true;}',
-     "success"=>'js:function(data){$.fn.yiiListView.update("yw0",{});}',
+     "success"=>'js:function(data){alert(data);$.fn.yiiListView.update("yw0");}',
      "type"=>"post",
 
           ),array("id"=>$data->id)); ?></p>

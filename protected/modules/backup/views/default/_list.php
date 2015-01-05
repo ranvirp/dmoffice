@@ -7,10 +7,10 @@
 		'create_time',
 		array(
 			'class' => 'CButtonColumn',
-			'template' => ' {download} {restore}',
+			'template' => '{download}',
 			  'buttons'=>array
 			    (
-			        'Download' => array
+			        'download' => array
 			        (
 			            'url'=>'Yii::app()->createUrl("backup/default/download", array("file"=>$data["name"]))',
 			        ),
@@ -18,7 +18,7 @@
 			        (
 			            'url'=>'Yii::app()->createUrl("backup/default/restore", array("file"=>$data["name"]))',
 					),
-			        'delete' => array
+			        'Delete' => array
 			        (
 			            'url'=>'Yii::app()->createUrl("backup/default/delete", array("file"=>$data["name"]))',
 			        ),
@@ -26,7 +26,7 @@
 		),
 		array(
 			'class' => 'CButtonColumn',
-			'template' => '{delete}',
+			'template' => '',
 			  'buttons'=>array
 			    (
 

@@ -97,9 +97,16 @@ class DefaultController extends Controller
 		$cmd = Yii::app()->db->createCommand($sql);
 		$table = $cmd->queryRow();
 
+if(!isset($table['Create Table']))
+{
+ return "";                       
+}
+ 
+
 		$create_query = $table['Create Table'] . ';';
 
 		$create_query  = preg_replace('/^CREATE TABLE/', 'CREATE TABLE IF NOT EXISTS', $create_query);
+
 		//$create_query = preg_replace('/AUTO_INCREMENT\s*=\s*([0-9])+/', '', $create_query);
 		if ( $this->fp)
 		{
