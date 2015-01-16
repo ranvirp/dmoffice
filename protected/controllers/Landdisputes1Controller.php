@@ -30,7 +30,7 @@ class Landdisputes1Controller extends Controller {
     public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view','myJson'),
+                'actions' => array('index', 'view','myJson','list'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -72,5 +72,19 @@ public function actionMyJson()
        
    }
    print jsone_encode($list);
+}
+public function actionList($ps)
+{
+    //list pending thanawise
+    $model=new Landdisputes();
+    $criteria=new CDbCriteria();
+    $criteria->limit=15;
+    $criteria->condition='policestation=:p';
+    $criteria->addCondition('status=0');
+    $criteria->params=array(':p'=>$ps);
+    $criteria->order="priority desc,created_at desc";
+    //$lds=Landdisputes::model()->findAll($criteria);
+    $dp= new CActiveDataProvider($model,array('criteria'=>$criteria));
+    $this->render('/landdisputes/ldwise',array('model'=>$model,'dp'=>$dp));
 }
 }

@@ -4,28 +4,14 @@
 
 
 ?>
-<?php
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#landdisputes-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
-?>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search1',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-<form>Page Size:<input name="page"/></form>
+
+
+<form><div class="row"><div class="col-md-2"> Number:<input name="page"/></div> 
+    
+    <?php echo TbHtml::dropDownListControlGroup('ps','', Utility::listAllByAttributes('Policestation',array('district_code'=>Utility::getDistrict(Yii::app()->user->id))),array('empty'=>'None','label'=>'Police Station','class'=>'form-control-inline col-md-2','span' => 5, 'maxlength' => 11)); 
+?>
+    <div class="col-md-2"><?php echo TbHtml::submitButton('Load');?></div></div></form>
 <?php $name='name_'.Yii::app()->language; ?>
 <?php
      $this->widget('ext.mPrint.mPrint', array(
@@ -44,12 +30,30 @@ $('.search-form form').submit(function(){
           'id' => 'print-div'         //id of the print link
       ));
 ?>
-<?php 
+<form method="POST">
+<?php
+echo '<div class="row">';
+echo '<div class="col-md-3">'; 
+
+echo TbHtml::textFieldControlGroup('doa', '', array('class'=>'datepicker','label'=>'Date of Action:'));
+echo '</div>';
+echo '<div class="col-md-2"><label></label><div>';
+ echo TbHtml::submitButton('Assign');
+ echo '</div></div>';
+ echo '</div>';
+$col[]=array('header'=>'Choose','value'=>'CHtml::checkBox("cid[]",null,array("value"=>$data->id,"id"=>"cid_".$data->id))','type'=>'raw');
+$col[]='nextdateofaction';
 $this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'landdisputes-grid',
 	'dataProvider'=>$dp,
 	'filter'=>$model,
    'type' => TbHtml::GRID_TYPE_BORDERED,
    // 'mergeColumns' => $mergeColumns,  
-	'columns'=>  Landdisputes::getColumns(false),
+	'columns'=>  array_merge($col,Landdisputes::getColumns(false)),
 )); ?>
+</form>
+<script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({ appendText: "(dd-mm-yyyy)",beforeShowDayType:$.datepicker.noWeekends})
+        });
+    </script>

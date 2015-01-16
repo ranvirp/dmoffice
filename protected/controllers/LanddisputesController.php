@@ -417,8 +417,14 @@ public function actionIndex()
             $model->priority=$numbers[$_GET['p']];
            if (isset($_GET['s']))
             $model->status=$numbers[$_GET['s']];
-           
-               
+       
+        if (isset($_POST['Landdisputes'])) {
+            $model->attributes = $_POST['Landdisputes'];
+        }
+         if (strcmp($model->revenuevillage,'None')==0)
+               unset($model->revenuevillage);
+         //$model->status=0;
+  
        $dp=$model->search();
        $dp->pagination=array('pageSize'=>20);
        if (isset($_GET['page']) && is_numeric($_GET['page']))
@@ -534,4 +540,62 @@ function gridToggleStatusButton($data,$row)
         $result ='<b>Disposed:</b>'. $disposed.'<br/>'.CHtml::link($disposedlinktext,$url) .'<br/>'; 
         return $result;
     }
+    public function actionList()
+{
+    //list pending thanawise
+        
+        if(isset($_POST['cid']))
+        {
+            //var_dump($_POST);
+            //exit;
+           foreach($_POST['cid'] as $i=>$cid)
+           {
+            $ld= Landdisputes::model()->findByPk($cid);
+            $date = DateTime::createFromFormat('m/d/Y', $_POST['doa']);
+            $ld->nextdateofaction= $date->format('Y-m-d');
+            
+            $ld->save();
+           }
+        }
+    $model=new Landdisputes();
+    $criteria=new CDbCriteria();
+    if(isset($_GET['page']))
+        
+    $criteria->limit=$_GET['page'];
+    else 
+        $criteria->limit=15;
+    if(isset($_GET['ps']))
+        
+    $ps=$_GET['ps'];
+    else 
+        $ps=0;
+    $criteria->condition='policestation=:p';
+    $criteria->addCondition('status=0');
+    $criteria->addCondition('nextdateofaction <=now()');
+    $criteria->params=array(':p'=>$ps);
+    $criteria->order="priority desc,revenuevillage desc,created_at desc";
+    //$lds=Landdisputes::model()->findAll($criteria);
+    $dp= new CActiveDataProvider($model,array('criteria'=>$criteria,'pagination'=>false));
+    $this->render('/landdisputes/ldwise_2',array('model'=>$model,'dp'=>$dp));
+}
+public function actionCl()
+{
+    $model=new Landdisputes();
+        $model->unsetAttributes();
+        $dp=null;
+        $title='';
+    if (isset($_POST['doa']))
+    {
+        
+        $date=  DateTime::createFromFormat("m/d/Y", $_POST['doa']);
+        $model->nextdateofaction=$date->format("Y-m-d");
+        //echo $date->format("m-d-Y");
+        //exit;
+        $model->policestation=$_POST['policestation'];
+        $x=  Policestation::model()->findByPk($_POST['policestation'])->name_en;
+        $title='Action list for '.$x.' on '.$date->format('d/m/Y');
+        $dp=$model->search();
+    }
+    $this->render('_psform',array('model'=>$model,'dp'=>$dp,'title'=>$title));
+}
 }

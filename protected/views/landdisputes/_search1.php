@@ -86,5 +86,18 @@
     </td>
     </tr>
     <?php $this->endWidget(); ?>
-    
+       <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+	'action'=>Yii::app()->createUrl($this->route),
+	'method'=>'post',
+)); ?>
+      <tr>  
+         <td >
+         <?php $this->widget('OfficerWidget',array('model'=>$model, 'attribute'=>'officerassigned'));?>
+</td> 
+            <td >
+        <?php echo TbHtml::submitButton('Search',  array('color' => TbHtml::BUTTON_COLOR_PRIMARY,));?>
+    </td>
+    </tr>
+    <?php $this->endWidget(); ?>
+      
 </table>

@@ -39,6 +39,9 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                     'itemCssClass' => 'item-test',
                     'encodeLabel' => false,
                     'items' => array(
+                          array('label' => 'Home', 'url' => array('/')),
+                         array('label' => 'Assign Dates', 'url' => array('/landdisputes/list')),
+                         array('label' => 'Cause list', 'url' => array('/landdisputes/cl')),
                          array('label' => 'Backup', 'url' => array('/backup')),
                         array('label' => 'Basedata', 'url' => array('/Basedata')),
                         array('label'=>'<i class="fa fa-file-pdf-o"></i> Pending '.Yii::t('app','Land disputes'),
@@ -66,7 +69,10 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                                  array('label'=>'Officer Wise Pending','url' => array('/complaints/ow')),
                                  
                                  )),
-                        array('label'=>'<span id="clock"></span>','url'=>'#'),
+                        array('label'=>'<span id="clock">    16/01/2015<br/>
+    9:38:02 PM
+    
+</span>','url'=>'#'),
                          array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label'=>'<span class="glyphicon glyphicon-user" aria-hidden="true"></span> ' . Yii::app()->user->name.' <span class=caret></span>' , 'url'=>'#','visible'=>!Yii::app()->user->isGuest,
                             'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"),  'items'=>

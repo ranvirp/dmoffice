@@ -3,16 +3,8 @@
 /* @var $model Landdisputes */
 
 
-$this->breadcrumbs=array(
-	'Landdisputes'=>array('index'),
-	'Manage',
-);
-
-$this->menu=array(
-	array('label'=>'List Landdisputes', 'url'=>array('index')),
-	array('label'=>'Create Landdisputes', 'url'=>array('create')),
-);
-
+?>
+<?php
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
 	$('.search-form').toggle();
@@ -20,17 +12,12 @@ $('.search-button').click(function(){
 });
 $('.search-form form').submit(function(){
 	$('#landdisputes-grid').yiiGridView('update', {
-		data: $(this).serialize(),
-                
+		data: $(this).serialize()
 	});
 	return false;
 });
 ");
 ?>
-
-<h1>Manage Landdisputes</h1>
-
-
 
 <?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button btn')); ?>
 <div class="search-form" style="display:none">
@@ -38,19 +25,17 @@ $('.search-form form').submit(function(){
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-
+<form>Page Size:<input name="page"/></form>
 <?php $name='name_'.Yii::app()->language; ?>
 <?php
      $this->widget('ext.mPrint.mPrint', array(
-          'title' => 'title',          //the title of the document. Defaults to the HTML title
+          'title' => 'Report for Land Disputes',          //the title of the document. Defaults to the HTML title
           'tooltip' => 'Print',        //tooltip message of the print icon. Defaults to 'print'
           'text' => 'Print Results',   //text which will appear beside the print icon. Defaults to NULL
-          'element' => '#landdisputes-grid',        //the element to be printed.
+          'element' => '#xxx',        //the element to be printed.
           'exceptions' => array(       //the element/s which will be ignored
               '.summary',
-              '.search-form',
-              '.button-column',
-              '.filters',
+              '.search-form'
           ),
           'publishCss' => true,       //publish the CSS for the whole page?
          // 'visible' => Yii::app()->user->checkAccess('print'),  //should this be visible to the current user?
@@ -59,21 +44,15 @@ $('.search-form form').submit(function(){
           'id' => 'print-div'         //id of the print link
       ));
 ?>
+<div id="xxx">
+    <h2><?php echo $title;?></h2>
 <?php 
 $this->widget('bootstrap.widgets.TbGridView',array(
-//$this->widget('zii.widgets.grid.CGridView',array(
 	'id'=>'landdisputes-grid',
-	'dataProvider'=>$model->search(),
-        //'filterPosition'=>'header',
+	'dataProvider'=>$dp,
 	'filter'=>$model,
-    'enablePagination'=>true,
-    'ajaxType'=>'POST',
    'type' => TbHtml::GRID_TYPE_BORDERED,
-      //'template'=>'{pager}{items}{summary}{pager}',
-    
-	'columns'=>  Landdisputes::getColumns(true),
-    
-   
-     
-	
+   // 'mergeColumns' => $mergeColumns,  
+	'columns'=>  Landdisputes::getColumns(false),
 )); ?>
+</div>
