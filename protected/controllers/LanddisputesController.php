@@ -285,9 +285,9 @@ public function actionIndex()
      */
     public function actionApprove() {
       $model=new Landdisputes;
-        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.updated_at<replies.update_time';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-        $sql1='select count(landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+        $sql1='select count(landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.updated_at<replies.update_time';
         $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
        // var_dump($count);
        //exit;        
