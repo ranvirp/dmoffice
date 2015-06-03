@@ -349,9 +349,9 @@ public function actionOw()
     }
      public function actionApprove() {
       $model=new Complaints;
-        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0';
+        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.updated_at<replies.update_time';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-        $sql1='select count(complaints.id) as count11 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0';
+        $sql1='select count(complaints.id) as count11 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.updated_at<replies.update_time';
        $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
         //$count=1;
  
