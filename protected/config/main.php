@@ -195,8 +195,8 @@ return array(
         ),
         'clientScript'=>array(
                       'scriptMap'=>array(
-                          'jquery.js'=>'/dmofficedev1/js/jquery-1.11.1.js',
-                          'jquery.min.js'=>'/dmofficedev1/js/jquery-1.11.1.min.js',
+                          'jquery.js'=>'https://code.jquery.com/jquery-1.11.3.js',
+                          'jquery.min.js'=>'https://code.jquery.com/jquery-1.11.3.min.js',
                          // 'login.js'=>'site.min.js',
                       ),
                 ),
@@ -205,7 +205,7 @@ return array(
         ),
         // uncomment the following to use a MySQL database
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=mydb',
+            'connectionString' => 'mysql:host=localhost;dbname=dmoffice',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
@@ -238,6 +238,13 @@ return array(
         'yiiwheels' => array(
             'class' => 'yiiwheels.YiiWheels',
         ),
+        /*
+        'session' => array (
+    'sessionName' => 'Site Access',
+    'cookieMode' => 'only',
+    //'savePath' => '/path/to/new/directory',
+),
+*/
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
@@ -245,5 +252,8 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
         'filesAlias' => 'application.data.files',
+        'businesssmsid'=>'dmaza@nic.in----',
+        'businesssmspwd'=>'password---',
+        'context'=>'spoffice',
     ),
 );

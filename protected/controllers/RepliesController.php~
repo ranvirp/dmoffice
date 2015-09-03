@@ -64,10 +64,6 @@ class RepliesController extends Controller {
 
             throw new CHttpException(400, 'Invalid request. content_type and content_type_id must exist');
         }
-        if (($content_type=='Complaints') ||($content_type=='Landdisputes') )
-           if ($contentmodel->officerassigned!=Designation::getDesignationByUser(Yii::app()->user->id))
-                   throw new CHttpException(400, 'Invalid request. You are not authorized to reply to this assignment');
-      
         $model = new Replies;
 
         // Uncomment the following line if AJAX validation is needed
@@ -115,7 +111,6 @@ class RepliesController extends Controller {
             }
         }
 else {
-
         if (!Yii::app()->request->isAjaxRequest) {
 
             $this->render('_form', array(

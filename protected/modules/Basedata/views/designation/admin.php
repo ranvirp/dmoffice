@@ -59,6 +59,10 @@ $('.search-form form').submit(function(){
 			),
             'officer_name',
             'officer_mobile',
+            array(
+		'header'=>'User',
+			'value'=>'array_key_exists(0,$data->designationUsers)?User::model()->findByPk($data->designationUsers[0]->user_id)->username."(".$data->designationUsers[0]->user_id.")":""',
+			),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 		),

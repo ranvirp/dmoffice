@@ -52,6 +52,9 @@ class LoginController extends Controller
 		$lastVisit = User::model()->notsafe()->findByPk(Yii::app()->user->id);
 		$lastVisit->lastvisit = time();
 		$lastVisit->save();
+		Yii::app()->session['viewall']=0;
+				Yii::app()->session['context']='dmoffice';
+				
 	}
 
 }

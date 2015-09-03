@@ -68,7 +68,12 @@ class ComplaintsController extends Controller {
      */
     public function actionCreate() {
         $model = new Complaints;
-
+         $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        if (! in_array(Yii::app()->user->id,$dataentry))
+           throw new CHttpException(401,'Not Allowed data entry in this context..try changing context');
+           $model->context=$context;
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
         $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
@@ -147,7 +152,8 @@ class ComplaintsController extends Controller {
     public function actionMy() {
         $model = new Complaints('search');
 		$model->unsetAttributes(); 
-                if (Yii::app()->user->id!=1)
+       //         if (Yii::app()->user->id!=1)
+       if (!Yii::app()->session['viewall'])
         $model->officerassigned = Designation::getDesignationByUser(Yii::app()->user->id);
                 if (isset($_GET['o']))
                 {
@@ -211,7 +217,8 @@ class ComplaintsController extends Controller {
   if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
   //$model->status=0;
-  if (Yii::app()->user->id!=1)
+ // if (Yii::app()->user->id!=1)
+ if (!Yii::app()->session['viewall'])
   {
       $model->officerassigned=  Designation::getDesignationByUser (Yii::app()->user->id);
       $title="Complaints pending with ".Designation::getDesignationModelByUser (Yii::app()->user->id)->name_hi;
@@ -349,9 +356,16 @@ public function actionOw()
     }
      public function actionApprove() {
       $model=new Complaints;
-        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0';
+      $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        if (in_array(Yii::app()->user->id,$dataentry))
+         $ids=join(",",$dataentry);
+        else
+         $ids=Yii::app()->user->id;
+        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.created_by in ('.$ids.')';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-        $sql1='select count(complaints.id) as count11 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0';
+        $sql1='select count(complaints.id) as count11 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.created_by in ('.$ids.')';
        $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
         //$count=1;
  

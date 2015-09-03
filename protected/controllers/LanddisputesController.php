@@ -68,6 +68,12 @@ class LanddisputesController extends Controller {
 
 
         $model = new Landdisputes;
+         $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        if (! in_array(Yii::app()->user->id,$dataentry))
+           throw new CHttpException(401,'Not Allowed data entry in this context..try changing context');
+           $model->context=$context;
         $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         $model->courtcasepending = 1;
         // $complainants=$this->getItemsToUpdate('complainants');
@@ -285,9 +291,16 @@ public function actionIndex()
      */
     public function actionApprove() {
       $model=new Landdisputes;
-        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+       $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        if (in_array(Yii::app()->user->id,$dataentry))
+         $ids=join(",",$dataentry);
+        else
+         $ids=Yii::app()->user->id;
+        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.created_by in ('.$ids.')';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-        $sql1='select count(landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0';
+        $sql1='select count(landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.created_by in ('.$ids.')';
         $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
        // var_dump($count);
        //exit;        
@@ -404,7 +417,8 @@ public function actionIndex()
         $numbers=array(0,1,2,3,4);
        $model = new Landdisputes('search');
 	   $model->unsetAttributes();
-	   if (Yii::app()->user->id!=1)
+	  // if (Yii::app()->user->id!=1)
+	  if (!Yii::app()->session['viewall'])
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
             if (isset($_GET['o']))
                 {
@@ -418,8 +432,8 @@ public function actionIndex()
            if (isset($_GET['s']))
             $model->status=$numbers[$_GET['s']];
        
-        if (isset($_POST['Landdisputes'])) {
-            $model->attributes = $_POST['Landdisputes'];
+        if (isset($_GET['Landdisputes'])) {
+            $model->attributes = $_GET['Landdisputes'];
         }
          if (strcmp($model->revenuevillage,'None')==0)
                unset($model->revenuevillage);
@@ -442,7 +456,8 @@ public function actionIndex()
     {
        $model = new Landdisputes('search');
 	   $model->unsetAttributes();
-	   if (Yii::app()->user->id!=1)
+	 //  if (Yii::app()->user->id!=1)
+	 if (!Yii::app()->session['viewall'])
        $model->officerassigned=Designation::getDesignationByUser(Yii::app()->user->id);
             $model->status=0;
           if (isset($_GET['p']))

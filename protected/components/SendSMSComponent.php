@@ -30,8 +30,8 @@ $ret = file($url);
  */
 class SendSMSComponent extends CApplicationComponent{
     public $sendsms=true;
-    public $ID="dmaza@nic.in";
-    public $Pwd="password";
+    public $ID="";
+    public $Pwd="";
     public $baseurl ="http://www.businesssms.co.in";
     public $PhNo="";
     public $Text="";
@@ -42,7 +42,9 @@ class SendSMSComponent extends CApplicationComponent{
 
     public function init()
     {
-        //parent::init();
+        parent::init();
+        $this->ID=Yii::app()->params['businesssmsid'];
+        $this->Pwd=Yii::app()->params['businesssmspwd'];
     } 
      public function sendSms($event)
     {

@@ -20,7 +20,7 @@ class SiteController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update','setviewall','setcontext'),
                 'users' => array('@'),
             ),
             array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -136,7 +136,12 @@ class SiteController extends Controller
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if($model->validate() && $model->login())
+			 {
+				Yii::app()->session['viewall']=0;
+				Yii::app()->session['context']='dmoffice';
 				$this->redirect(Yii::app()->user->returnUrl);
+				
+			 }
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));
@@ -412,6 +417,28 @@ $cv->save();
 		  }
 		  
 		}
+	}
+	public function actionSetviewall($set=1)
+	{
+	 if (Yii::app()->user->checkAccess('dataadmin'))
+	  {
+	    Yii::app()->session['viewall']=$set;
+	   echo '<script type="text/javascript">window.location.href="/site/index"; </script>';
+
+	  }
+	  else
+	    print "Not Allowed";
+      
+	
+	}
+	public function actionSetcontext($context='dmoffice')
+	{
+	
+	    Yii::app()->session['context']=$context;
+	    echo '<script type="text/javascript">window.location.href="/site/index"; </script>';
+
+      
+	
 	}
 	
 }

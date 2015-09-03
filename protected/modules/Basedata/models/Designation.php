@@ -50,7 +50,7 @@ class Designation extends CActiveRecord {
 			'designationType' => array(self::BELONGS_TO, 'DesignationType', 'designation_type_id'),
 			'designationUsers' => array(self::HAS_MANY, 'DesignationUser', 'designation_id'),
 			'district' => array(self::BELONGS_TO, 'District', 'district_code'),
-                     
+			         
 		);
 	}
 

@@ -30,6 +30,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
         $user_name=$designation?$designation->officer_name:'';
 }
     ?>
+
                 <?php
                 $this->widget('YiiSmartMenu', array(
                   //  'partItemSeparator' => '.',
@@ -39,9 +40,39 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                     'itemCssClass' => 'item-test',
                     'encodeLabel' => false,
                     'items' => array(
+                      array('label' => Yii::t('app','Context').'('.((Yii::app()->session['context']=='spoffice')?'SP Office':'DM Office').')'.'<span class="caret"></span>', 'url'=>'#',
+                             'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                             'items'=>array(
+                                 array('label'=>CHtml::ajaxLink('DM Office',array('/site/setcontext?context=dmoffice'),array (
+        'type'=>'POST',
+        //'dataType'=>'json',
+        'success'=>'function(html){ window.location.href="'.Yii::app()->createUrl('/site/index').'"; }'
+        )),'url'=>'#' ),
+                                array('label'=>CHtml::ajaxLink('SP Office',array('/site/setcontext?context=spoffice'),array (
+        'type'=>'POST',
+        //'dataType'=>'json',
+        'success'=>'function(html){ window.location.href="'.Yii::app()->createUrl('/site/index').'"; }'
+        )),'url'=>'#'),
+                                  )),
+                         array('label' => Yii::t('app','View All').'<span class="caret"></span>', 'url'=>'#','visible' => Yii::app()->user->checkAccess('dataadmin'),
+                             'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
+                             'items'=>array(
+                                 array('label'=>CHtml::ajaxLink('View Own',array('/site/setviewall?set=0'),array (
+        'type'=>'POST',
+        //'dataType'=>'json',
+        'success'=>'function(html){ window.location.href="'.Yii::app()->createUrl('/site/index').'"; }'
+        )),'url'=>'#'),
+                                array('label'=>CHtml::ajaxLink('View All',array('/site/setviewall?set=1'),array (
+        'type'=>'POST',
+        //'dataType'=>'json',
+        'success'=>'function(html){ window.location.href="'.Yii::app()->createUrl('/site/index').'"; }'
+        )),'url'=>'#'),
+                                  )),
                           array('label' => 'Home', 'url' => array('/')),
+                          /*
                          array('label' => 'Assign Dates', 'url' => array('/landdisputes/list')),
                          array('label' => 'Cause list', 'url' => array('/landdisputes/cl')),
+                         */
                          array('label' => 'Backup', 'url' => array('/backup')),
                         array('label' => 'Basedata', 'url' => array('/Basedata')),
                         array('label'=>'<i class="fa fa-file-pdf-o"></i> Pending '.Yii::t('app','Land disputes'),
@@ -69,7 +100,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
                                  array('label'=>'Officer Wise Pending','url' => array('/complaints/ow')),
                                  
                                  )),
-                        array('label'=>'<span id="clock">    16/01/2015<br/>
+                        array('label'=>'<span id="clock">16/01/2015<br/>
     9:38:02 PM
     
 </span>','url'=>'#'),

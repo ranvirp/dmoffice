@@ -82,11 +82,32 @@ Yii::app()->ClientScript->registerScriptFile(Yii::app()->baseUrl.'/js/bootstrap-
 		    <script type="text/javascript" src="https://www.google.com/jsapi" ></script>
         <script src='<?php echo Yii::app()->baseUrl.'/js/googleTransliteration.js'; ?>' type='text/javascript' ></script>
  <script src='<?php echo Yii::app()->baseUrl.'/js/common.js'; ?>' type='text/javascript' ></script>
- 
+ <style>
+ .layout-main-shortcuts {
+    background: #eee none repeat scroll 0 0;
+    border-bottom: 1px solid #ddd;
+    line-height: 16px;
+    margin: 0 auto;
+    padding: 3px 0;
+    text-align: right;
+}
+layout-main-shortcuts .container_12 {
+    width: 980px;
+}
+.container_12, .container_16 {
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+ </style>
   </head>
 
 <body>
-    
+ <div class="layout-main-shortcuts">
+<div class="container_12">
+
+</div>
+</div>
    
 <!-- Require the navigation -->
 <?php require_once('tpl_navigation_1.php')?>

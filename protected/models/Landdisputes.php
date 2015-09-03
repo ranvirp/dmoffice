@@ -39,7 +39,7 @@ class Landdisputes extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending,officerassigned, policerequired,  disputependingfor, casteorcommunal', 'required'),
+            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending,officerassigned, policerequired,  disputependingfor, casteorcommunal,id', 'required'),
             array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, officerassigned,disputependingfor, casteorcommunal,priority', 'numerical', 'integerOnly' => true),
             array('complainants, oppositions', 'length', 'max' => 100),
             array('gatanos,courtname,nextdateofaction,prevreferenceno,stayexists', 'length', 'max' => 220),
@@ -47,6 +47,7 @@ class Landdisputes extends CActiveRecord {
             array('nextdateofaction', 'length', 'max' => 200),
             array('complainantmobileno', 'length', 'max' => 13),
             array('oppositionmobileno', 'length', 'max' => 13),
+            array('context','length','max'=>20),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id,complainants, oppositions, revenuevillage, status,policestation, gatanos, category, description, courtcasepending,courtname,stayexists, courtcasedetails, policerequired,officerassigned, nextdateofaction, disputependingfor, casteorcommunal,prevreferencetype,prevreferenceno', 'safe', 'on' => 'search'),
@@ -197,7 +198,26 @@ class Landdisputes extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-
+	  public function beforeFind() {
+        parent::beforeFind();
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        $this->getDbCriteria()->addInCondition('created_by',$dataentry);
+       // $defaultConditions = array('create_user' => $dataentry);
+        //$queryData['conditions'] = array_merge($queryData['conditions'], $defaultConditions);
+        //return $queryData;
+    }
+      public function beforeCount() {
+        parent::beforeCount();
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        $this->getDbCriteria()->addInCondition('created_by',$dataentry);
+       // $defaultConditions = array('create_user' => $dataentry);
+        //$queryData['conditions'] = array_merge($queryData['conditions'], $defaultConditions);
+        //return $queryData;
+    }
     /**
      * Returns all models in List of primary key,name format
      */
@@ -313,14 +333,17 @@ Login To – http://azamgarhdm.com";
      $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
      {
           $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
-         $x= $data->id ;
+         $x=$data->context.'/';
+         $x.= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag;
          $prevreference=new Prevreference();
          $prevreferencetype='';
          if (isset($prevreference->options[$data->prevreferencetype]))
          $prevreferencetype=$prevreference->options[$data->prevreferencetype].' '.$data->prevreferenceno;
-         $x.='<br/>'.'<a href="/replies/create/content_type/Landdisputes/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
+         $x.='<br/>'.CHtml::link('<i class="fa fa-reply"></i>',array("/replies/create/content_type/Landdisputes/content_type_id/".$data->id));
+        
+         
              return TbHtml::link($x,Yii::app()->createUrl('/landdisputes/'.$data->id)).'<br/>'.'<span style="font-size:8px">'
              .  $prevreferencetype.'</span>';
          
@@ -425,7 +448,8 @@ Login To – http://azamgarhdm.com";
     {
         $condition=array();
         $condition['status']=0;
-        if (Yii::app()->user->id!=1)
+      //  if (Yii::app()->user->id!=1)
+      if (!Yii::app()->session['viewall'])
         $condition['officerassigned']=Designation::getDesignationByUser(Yii::app()->user->id);
         if ($urgent)
             $condition['priority']=1;
@@ -445,7 +469,10 @@ Login To – http://azamgarhdm.com";
         //$url=$column->grid->owner->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
        $url=Yii::app()->createUrl("/landdisputes/toggleStatus/id/").'/'.$data->id;
         $result =$disposed1;
-		if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus'))
+         $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+       if (Yii::app()->user->checkAccess('Landdisputes.toggleStatus') && in_array(Yii::app()->user->id,$dataentry))
 		{
 		 $result.=TbHtml::button($disposedlinktext,array('class'=>'hidden-print','onclick'=>"js:$.get('".$url."',function(data){\$('#landdisputes-grid').yiiGridView('update');})")) ; 
             //$result.=TbHtml::button($disposedlinktext,array('onclick'=>"js:$.get('".$url."',function(data){})"));

@@ -107,6 +107,25 @@ class Department extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+		  public function beforeFind() {
+        parent::beforeFind();
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $subordinatedepartments=$contexts[$context]['subordinatedepartments'];
+        if (count($subordinatedepartments)>0)
+        $this->getDbCriteria()->addInCondition('code',$subordinatedepartments);
+       
+    }
+      public function beforeCount() {
+        parent::beforeCount();
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+         $subordinatedepartments=$contexts[$context]['subordinatedepartments'];
+        if (count($subordinatedepartments)>0)
+        $this->getDbCriteria()->addInCondition(code,$subordinatedepartments);
+       
+    }
 	/**
 	* Returns all models in List of primary key,name format
 	*/

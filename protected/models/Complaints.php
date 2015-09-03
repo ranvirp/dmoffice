@@ -23,6 +23,7 @@
  */
 class Complaints extends CActiveRecord
 {
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -45,6 +46,7 @@ class Complaints extends CActiveRecord
 			array('oppositionmobileno', 'length', 'max'=>13),
 			array('revenuevillage', 'length', 'max'=>11),
 			array('nextdateofaction', 'length', 'max'=>200),
+			 array('context','length','max'=>20),
 			//array('officerassigned', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -152,6 +154,28 @@ class Complaints extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	  public function beforeFind() {
+        parent::beforeFind();
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        $this->getDbCriteria()->addInCondition('created_by',$dataentry);
+       // $defaultConditions = array('create_user' => $dataentry);
+        //$queryData['conditions'] = array_merge($queryData['conditions'], $defaultConditions);
+        //return $queryData;
+    }
+      public function beforeCount() {
+        parent::beforeCount();
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        $this->getDbCriteria()->addInCondition('created_by',$dataentry);
+       // $defaultConditions = array('create_user' => $dataentry);
+        //$queryData['conditions'] = array_merge($queryData['conditions'], $defaultConditions);
+        //return $queryData;
+    }
+	
+	
 	/**
 	* Returns all models in List of primary key,name format
 	*/
@@ -194,10 +218,11 @@ class Complaints extends CActiveRecord
      $columns[]=array('name'=>'id','value'=>function($data,$row,$column)
      {
           $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";
-         $x= $data->id ;
+         $x=$data->context.'/';
+         $x.= $data->id ;
          if ($data->priority==1)
                  $x.=$redtag.'<br/><b>Urgent</b>';
-          $x.='<br/>'.'<a href="/replies/create/content_type/Complaints/content_type_id/'.$data->id.'"><i class="fa fa-reply"></i></a>';
+          $x.='<br/>'.CHtml::link('<i class="fa fa-reply"></i>',array("/replies/create/content_type/Complaints/content_type_id/".$data->id));
         
               return TbHtml::link($x,Yii::app()->createUrl('/complaints/'.$data->id));
          
@@ -360,7 +385,10 @@ public function count1($urgent=false,$disposed=false)
     {
 	  $condition=array();
         $condition['status']=0;
-        if (Yii::app()->user->id!=1)
+       // if (Yii::app()->user->id!=1)
+      // if (!CWebUser::checkAccess('dataadmin'))
+      //if (Designation::getDesignationByUser(Yii::app()->user->id)->designationType->code=='dist-dataOperator'
+       if (!Yii::app()->session['viewall']) 
         $condition['officerassigned']=Designation::getDesignationByUser(Yii::app()->user->id);
         if ($urgent)
             $condition['priority']=1;
@@ -385,7 +413,11 @@ public static function gridToggleStatusButton($data,$row,$column)
         $disposedlinktext=$data->status?'<i class="fa fa-thumbs-o-down"></i>':'<i class="fa fa-thumbs-o-up"></i>';
         $url=$column->grid->owner->createUrl("/complaints/toggleStatus/id/").'/'.$data->id;
         $result = $disposed1;
-		if (Yii::app()->user->checkAccess('Complaints.toggleStatus'))
+         $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+      	
+		if (Yii::app()->user->checkAccess('Complaints.toggleStatus')&& in_array(Yii::app()->user->id,$dataentry))
 		$result.= TbHtml::button($disposedlinktext,array('class'=>'hide-print','onclick'=>"js:$.get('".$url."',function(data){\$('#complaints-grid').yiiGridView('update');})")) ; 
         
         return $result;

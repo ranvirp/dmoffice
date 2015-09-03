@@ -231,7 +231,7 @@ return array(
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=mydb',
+			'connectionString' => 'mysql:host=localhost;dbname=dmoffice',
 			'emulatePrepare' => true,
 			'username' => 'root',
 			'password' => '',

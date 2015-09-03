@@ -40,12 +40,12 @@ $('.search-form form').submit(function(){
 		'code',
 		array(
 		'name'=>'department_id',
-	    'value'=>'$data->department->name_'.$lang,
+	    'value'=>'$data->department?$data->department->name_'.$lang.':""',
 			),
 		
 		array(
 			'name'=>'level_id',
-			 'value'=>'$data->level->name_'.$lang,
+			 'value'=>'$data->level?$data->level->name_'.$lang.':""',
 			),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
