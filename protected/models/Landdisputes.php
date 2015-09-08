@@ -39,7 +39,7 @@ class Landdisputes extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending,officerassigned, policerequired,  disputependingfor, casteorcommunal,id', 'required'),
+            array('complainants, oppositions, revenuevillage, policestation,complainantmobileno, gatanos, category, description, courtcasepending,officerassigned, policerequired,  disputependingfor, casteorcommunal', 'required'),
             array('revenuevillage, policestation, category, courtcasepending, policerequired,prevreferencetype, officerassigned,disputependingfor, casteorcommunal,priority', 'numerical', 'integerOnly' => true),
             array('complainants, oppositions', 'length', 'max' => 100),
             array('gatanos,courtname,nextdateofaction,prevreferenceno,stayexists', 'length', 'max' => 220),

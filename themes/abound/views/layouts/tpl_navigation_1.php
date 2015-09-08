@@ -54,7 +54,7 @@ $designation=Designation::getDesignationModelByUser(Yii::app()->user->id);
         'success'=>'function(html){ window.location.href="'.Yii::app()->createUrl('/site/index').'"; }'
         )),'url'=>'#'),
                                   )),
-                         array('label' => Yii::t('app','View All').'<span class="caret"></span>', 'url'=>'#','visible' => Yii::app()->user->checkAccess('dataadmin'),
+                         array('label' => Yii::t('app','View ').((Yii::app()->session['viewall']==1)?'All':'Own').'<span class="caret"></span>', 'url'=>'#','visible' => Yii::app()->user->checkAccess('dataadmin'),
                              'itemOptions'=>array('class'=>'dropdown','tabindex'=>"-1"),'linkOptions'=>array('class'=>'dropdown-toggle','data-toggle'=>"dropdown"), 
                              'items'=>array(
                                  array('label'=>CHtml::ajaxLink('View Own',array('/site/setviewall?set=0'),array (
