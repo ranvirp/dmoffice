@@ -26,7 +26,7 @@ $this->menu=array(
     ),
     'data'=>$model,
     'attributes'=>array(
-		array('name'=>'id','value'=>($model->priority==1)?$redtag:''.$model->id,'type'=>'raw'),
+		array('name'=>'id','value'=>(($model->priority==1)?$redtag:'').$model->context.'/'.$model->id,'type'=>'raw'),
         
 		'complainants',
 		'oppositions',
@@ -96,13 +96,14 @@ if ($displayAttach==true)
 }
 else 
 {
-    echo TbHtml::btn(TbHtml::BUTTON_TYPE_LINK,'Attach (More) files',array('onClick'=>'window.location.replace("/landdisputes/view/id/"+"'.$model->id.'"+"/d/1")'));
+    echo TbHtml::btn(TbHtml::BUTTON_TYPE_LINK,'Attach (More) files',array('onClick'=>'window.location.replace("'.Yii::app()->createUrl("/landdisputes/view/id").'"+"/'.$model->id.'"+"/d/1")'));
 
 }
-echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'Landdisputes','content_type_id'=>$model->id)),array('dataType'=>'json',
+echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'Landdisputes','content_type_id'=>$model->id)),array(
+//'dataType'=>'json',
   'type'=>'post',	
     'success'=>"function(data){
-	$('#commentdiv').html(data.html);
+	$('#commentdiv').html(data);
 	}"));
 
 echo '<div id="commentdiv"></div>';

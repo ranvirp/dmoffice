@@ -2,7 +2,7 @@
 <?php if (is_array($data)) {$data = Complaints::model()->with('replies')->findByPk($data['id1']);}?>
 <div class="panel panel-default post" id="post-<?php echo $data->id; ?>">
     <div class="panel-heading">
-        <div  class="col-md-2 pull-left">#<?php echo $data->id;?></div>
+        <div  class="col-md-2 pull-left">#<?php echo CHtml::link('Update '.$data->id,Yii::app()->createUrl('/complaints/update').'/'.$data->id);?></div>
         <div class="col-md-4"><?php echo Yii::t('app','Category').':'.$data->categoryName->name_hi;?></div>
         <span><?php echo $data->officer?$data->officer->name_hi:'missing';?></span>
         <span class="pull-right"><?php echo date('d/m/Y',$data->created_at);?></span>

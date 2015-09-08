@@ -128,7 +128,13 @@
 
 
 
-<?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget', array('model' => $model, 'attribute' => 'stayorders')); ?>
+<?php 
+ Yii::app()->clientScript->defaultScriptFilePosition=CClientScript::POS_END;
+   
+$this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget', array('model' => $model, 'attribute' => 'stayorders'));
+  Yii::app()->clientScript->defaultScriptFilePosition=CClientScript::POS_HEAD;
+   
+?>
                     </div>
                 </div>
             </div>
@@ -139,7 +145,13 @@
             <div class='panel panel-success'>
                 <div class='panel-heading'>Documents </div>
                 <div class='panel-body'>
-<?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget', array('model' => $model, 'attribute' => 'documents')); ?>
+<?php 
+Yii::app()->clientScript->defaultScriptFilePosition=CClientScript::POS_END;
+ 
+$this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget', array('model' => $model, 'attribute' => 'documents')); 
+ Yii::app()->clientScript->defaultScriptFilePosition=CClientScript::POS_HEAD;
+ 
+?>
                 </div>
             </div>
         </div>

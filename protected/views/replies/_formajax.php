@@ -2,10 +2,11 @@
 <div class="form">
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-	'id'=>'replies-form',
-	'enableAjaxValidation'=>true,
-	'clientOptions'=>array('validateOnChange'=>false,'validateOnSubmit'=>TRUE),
-	'action'=>Yii::app()->createUrl('replies/create/content_type/'.$content_type.'/content_type_id/'.$content_type_id),
+	'id'=>'ajax-replies-form',
+	'enableAjaxValidation'=>false,
+	//'clientOptions'=>array('validateOnChange'=>false,'validateOnSubmit'=>TRUE),
+	'action'=>'#',
+	//'action'=>Yii::app()->createUrl('replies/create/content_type/'.$content_type.'/content_type_id/'.$content_type_id),
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -27,32 +28,41 @@
 
  <?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'attachments'));?>
       
-	<div class="row buttons">
+	<div class="row buttons form-actions">
 		<?php 
-                /*
-                echo CHtml::ajaxSubmitButton("Save","",
-		array('dataType'=>'json',
+                
+        echo CHtml::ajaxSubmitButton("Save",
+               Yii::app()->createUrl('replies/create/content_type/'.$content_type.'/content_type_id/'.$content_type_id),
+		array(
+		//'dataType'=>'json',
                     'type'=>'post',
 		'success'=>"function(data)
                 {
-				if (!data.redirect){
+                window.location.replace('".Yii::app()->createUrl('/'.$content_type.'/'.$content_type_id)."')
+               //alert(data);
+               // console.log(data);
+                //if (typeof data != 'object')
+                  // data=$.parseJSON(data);
+                   //alert(data);
+			  if (! data.redirect){
                     // Update the status
                     $('.form').html(data.html);
 					}
 				else {
 				alert(data.redirect);
-				   //window.location.replace(data.redirect);
-                                 //  window.location.reload();
+				   window.location.replace(data.redirect);
+                                  // window.location.reload();
 				   }
                     
  
-                } "),array("style"=>"visibility:hidden","id"=>"st1"));
-                 * 
-                 */
+                } "),array("id"=>"st1",'class'=>'btn btn-info'));
+                 
  ?>
 	</div>
 <div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php 
+		//echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
+		?>
 	</div>
 <?php $this->endWidget(); ?>
 

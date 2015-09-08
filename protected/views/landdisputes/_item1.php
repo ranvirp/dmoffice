@@ -3,7 +3,7 @@
 <div class="panel panel-success post" id="post-<?php echo $data->id; ?>">
     <div class="panel-heading">
         <div class="row">
-        <div  class="pull-left col-md-2">#<?php echo $data->id;?></div>
+        <div  class="pull-left col-md-2">#<?php echo echo CHtml::link('Update '.$data->id,Yii::app()->createUrl('/landdisputes/update').'/'.$data->id);?></div>
         <div class="col-md-3"><?php echo "  ".$data->categoryName->name_hi;?></div>
         <div class="col-md-3"><?php echo $data->officer?$data->officer->name_hi:'missing';?></div>
        

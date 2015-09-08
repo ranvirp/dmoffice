@@ -98,7 +98,13 @@ echo $form->dropDownListControlGroup($model, 'priority',$priority);?>
          
     
        
-       <?php $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'documents'));?>
+       <?php 
+       Yii::app()->clientScript->defaultScriptFilePosition=CClientScript::POS_END;
+   
+       $this->widget('application.extensions.basicJqueryUpload.basicJqueryFileUploadWidget',array('model'=>$model,'attribute'=>'documents'));
+        Yii::app()->clientScript->defaultScriptFilePosition=CClientScript::POS_HEAD;
+   
+       ?>
       </div>
        </div>
    </div>

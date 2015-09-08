@@ -298,9 +298,9 @@ public function actionIndex()
          $ids=join(",",$dataentry);
         else
          $ids=Yii::app()->user->id;
-        $sql='select landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.created_by in ('.$ids.')';
+        $sql='select distinct landdisputes.id as id1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.created_by in ('.$ids.') and landdisputes.updated_at<replies.create_time';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-        $sql1='select count(landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.created_by in ('.$ids.')';
+        $sql1='select count(distinct landdisputes.id) as count1 from replies left join landdisputes  on replies.content_type=\'landdisputes\' and replies.content_type_id=landdisputes.id where landdisputes.status=0 and landdisputes.created_by in ('.$ids.') and landdisputes.updated_at<replies.create_time';
         $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
        // var_dump($count);
        //exit;        

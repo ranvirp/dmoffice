@@ -19,6 +19,7 @@ $this->menu=array(
 ?>
 <?php $name='name_'.Yii::app()->language;?>
 <h1>View <?php echo Yii::t('app','Complaints');?> #<?php echo $model->id; ?></h1>
+<?php $redtag="<span style=\"color:red\" class=\"glyphicon glyphicon-tags\"\>";?>
 
 <?php $this->widget('zii.widgets.CDetailView',array(
     'htmlOptions' => array(
@@ -26,7 +27,8 @@ $this->menu=array(
     ),
     'data'=>$model,
     'attributes'=>array(
-		
+			array('name'=>'id','value'=>(($model->priority==1)?$redtag:'').$model->context.'/'.$model->id,'type'=>'raw'),
+    
 		'complainants',
 		'oppositions',
         array(
@@ -70,13 +72,14 @@ if ($displayAttach==true)
 }
 else 
 {
-    echo TbHtml::btn(TbHtml::BUTTON_TYPE_LINK,'Attach (More) files',array('onClick'=>'window.location.replace("/complaints/view/id/"+"'.$model->id.'"+"/d/1")'));
+    echo TbHtml::btn(TbHtml::BUTTON_TYPE_LINK,'Attach (More) files',array('onClick'=>'window.location.replace("'.Yii::app()->createUrl("/complaints/view/id").'"+"/'.$model->id.'"+"/d/1")'));
 
 }
-echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'Complaints','content_type_id'=>$model->id)),array('dataType'=>'json',
+echo CHtml::ajaxButton('उत्तर दर्ज करें',Ccontroller::createUrl('/replies/create',array('content_type'=>'Complaints','content_type_id'=>$model->id)),array(
+//'dataType'=>'json',
   'type'=>'post',	
     'success'=>"function(data){
-	$('#commentdiv').html(data.html);
+	$('#commentdiv').html(data);
 	}"));
 
 echo '<div id="commentdiv"></div>';

@@ -34,21 +34,35 @@ class basicJqueryFileUploadWidget extends CWidget {
             //@ALEXTODO make ui interface optional
             Yii::app() -> clientScript -> registerCssFile($baseUrl . '/css/jquery.fileupload.css');
             // The basic File Upload plugin
-            Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload.js', CClientScript::POS_END);
-            Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-process.js', CClientScript::POS_END);
+            Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload.js'
+          //  , CClientScript::POS_END
+            );
+            Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-process.js'
+          //  , CClientScript::POS_END
+            );
           
 			// if($this->previewImages || $this->imageProcessing){
-                Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/load-image.all.min.js', CClientScript::POS_END);
-                Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/canvas-to-blob.min.js', CClientScript::POS_END);
+                Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/load-image.all.min.js'
+             //   , CClientScript::POS_END
+                );
+                Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/canvas-to-blob.min.js'
+             //   , CClientScript::POS_END
+                );
           //  }
             //The Iframe Transport is required for browsers without support for XHR file uploads
-            Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.iframe-transport.js', CClientScript::POS_END);
+            Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.iframe-transport.js'
+           // , CClientScript::POS_END
+            );
             // The File Upload image processing plugin
            // if($this->imageProcessing){
-                Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-image.js', CClientScript::POS_END);
+                Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-image.js'
+            //    , CClientScript::POS_END
+                );
             // Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-audio.js', CClientScript::POS_END);
     //Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-video.js', CClientScript::POS_END);
-   Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-validate.js', CClientScript::POS_END);
+   Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/jquery.fileupload-validate.js'
+  //, CClientScript::POS_END
+  );
     Yii::app() -> clientScript -> registerScriptFile($baseUrl . '/js/vendor/jquery.ui.widget.js');
            
    

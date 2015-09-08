@@ -64,8 +64,12 @@ class RepliesController extends Controller {
 
             throw new CHttpException(400, 'Invalid request. content_type and content_type_id must exist');
         }
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        if (in_array(Yii::app()->user->id,$dataentry))
         if (($content_type=='Complaints') ||($content_type=='Landdisputes') )
-           if ($contentmodel->officerassigned!=Designation::getDesignationByUser(Yii::app()->user->id))
+           if (!in_array(Yii::app()->user->id,$dataentry) && ($contentmodel->officerassigned!=Designation::getDesignationByUser(Yii::app()->user->id)))
                    throw new CHttpException(400, 'Invalid request. You are not authorized to reply to this assignment');
       
         $model = new Replies;
@@ -105,8 +109,11 @@ class RepliesController extends Controller {
                 $url = $this->createURL("/" . $model->content_type . "/view", array('id' => $model->content_type_id));
               if (Yii::app()->request->isAjaxRequest)
               {
-                echo CJSON::encode(array('errors' => $model->getErrors(), 'redirect' => $url));
-                exit;
+               //$this->redirect($url);
+                //echo CJSON::encode(array('errors' => $model->getErrors(), 'redirect' => $url));
+               //echo CJavaScript::jsonEncode(array( 'redirect' => $url));
+               echo $model->id;
+                Yii::app()->end();
                 
               }
                 else 
@@ -125,15 +132,21 @@ else {
                 'content_type_id' => $content_type_id,
             ));
         } else {
+Yii::app()->clientScript->scriptMap['jquery.js'] = false;
+Yii::app()->clientScript->scriptMap['jquery.min.js'] = false;
 
-
-            $string = $this->renderPartial('_formajax', array(
+           
+                     $string = $this->renderPartial('_formajax', array(
                 'model' => $model,
                 'parentcontent' => $parentcontent,
                 'content_type' => $content_type,
                 'content_type_id' => $content_type_id,
-                    ), true, true);
-             echo CJSON::encode(array('html' => $string, 'errors' => $model->getErrors(), 'redirect' => $url));
+                    ), true,true);
+                    echo $string;
+            // echo CJSON::encode(array('html' => $string
+             //, 
+             //'errors' => $model->getErrors(), 'redirect' => $url
+             //));
              Yii::app()->end();  
            
         }

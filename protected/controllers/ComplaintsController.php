@@ -363,9 +363,9 @@ public function actionOw()
          $ids=join(",",$dataentry);
         else
          $ids=Yii::app()->user->id;
-        $sql='select complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.created_by in ('.$ids.')';
+        $sql='select distinct complaints.id as id1 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.created_by in ('.$ids.') and complaints.updated_at<replies.create_time';
         $rawData = Yii::app()->db->createCommand($sql); //or use ->queryAll(); in CArrayDataProvider
-        $sql1='select count(complaints.id) as count11 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.created_by in ('.$ids.')';
+        $sql1='select count(distinct complaints.id) as count11 from replies left join complaints  on replies.content_type=\'complaints\' and replies.content_type_id=complaints.id where complaints.status=0 and complaints.created_by in ('.$ids.') and complaints.updated_at<replies.create_time';
        $count = Yii::app()->db->createCommand($sql1)->queryScalar(); //the count
         //$count=1;
  
