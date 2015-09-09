@@ -238,7 +238,12 @@ $x->pagination=false;
         $model->onAfterSave = array(new SendSMSComponent(), 'sendSMS');
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-
+        $context=Yii::app()->session['context'];
+        $contexts=Context::contexts();
+        $dataentry=$contexts[$context]['dataentry'];
+        if (! in_array(Yii::app()->user->id,$dataentry) || ($model->context!=$context))
+           throw new CHttpException(401,'Not Allowed update in this context..try changing context');
+          
         if (isset($_POST['Landdisputes'])) {
             $model->attributes = $_POST['Landdisputes'];
             if (isset($_POST['Landdisputes']['stayorders']))
