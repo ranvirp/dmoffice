@@ -158,8 +158,11 @@ class Complaints extends CActiveRecord
         parent::beforeFind();
         $context=Yii::app()->session['context'];
         $contexts=Context::contexts();
+        if (array_key_exists($context,$contexts))
+        {
         $dataentry=$contexts[$context]['dataentry'];
         $this->getDbCriteria()->addInCondition('created_by',$dataentry);
+        }
        // $defaultConditions = array('create_user' => $dataentry);
         //$queryData['conditions'] = array_merge($queryData['conditions'], $defaultConditions);
         //return $queryData;
@@ -168,8 +171,11 @@ class Complaints extends CActiveRecord
         parent::beforeCount();
         $context=Yii::app()->session['context'];
         $contexts=Context::contexts();
+        if (array_key_exists($context,$contexts))
+        {
         $dataentry=$contexts[$context]['dataentry'];
         $this->getDbCriteria()->addInCondition('created_by',$dataentry);
+        }
        // $defaultConditions = array('create_user' => $dataentry);
         //$queryData['conditions'] = array_merge($queryData['conditions'], $defaultConditions);
         //return $queryData;
