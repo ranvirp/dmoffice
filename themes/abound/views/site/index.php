@@ -25,12 +25,12 @@
  echo TbHtml::dropDownListControlGroup('contenttype','0',array(Yii::t('app','Landdisputes'),Yii::t('app','Complaints')),array('empty'=>'None','label'=>'Type'));
  ?>
  </div> 
-    <div class="col-md-2">
+    <div class="col-md-2" style="padding-top:20px;margin:5px">
      <?php
  echo TbHtml::textFieldControlGroup('contentid','',array('label'=>'Id'));
  ?>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-2" style="padding-top:45px;margin:5px">
     <?php
  echo TbHtml::submitButton("Search");
  ?>
